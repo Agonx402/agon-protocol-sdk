@@ -10,14 +10,14 @@
   "publishConfig": {
     "access": "public"
   },
-  "homepage": "https://github.com/Agonx402/agon-sdk/tree/main/packages/sdk",
+  "homepage": "https://github.com/Agonx402/agon-protocol-sdk/tree/main/packages/sdk",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Agonx402/agon-sdk.git",
+    "url": "https://github.com/Agonx402/agon-protocol-sdk.git",
     "directory": "packages/sdk"
   },
   "bugs": {
-    "url": "https://github.com/Agonx402/agon-sdk/issues"
+    "url": "https://github.com/Agonx402/agon-protocol-sdk/issues"
   },
   "sideEffects": false,
   "keywords": [

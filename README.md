@@ -1,4 +1,4 @@
-# Agon SDK
+# Agon Protocol SDK
 
 TypeScript SDK for the decentralized [Agon Protocol](https://agonx402.com) on Solana.
 
