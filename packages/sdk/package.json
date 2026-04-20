@@ -1,0 +1,59 @@
+{
+  "name": "@agonx402/sdk",
+  "version": "0.1.0",
+  "description": "TypeScript SDK for the decentralized Agon Protocol on Solana",
+  "type": "module",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "homepage": "https://github.com/Agonx402/agon-sdk/tree/main/packages/sdk",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Agonx402/agon-sdk.git",
+    "directory": "packages/sdk"
+  },
+  "bugs": {
+    "url": "https://github.com/Agonx402/agon-sdk/issues"
+  },
+  "sideEffects": false,
+  "keywords": [
+    "solana",
+    "anchor",
+    "payments",
+    "state-channels",
+    "agon",
+    "protocol"
+  ],
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -b && node ./scripts/copy-generated.mjs",
+    "clean": "node -e \"fs.rmSync('dist', { recursive: true, force: true })\"",
+    "lint": "tsc --noEmit -p tsconfig.json",
+    "prepublishOnly": "npm run build"
+  },
+  "dependencies": {
+    "@coral-xyz/anchor": "^0.32.1",
+    "@noble/curves": "^1.9.7",
+    "@solana/web3.js": "^1.95.3"
+  },
+  "devDependencies": {
+    "@types/node": "^24.9.1",
+    "typescript": "^5.7.3"
+  }
+}

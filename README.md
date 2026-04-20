@@ -1,64 +1,36 @@
 # Agon SDK
 
-TypeScript SDKs for the [Agon](https://agonx402.com) payment layer — deposit USDC once, pay for any API, settle on-chain in batches.
+TypeScript SDK for the decentralized [Agon Protocol](https://agonx402.com) on Solana.
 
-**[Full Documentation](https://docs.agonx402.com)**
-
-## Packages
+This repository publishes the protocol-facing SDK used to interact with the Agon onchain program:
 
 | Package | Description | Install |
 |---------|-------------|---------|
-| [`@agonx402/types`](packages/types) | Shared types and constants | `npm i @agonx402/types` |
-| [`@agonx402/client`](packages/client) | Consumer SDK — deposit, fetch, withdraw | `npm i @agonx402/client` |
-| [`@agonx402/platform`](packages/platform) | Platform SDK — Express/Fastify/Next.js middleware | `npm i @agonx402/platform` |
+| [`@agonx402/sdk`](packages/sdk) | Protocol SDK — PDAs, message builders, settlement helpers, and `AgonClient` | `npm i @agonx402/sdk` |
 
 ## Quick start
 
-**Consumer** — pay for APIs:
-
 ```ts
-import { AgonClient } from '@agonx402/client'
+import * as anchor from "@coral-xyz/anchor";
+import { AgonClient } from "@agonx402/sdk";
 
-const agon = new AgonClient({
-  baseUrl: 'https://api.agonx402.com',
-  apiKey: 'ak_live_xxx',
-  wallet: myKeypair,
-})
+const provider = anchor.AnchorProvider.env();
+const client = new AgonClient({ provider });
 
-const res = await agon.fetch('https://api.example.com/data')
+const participant = await client.fetchParticipant(provider.wallet.publicKey);
 ```
 
-**Platform** — get paid for APIs:
+## Local development
 
-```ts
-import { agonMiddleware } from '@agonx402/platform/express'
-
-app.use(agonMiddleware({
-  agonUrl: 'https://api.agonx402.com',
-  platformKey: 'pk_xxx',
-  pricing: (req) => 1000, // 0.001 USDC
-}))
+```bash
+npm install
+npm run build
+npm run lint
 ```
 
-## How it works
+## Publishing
 
-1. Consumer deposits USDC to Agon (one on-chain transaction)
-2. Consumer calls APIs using `agon.fetch()` — payments are authorized off-chain in ~5ms
-3. Agon settles to platforms in batches — one on-chain transaction for thousands of calls
-
-Compatible with the [x402](https://x402.org) HTTP payment standard.
-
-## Important Risk and Security Notice
-
-AGON is an early-stage, devnet payment infrastructure project. It functions as a custodial service: after deposit, funds are swept to and held in project-controlled wallets.
-
-While the core payment flows are operational, the platform is still under active development and has not yet undergone a formal security audit or obtained insurance coverage. The project is also in the process of completing VASP registration in Georgia.
-
-As with any early-stage financial technology, there are material risks including (but not limited to) technical failures, operational errors, or unforeseen events that could result in loss of funds.
-
-We strongly recommend testing with very small amounts only and monitoring your activity closely.
-
-We are committed to transparency and continuous improvement — live Proof of Reserves, public multisig wallets, and regular updates are available on the site.
+The GitHub Actions workflow in [`.github/workflows/publish.yml`](.github/workflows/publish.yml) publishes the package under `packages/sdk` as `@agonx402/sdk`.
 
 ## License
 

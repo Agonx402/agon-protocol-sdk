@@ -1,4 +1,4 @@
-name: Publish Agon SDK
+name: Publish Agon Protocol SDK
 
 on:
   workflow_dispatch:
@@ -15,7 +15,7 @@ on:
 
 jobs:
   publish:
-    name: Publish Packages to NPM
+    name: Publish Package to NPM
     runs-on: ubuntu-latest
     permissions:
       contents: write # Needed to push tags and commits

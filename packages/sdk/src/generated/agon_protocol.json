@@ -1,0 +1,3967 @@
+{
+  "address": "Ba2puU8D2CLD1dYfRQ4YBXxirdyz3zVLLChvMf9AqJ1Y",
+  "metadata": {
+    "name": "agon_protocol",
+    "version": "0.1.0",
+    "spec": "0.1.0",
+    "description": "Created with Anchor"
+  },
+  "instructions": [
+    {
+      "name": "accept_config_authority",
+      "docs": [
+        "Pending config authority accepts the handoff."
+      ],
+      "discriminator": [
+        138,
+        34,
+        130,
+        16,
+        252,
+        207,
+        24,
+        90
+      ],
+      "accounts": [
+        {
+          "name": "global_config",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  45,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "pending_authority",
+          "signer": true
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "accept_registry_authority",
+      "docs": [
+        "Pending token registry authority accepts the handoff."
+      ],
+      "discriminator": [
+        228,
+        112,
+        232,
+        244,
+        155,
+        68,
+        83,
+        87
+      ],
+      "accounts": [
+        {
+          "name": "token_registry",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  116,
+                  111,
+                  107,
+                  101,
+                  110,
+                  45,
+                  114,
+                  101,
+                  103,
+                  105,
+                  115,
+                  116,
+                  114,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "pending_authority",
+          "signer": true
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "cancel_withdrawal",
+      "docs": [
+        "Cancel a pending withdrawal for a specific token."
+      ],
+      "discriminator": [
+        183,
+        104,
+        181,
+        250,
+        28,
+        128,
+        210,
+        70
+      ],
+      "accounts": [
+        {
+          "name": "participant_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  97,
+                  114,
+                  116,
+                  105,
+                  99,
+                  105,
+                  112,
+                  97,
+                  110,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "owner"
+              }
+            ]
+          }
+        },
+        {
+          "name": "owner",
+          "signer": true,
+          "relations": [
+            "participant_account"
+          ]
+        }
+      ],
+      "args": [
+        {
+          "name": "token_id",
+          "type": "u16"
+        }
+      ]
+    },
+    {
+      "name": "create_channel",
+      "docs": [
+        "Create a token-specific channel from payer to payee. Must be called before any payment commitments are signed or settled.",
+        "Payer signs and pays ~0.002 SOL rent. Ensures payees and facilitators never pay for creation."
+      ],
+      "discriminator": [
+        37,
+        105,
+        253,
+        99,
+        87,
+        46,
+        223,
+        20
+      ],
+      "accounts": [
+        {
+          "name": "token_registry",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  116,
+                  111,
+                  107,
+                  101,
+                  110,
+                  45,
+                  114,
+                  101,
+                  103,
+                  105,
+                  115,
+                  116,
+                  114,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "payer_account",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  97,
+                  114,
+                  116,
+                  105,
+                  99,
+                  105,
+                  112,
+                  97,
+                  110,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "owner"
+              }
+            ]
+          }
+        },
+        {
+          "name": "payee_account",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  97,
+                  114,
+                  116,
+                  105,
+                  99,
+                  105,
+                  112,
+                  97,
+                  110,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "payee_account.owner",
+                "account": "ParticipantAccount"
+              }
+            ]
+          }
+        },
+        {
+          "name": "channel_state",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  104,
+                  97,
+                  110,
+                  110,
+                  101,
+                  108,
+                  45,
+                  118,
+                  50
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "payer_account.participant_id",
+                "account": "ParticipantAccount"
+              },
+              {
+                "kind": "account",
+                "path": "payee_account.participant_id",
+                "account": "ParticipantAccount"
+              },
+              {
+                "kind": "arg",
+                "path": "token_id"
+              }
+            ]
+          }
+        },
+        {
+          "name": "owner",
+          "writable": true,
+          "signer": true,
+          "relations": [
+            "payer_account"
+          ]
+        },
+        {
+          "name": "payee_owner",
+          "signer": true,
+          "optional": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "token_id",
+          "type": "u16"
+        },
+        {
+          "name": "authorized_signer",
+          "type": {
+            "option": "pubkey"
+          }
+        }
+      ]
+    },
+    {
+      "name": "deposit",
+      "docs": [
+        "Deposit tokens into the vault (credits signer's vault)."
+      ],
+      "discriminator": [
+        242,
+        35,
+        198,
+        137,
+        82,
+        225,
+        242,
+        182
+      ],
+      "accounts": [
+        {
+          "name": "token_registry",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  116,
+                  111,
+                  107,
+                  101,
+                  110,
+                  45,
+                  114,
+                  101,
+                  103,
+                  105,
+                  115,
+                  116,
+                  114,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "global_config",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  45,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "participant_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  97,
+                  114,
+                  116,
+                  105,
+                  99,
+                  105,
+                  112,
+                  97,
+                  110,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "owner"
+              }
+            ]
+          }
+        },
+        {
+          "name": "owner_token_account",
+          "writable": true
+        },
+        {
+          "name": "vault_token_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116,
+                  45,
+                  116,
+                  111,
+                  107,
+                  101,
+                  110,
+                  45,
+                  97,
+                  99,
+                  99,
+                  111,
+                  117,
+                  110,
+                  116
+                ]
+              },
+              {
+                "kind": "arg",
+                "path": "token_id"
+              }
+            ]
+          }
+        },
+        {
+          "name": "owner",
+          "signer": true,
+          "relations": [
+            "participant_account"
+          ]
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        }
+      ],
+      "args": [
+        {
+          "name": "token_id",
+          "type": "u16"
+        },
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "deposit_for",
+      "docs": [
+        "Deposit a registered token for multiple participants in one tx.",
+        "Funder's ATA to vault; credits each recipient.",
+        "amounts.len() must equal remaining_accounts (ParticipantAccounts). Max 16 recipients."
+      ],
+      "discriminator": [
+        193,
+        39,
+        228,
+        88,
+        160,
+        254,
+        92,
+        53
+      ],
+      "accounts": [
+        {
+          "name": "token_registry",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  116,
+                  111,
+                  107,
+                  101,
+                  110,
+                  45,
+                  114,
+                  101,
+                  103,
+                  105,
+                  115,
+                  116,
+                  114,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "global_config",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  45,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "funder_token_account",
+          "writable": true
+        },
+        {
+          "name": "vault_token_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116,
+                  45,
+                  116,
+                  111,
+                  107,
+                  101,
+                  110,
+                  45,
+                  97,
+                  99,
+                  99,
+                  111,
+                  117,
+                  110,
+                  116
+                ]
+              },
+              {
+                "kind": "arg",
+                "path": "token_id"
+              }
+            ]
+          }
+        },
+        {
+          "name": "funder",
+          "signer": true
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        }
+      ],
+      "args": [
+        {
+          "name": "token_id",
+          "type": "u16"
+        },
+        {
+          "name": "amounts",
+          "type": {
+            "vec": "u64"
+          }
+        }
+      ]
+    },
+    {
+      "name": "execute_unlock_channel_funds",
+      "docs": [
+        "Execute a previously requested collateral unlock once its timelock expires."
+      ],
+      "discriminator": [
+        15,
+        42,
+        242,
+        109,
+        6,
+        117,
+        101,
+        63
+      ],
+      "accounts": [
+        {
+          "name": "global_config",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  45,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "payer_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  97,
+                  114,
+                  116,
+                  105,
+                  99,
+                  105,
+                  112,
+                  97,
+                  110,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "owner"
+              }
+            ]
+          }
+        },
+        {
+          "name": "payee_account",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  97,
+                  114,
+                  116,
+                  105,
+                  99,
+                  105,
+                  112,
+                  97,
+                  110,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "payee_account.owner",
+                "account": "ParticipantAccount"
+              }
+            ]
+          }
+        },
+        {
+          "name": "channel_state",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  104,
+                  97,
+                  110,
+                  110,
+                  101,
+                  108,
+                  45,
+                  118,
+                  50
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "payer_account.participant_id",
+                "account": "ParticipantAccount"
+              },
+              {
+                "kind": "account",
+                "path": "payee_account.participant_id",
+                "account": "ParticipantAccount"
+              },
+              {
+                "kind": "account",
+                "path": "channel_state.token_id",
+                "account": "ChannelState"
+              }
+            ]
+          }
+        },
+        {
+          "name": "owner",
+          "signer": true,
+          "relations": [
+            "payer_account"
+          ]
+        }
+      ],
+      "args": [
+        {
+          "name": "token_id",
+          "type": "u16"
+        }
+      ]
+    },
+    {
+      "name": "execute_update_channel_authorized_signer",
+      "docs": [
+        "Execute a previously requested authorized-signer rotation once its timelock expires."
+      ],
+      "discriminator": [
+        44,
+        98,
+        34,
+        239,
+        137,
+        228,
+        10,
+        35
+      ],
+      "accounts": [
+        {
+          "name": "global_config",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  45,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "payer_account",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  97,
+                  114,
+                  116,
+                  105,
+                  99,
+                  105,
+                  112,
+                  97,
+                  110,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "owner"
+              }
+            ]
+          }
+        },
+        {
+          "name": "payee_account",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  97,
+                  114,
+                  116,
+                  105,
+                  99,
+                  105,
+                  112,
+                  97,
+                  110,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "payee_account.owner",
+                "account": "ParticipantAccount"
+              }
+            ]
+          }
+        },
+        {
+          "name": "channel_state",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  104,
+                  97,
+                  110,
+                  110,
+                  101,
+                  108,
+                  45,
+                  118,
+                  50
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "payer_account.participant_id",
+                "account": "ParticipantAccount"
+              },
+              {
+                "kind": "account",
+                "path": "payee_account.participant_id",
+                "account": "ParticipantAccount"
+              },
+              {
+                "kind": "account",
+                "path": "channel_state.token_id",
+                "account": "ChannelState"
+              }
+            ]
+          }
+        },
+        {
+          "name": "owner",
+          "signer": true,
+          "relations": [
+            "payer_account"
+          ]
+        }
+      ],
+      "args": [
+        {
+          "name": "token_id",
+          "type": "u16"
+        }
+      ]
+    },
+    {
+      "name": "execute_withdrawal_timelocked",
+      "docs": [
+        "Execute a withdrawal for a specific token after timelock expires."
+      ],
+      "discriminator": [
+        15,
+        177,
+        178,
+        198,
+        72,
+        205,
+        114,
+        135
+      ],
+      "accounts": [
+        {
+          "name": "token_registry",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  116,
+                  111,
+                  107,
+                  101,
+                  110,
+                  45,
+                  114,
+                  101,
+                  103,
+                  105,
+                  115,
+                  116,
+                  114,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "global_config",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  45,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "participant_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  97,
+                  114,
+                  116,
+                  105,
+                  99,
+                  105,
+                  112,
+                  97,
+                  110,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "participant_account.owner",
+                "account": "ParticipantAccount"
+              }
+            ]
+          }
+        },
+        {
+          "name": "vault_token_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116,
+                  45,
+                  116,
+                  111,
+                  107,
+                  101,
+                  110,
+                  45,
+                  97,
+                  99,
+                  99,
+                  111,
+                  117,
+                  110,
+                  116
+                ]
+              },
+              {
+                "kind": "arg",
+                "path": "token_id"
+              }
+            ]
+          }
+        },
+        {
+          "name": "withdrawal_destination",
+          "docs": [
+            "Destination token account (any valid token ATA — participant or 3rd party)."
+          ],
+          "writable": true
+        },
+        {
+          "name": "fee_recipient_token_account",
+          "docs": [
+            "Fee recipient's token account for the token being withdrawn."
+          ],
+          "writable": true
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        }
+      ],
+      "args": [
+        {
+          "name": "token_id",
+          "type": "u16"
+        }
+      ]
+    },
+    {
+      "name": "initialize",
+      "docs": [
+        "Initialize the protocol: creates GlobalConfig PDA.",
+        "`chain_id` selects the immutable settlement domain and withdrawal timelock."
+      ],
+      "discriminator": [
+        175,
+        175,
+        109,
+        31,
+        13,
+        152,
+        155,
+        237
+      ],
+      "accounts": [
+        {
+          "name": "global_config",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  45,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "fee_recipient",
+          "docs": [
+            "Wallet that receives registration-fee lamports and owns fee token accounts."
+          ]
+        },
+        {
+          "name": "upgrade_authority",
+          "docs": [
+            "Program's upgrade authority performs the one-time bootstrap."
+          ],
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "program",
+          "address": "Ba2puU8D2CLD1dYfRQ4YBXxirdyz3zVLLChvMf9AqJ1Y"
+        },
+        {
+          "name": "program_data"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "chain_id",
+          "type": "u16"
+        },
+        {
+          "name": "fee_bps",
+          "type": "u16"
+        },
+        {
+          "name": "registration_fee_lamports",
+          "type": "u64"
+        },
+        {
+          "name": "initial_authority",
+          "type": {
+            "option": "pubkey"
+          }
+        }
+      ]
+    },
+    {
+      "name": "initialize_participant",
+      "docs": [
+        "One-time participant registration."
+      ],
+      "discriminator": [
+        140,
+        19,
+        249,
+        135,
+        62,
+        118,
+        69,
+        153
+      ],
+      "accounts": [
+        {
+          "name": "global_config",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  45,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "participant_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  97,
+                  114,
+                  116,
+                  105,
+                  99,
+                  105,
+                  112,
+                  97,
+                  110,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "owner"
+              }
+            ]
+          }
+        },
+        {
+          "name": "fee_recipient",
+          "writable": true
+        },
+        {
+          "name": "owner",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "initialize_token_registry",
+      "docs": [
+        "Initialize the token registry (authority only, called once after program deployment)."
+      ],
+      "discriminator": [
+        206,
+        94,
+        91,
+        162,
+        242,
+        92,
+        51,
+        192
+      ],
+      "accounts": [
+        {
+          "name": "token_registry",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  116,
+                  111,
+                  107,
+                  101,
+                  110,
+                  45,
+                  114,
+                  101,
+                  103,
+                  105,
+                  115,
+                  116,
+                  114,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "global_config",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  45,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "authority",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "lock_channel_funds",
+      "docs": [
+        "Lock tokens as ring-fenced collateral for a specific payee channel."
+      ],
+      "discriminator": [
+        17,
+        122,
+        150,
+        31,
+        214,
+        154,
+        222,
+        93
+      ],
+      "accounts": [
+        {
+          "name": "token_registry",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  116,
+                  111,
+                  107,
+                  101,
+                  110,
+                  45,
+                  114,
+                  101,
+                  103,
+                  105,
+                  115,
+                  116,
+                  114,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "payer_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  97,
+                  114,
+                  116,
+                  105,
+                  99,
+                  105,
+                  112,
+                  97,
+                  110,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "owner"
+              }
+            ]
+          }
+        },
+        {
+          "name": "payee_account"
+        },
+        {
+          "name": "channel_state",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  104,
+                  97,
+                  110,
+                  110,
+                  101,
+                  108,
+                  45,
+                  118,
+                  50
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "payer_account.participant_id",
+                "account": "ParticipantAccount"
+              },
+              {
+                "kind": "account",
+                "path": "payee_account.participant_id",
+                "account": "ParticipantAccount"
+              },
+              {
+                "kind": "account",
+                "path": "channel_state.token_id",
+                "account": "ChannelState"
+              }
+            ]
+          }
+        },
+        {
+          "name": "owner",
+          "writable": true,
+          "signer": true,
+          "relations": [
+            "payer_account"
+          ]
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "token_id",
+          "type": "u16"
+        },
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "register_token",
+      "docs": [
+        "Register a new token in the registry (authority only)."
+      ],
+      "discriminator": [
+        32,
+        146,
+        36,
+        240,
+        80,
+        183,
+        36,
+        84
+      ],
+      "accounts": [
+        {
+          "name": "token_registry",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  116,
+                  111,
+                  107,
+                  101,
+                  110,
+                  45,
+                  114,
+                  101,
+                  103,
+                  105,
+                  115,
+                  116,
+                  114,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "vault_token_account",
+          "docs": [
+            "Vault token account for this token (created when token is registered)"
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116,
+                  45,
+                  116,
+                  111,
+                  107,
+                  101,
+                  110,
+                  45,
+                  97,
+                  99,
+                  99,
+                  111,
+                  117,
+                  110,
+                  116
+                ]
+              },
+              {
+                "kind": "arg",
+                "path": "token_id"
+              }
+            ]
+          }
+        },
+        {
+          "name": "mint",
+          "docs": [
+            "Mint to register"
+          ]
+        },
+        {
+          "name": "global_config",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  45,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "authority",
+          "docs": [
+            "Registry authority"
+          ],
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "rent",
+          "address": "SysvarRent111111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "token_id",
+          "type": "u16"
+        },
+        {
+          "name": "symbol_bytes",
+          "type": {
+            "array": [
+              "u8",
+              8
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "request_unlock_channel_funds",
+      "docs": [
+        "Request a timelocked partial unlock of channel collateral."
+      ],
+      "discriminator": [
+        227,
+        33,
+        208,
+        127,
+        89,
+        141,
+        27,
+        203
+      ],
+      "accounts": [
+        {
+          "name": "global_config",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  45,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "payer_account",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  97,
+                  114,
+                  116,
+                  105,
+                  99,
+                  105,
+                  112,
+                  97,
+                  110,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "owner"
+              }
+            ]
+          }
+        },
+        {
+          "name": "payee_account",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  97,
+                  114,
+                  116,
+                  105,
+                  99,
+                  105,
+                  112,
+                  97,
+                  110,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "payee_account.owner",
+                "account": "ParticipantAccount"
+              }
+            ]
+          }
+        },
+        {
+          "name": "channel_state",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  104,
+                  97,
+                  110,
+                  110,
+                  101,
+                  108,
+                  45,
+                  118,
+                  50
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "payer_account.participant_id",
+                "account": "ParticipantAccount"
+              },
+              {
+                "kind": "account",
+                "path": "payee_account.participant_id",
+                "account": "ParticipantAccount"
+              },
+              {
+                "kind": "account",
+                "path": "channel_state.token_id",
+                "account": "ChannelState"
+              }
+            ]
+          }
+        },
+        {
+          "name": "owner",
+          "signer": true,
+          "relations": [
+            "payer_account"
+          ]
+        }
+      ],
+      "args": [
+        {
+          "name": "token_id",
+          "type": "u16"
+        },
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "request_update_channel_authorized_signer",
+      "docs": [
+        "Request a timelocked rotation of the channel's authorized signer."
+      ],
+      "discriminator": [
+        196,
+        150,
+        53,
+        172,
+        4,
+        107,
+        185,
+        203
+      ],
+      "accounts": [
+        {
+          "name": "global_config",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  45,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "payer_account",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  97,
+                  114,
+                  116,
+                  105,
+                  99,
+                  105,
+                  112,
+                  97,
+                  110,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "owner"
+              }
+            ]
+          }
+        },
+        {
+          "name": "payee_account",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  97,
+                  114,
+                  116,
+                  105,
+                  99,
+                  105,
+                  112,
+                  97,
+                  110,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "payee_account.owner",
+                "account": "ParticipantAccount"
+              }
+            ]
+          }
+        },
+        {
+          "name": "channel_state",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  104,
+                  97,
+                  110,
+                  110,
+                  101,
+                  108,
+                  45,
+                  118,
+                  50
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "payer_account.participant_id",
+                "account": "ParticipantAccount"
+              },
+              {
+                "kind": "account",
+                "path": "payee_account.participant_id",
+                "account": "ParticipantAccount"
+              },
+              {
+                "kind": "account",
+                "path": "channel_state.token_id",
+                "account": "ChannelState"
+              }
+            ]
+          }
+        },
+        {
+          "name": "owner",
+          "signer": true,
+          "relations": [
+            "payer_account"
+          ]
+        }
+      ],
+      "args": [
+        {
+          "name": "token_id",
+          "type": "u16"
+        },
+        {
+          "name": "new_signer",
+          "type": "pubkey"
+        }
+      ]
+    },
+    {
+      "name": "request_withdrawal",
+      "docs": [
+        "Request a timelocked withdrawal for a specific token."
+      ],
+      "discriminator": [
+        251,
+        85,
+        121,
+        205,
+        56,
+        201,
+        12,
+        177
+      ],
+      "accounts": [
+        {
+          "name": "token_registry",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  116,
+                  111,
+                  107,
+                  101,
+                  110,
+                  45,
+                  114,
+                  101,
+                  103,
+                  105,
+                  115,
+                  116,
+                  114,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "global_config",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  45,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "participant_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  97,
+                  114,
+                  116,
+                  105,
+                  99,
+                  105,
+                  112,
+                  97,
+                  110,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "owner"
+              }
+            ]
+          }
+        },
+        {
+          "name": "withdrawal_destination",
+          "docs": [
+            "The withdrawal destination token account"
+          ]
+        },
+        {
+          "name": "owner",
+          "signer": true,
+          "relations": [
+            "participant_account"
+          ]
+        }
+      ],
+      "args": [
+        {
+          "name": "token_id",
+          "type": "u16"
+        },
+        {
+          "name": "amount",
+          "type": "u64"
+        },
+        {
+          "name": "destination",
+          "type": "pubkey"
+        }
+      ]
+    },
+    {
+      "name": "settle_clearing_round",
+      "docs": [
+        "Cooperative clearing round: advances many channels and applies only net participant balance changes."
+      ],
+      "discriminator": [
+        172,
+        91,
+        157,
+        209,
+        159,
+        165,
+        164,
+        205
+      ],
+      "accounts": [
+        {
+          "name": "token_registry",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  116,
+                  111,
+                  107,
+                  101,
+                  110,
+                  45,
+                  114,
+                  101,
+                  103,
+                  105,
+                  115,
+                  116,
+                  114,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "global_config",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  45,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "submitter",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "instructions_sysvar",
+          "address": "Sysvar1nstructions1111111111111111111111111"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "settle_commitment_bundle",
+      "docs": [
+        "Settle many latest commitments for one payee across many unilateral channels."
+      ],
+      "discriminator": [
+        216,
+        165,
+        96,
+        156,
+        207,
+        11,
+        86,
+        63
+      ],
+      "accounts": [
+        {
+          "name": "token_registry",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  116,
+                  111,
+                  107,
+                  101,
+                  110,
+                  45,
+                  114,
+                  101,
+                  103,
+                  105,
+                  115,
+                  116,
+                  114,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "global_config",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  45,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "payee_account",
+          "writable": true
+        },
+        {
+          "name": "submitter",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "instructions_sysvar",
+          "address": "Sysvar1nstructions1111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "count",
+          "type": "u8"
+        }
+      ]
+    },
+    {
+      "name": "settle_individual",
+      "docs": [
+        "Settle a single payment commitment. Submitter must be the payee or an authorized settler."
+      ],
+      "discriminator": [
+        34,
+        189,
+        136,
+        193,
+        154,
+        42,
+        233,
+        49
+      ],
+      "accounts": [
+        {
+          "name": "token_registry",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  116,
+                  111,
+                  107,
+                  101,
+                  110,
+                  45,
+                  114,
+                  101,
+                  103,
+                  105,
+                  115,
+                  116,
+                  114,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "global_config",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  45,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "payer_account",
+          "writable": true
+        },
+        {
+          "name": "payee_account",
+          "writable": true
+        },
+        {
+          "name": "channel_state",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  104,
+                  97,
+                  110,
+                  110,
+                  101,
+                  108,
+                  45,
+                  118,
+                  50
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "payer_account.participant_id",
+                "account": "ParticipantAccount"
+              },
+              {
+                "kind": "account",
+                "path": "payee_account.participant_id",
+                "account": "ParticipantAccount"
+              },
+              {
+                "kind": "account",
+                "path": "channel_state.token_id",
+                "account": "ChannelState"
+              }
+            ]
+          }
+        },
+        {
+          "name": "submitter",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "instructions_sysvar",
+          "address": "Sysvar1nstructions1111111111111111111111111"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "update_config",
+      "docs": [
+        "Update protocol configuration (authority only).",
+        "Settlement chain_id and withdrawal timelock are immutable and cannot be changed."
+      ],
+      "discriminator": [
+        29,
+        158,
+        252,
+        191,
+        10,
+        83,
+        219,
+        99
+      ],
+      "accounts": [
+        {
+          "name": "global_config",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  45,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "authority",
+          "docs": [
+            "Config authority — only this key can update config."
+          ],
+          "signer": true,
+          "relations": [
+            "global_config"
+          ]
+        }
+      ],
+      "args": [
+        {
+          "name": "new_authority",
+          "type": {
+            "option": "pubkey"
+          }
+        },
+        {
+          "name": "new_fee_recipient",
+          "type": {
+            "option": "pubkey"
+          }
+        },
+        {
+          "name": "new_fee_bps",
+          "type": {
+            "option": "u16"
+          }
+        },
+        {
+          "name": "new_registration_fee_lamports",
+          "type": {
+            "option": "u64"
+          }
+        }
+      ]
+    },
+    {
+      "name": "update_inbound_channel_policy",
+      "docs": [
+        "Update the participant's inbound channel policy."
+      ],
+      "discriminator": [
+        90,
+        47,
+        72,
+        151,
+        139,
+        252,
+        19,
+        78
+      ],
+      "accounts": [
+        {
+          "name": "participant_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  97,
+                  114,
+                  116,
+                  105,
+                  99,
+                  105,
+                  112,
+                  97,
+                  110,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "owner"
+              }
+            ]
+          }
+        },
+        {
+          "name": "owner",
+          "signer": true,
+          "relations": [
+            "participant_account"
+          ]
+        }
+      ],
+      "args": [
+        {
+          "name": "inbound_channel_policy",
+          "type": "u8"
+        }
+      ]
+    },
+    {
+      "name": "update_registry_authority",
+      "docs": [
+        "Nominate a pending token registry authority."
+      ],
+      "discriminator": [
+        36,
+        103,
+        15,
+        149,
+        117,
+        134,
+        26,
+        41
+      ],
+      "accounts": [
+        {
+          "name": "token_registry",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  116,
+                  111,
+                  107,
+                  101,
+                  110,
+                  45,
+                  114,
+                  101,
+                  103,
+                  105,
+                  115,
+                  116,
+                  114,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "current_authority",
+          "docs": [
+            "Current authority"
+          ],
+          "signer": true
+        }
+      ],
+      "args": [
+        {
+          "name": "new_authority",
+          "type": "pubkey"
+        }
+      ]
+    }
+  ],
+  "accounts": [
+    {
+      "name": "ChannelState",
+      "discriminator": [
+        74,
+        132,
+        141,
+        196,
+        64,
+        52,
+        83,
+        136
+      ]
+    },
+    {
+      "name": "GlobalConfig",
+      "discriminator": [
+        149,
+        8,
+        156,
+        202,
+        160,
+        252,
+        176,
+        217
+      ]
+    },
+    {
+      "name": "ParticipantAccount",
+      "discriminator": [
+        239,
+        31,
+        144,
+        66,
+        245,
+        178,
+        84,
+        109
+      ]
+    },
+    {
+      "name": "TokenRegistry",
+      "discriminator": [
+        227,
+        255,
+        152,
+        118,
+        84,
+        200,
+        145,
+        120
+      ]
+    }
+  ],
+  "events": [
+    {
+      "name": "ChannelAuthorizedSignerUpdateRequested",
+      "discriminator": [
+        23,
+        50,
+        157,
+        244,
+        11,
+        21,
+        150,
+        241
+      ]
+    },
+    {
+      "name": "ChannelAuthorizedSignerUpdated",
+      "discriminator": [
+        52,
+        244,
+        219,
+        121,
+        176,
+        126,
+        4,
+        38
+      ]
+    },
+    {
+      "name": "ChannelCreated",
+      "discriminator": [
+        32,
+        4,
+        161,
+        165,
+        148,
+        144,
+        56,
+        139
+      ]
+    },
+    {
+      "name": "ChannelFundsLocked",
+      "discriminator": [
+        146,
+        187,
+        75,
+        43,
+        84,
+        112,
+        53,
+        224
+      ]
+    },
+    {
+      "name": "ChannelFundsUnlocked",
+      "discriminator": [
+        137,
+        22,
+        235,
+        8,
+        189,
+        212,
+        74,
+        196
+      ]
+    },
+    {
+      "name": "ChannelUnlockRequested",
+      "discriminator": [
+        178,
+        124,
+        32,
+        190,
+        132,
+        96,
+        189,
+        79
+      ]
+    },
+    {
+      "name": "ClearingRoundSettled",
+      "discriminator": [
+        122,
+        115,
+        145,
+        36,
+        176,
+        77,
+        63,
+        212
+      ]
+    },
+    {
+      "name": "CommitmentBundleSettled",
+      "discriminator": [
+        220,
+        114,
+        110,
+        246,
+        81,
+        235,
+        243,
+        248
+      ]
+    },
+    {
+      "name": "ConfigAuthorityTransferStarted",
+      "discriminator": [
+        56,
+        105,
+        50,
+        173,
+        103,
+        239,
+        20,
+        7
+      ]
+    },
+    {
+      "name": "ConfigAuthorityTransferred",
+      "discriminator": [
+        116,
+        152,
+        24,
+        23,
+        117,
+        176,
+        34,
+        143
+      ]
+    },
+    {
+      "name": "ConfigUpdated",
+      "discriminator": [
+        40,
+        241,
+        230,
+        122,
+        11,
+        19,
+        198,
+        194
+      ]
+    },
+    {
+      "name": "Deposited",
+      "discriminator": [
+        111,
+        141,
+        26,
+        45,
+        161,
+        35,
+        100,
+        57
+      ]
+    },
+    {
+      "name": "InboundChannelPolicyUpdated",
+      "discriminator": [
+        105,
+        82,
+        102,
+        34,
+        224,
+        237,
+        140,
+        178
+      ]
+    },
+    {
+      "name": "IndividualSettled",
+      "discriminator": [
+        5,
+        202,
+        48,
+        14,
+        106,
+        152,
+        91,
+        3
+      ]
+    },
+    {
+      "name": "ParticipantInitialized",
+      "discriminator": [
+        177,
+        34,
+        13,
+        226,
+        173,
+        96,
+        231,
+        179
+      ]
+    },
+    {
+      "name": "RegistryAuthorityTransferStarted",
+      "discriminator": [
+        98,
+        230,
+        147,
+        76,
+        30,
+        12,
+        224,
+        43
+      ]
+    },
+    {
+      "name": "RegistryAuthorityTransferred",
+      "discriminator": [
+        70,
+        11,
+        67,
+        54,
+        50,
+        206,
+        25,
+        115
+      ]
+    },
+    {
+      "name": "WithdrawalCancelled",
+      "discriminator": [
+        119,
+        175,
+        207,
+        80,
+        186,
+        237,
+        229,
+        9
+      ]
+    },
+    {
+      "name": "WithdrawalRequested",
+      "discriminator": [
+        75,
+        207,
+        21,
+        12,
+        160,
+        102,
+        150,
+        55
+      ]
+    },
+    {
+      "name": "Withdrawn",
+      "discriminator": [
+        20,
+        89,
+        223,
+        198,
+        194,
+        124,
+        219,
+        13
+      ]
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "InsufficientBalance",
+      "msg": "Insufficient balance for this operation"
+    },
+    {
+      "code": 6001,
+      "name": "WithdrawalAlreadyPending",
+      "msg": "A withdrawal is already pending"
+    },
+    {
+      "code": 6002,
+      "name": "NoWithdrawalPending",
+      "msg": "No withdrawal is currently pending"
+    },
+    {
+      "code": 6003,
+      "name": "WithdrawalLocked",
+      "msg": "Withdrawal timelock has not yet expired"
+    },
+    {
+      "code": 6004,
+      "name": "InvalidWithdrawalDestination",
+      "msg": "Invalid withdrawal destination address"
+    },
+    {
+      "code": 6005,
+      "name": "InvalidAuthority",
+      "msg": "Authority cannot be the zero address"
+    },
+    {
+      "code": 6006,
+      "name": "InvalidFeeRecipient",
+      "msg": "Fee recipient cannot be the zero address"
+    },
+    {
+      "code": 6007,
+      "name": "InvalidInboundChannelPolicy",
+      "msg": "Invalid inbound channel policy"
+    },
+    {
+      "code": 6008,
+      "name": "UnauthorizedInitializer",
+      "msg": "Only the program upgrade authority can initialize the protocol"
+    },
+    {
+      "code": 6009,
+      "name": "InvalidFeeBps",
+      "msg": "Fee BPS must be between 3 (0.03%) and 30 (0.3%)"
+    },
+    {
+      "code": 6010,
+      "name": "InvalidRegistrationFee",
+      "msg": "Registration fee must be 0 or between 0.001 and 0.01 SOL"
+    },
+    {
+      "code": 6011,
+      "name": "InvalidDepositFor",
+      "msg": "Invalid deposit_for: amounts length must match recipients, max 16"
+    },
+    {
+      "code": 6012,
+      "name": "AmountMustBePositive",
+      "msg": "Amount must be greater than zero"
+    },
+    {
+      "code": 6013,
+      "name": "CommitmentAmountMustIncrease",
+      "msg": "Committed amount must be greater than the previously settled amount"
+    },
+    {
+      "code": 6014,
+      "name": "InvalidAuthoritySignature",
+      "msg": "Invalid authority signature"
+    },
+    {
+      "code": 6015,
+      "name": "SignatureAlreadyUsed",
+      "msg": "This signature or clearing round has already been used"
+    },
+    {
+      "code": 6016,
+      "name": "ParticipantNotFound",
+      "msg": "Participant not found"
+    },
+    {
+      "code": 6017,
+      "name": "AccountIdMismatch",
+      "msg": "Account participant_id does not match message participant_id"
+    },
+    {
+      "code": 6018,
+      "name": "InvalidCommitmentMessage",
+      "msg": "Invalid payment commitment message format"
+    },
+    {
+      "code": 6019,
+      "name": "InvalidClearingRoundMessage",
+      "msg": "Invalid clearing round message format"
+    },
+    {
+      "code": 6020,
+      "name": "NetFlowImbalance",
+      "msg": "Net flow sums do not balance"
+    },
+    {
+      "code": 6021,
+      "name": "NetPositionOverflow",
+      "msg": "Net position computation overflowed"
+    },
+    {
+      "code": 6022,
+      "name": "MathOverflow",
+      "msg": "Arithmetic overflow"
+    },
+    {
+      "code": 6023,
+      "name": "InvalidChainId",
+      "msg": "Chain ID is not supported by this deployment configuration"
+    },
+    {
+      "code": 6024,
+      "name": "InvalidMessageDomain",
+      "msg": "Message domain does not match this deployment"
+    },
+    {
+      "code": 6025,
+      "name": "InvalidSignature",
+      "msg": "Ed25519 signature verification failed"
+    },
+    {
+      "code": 6026,
+      "name": "CpiNotAllowed",
+      "msg": "CPI calls to settlement instructions are not allowed"
+    },
+    {
+      "code": 6027,
+      "name": "InvalidEd25519Data",
+      "msg": "Invalid Ed25519 instruction data"
+    },
+    {
+      "code": 6028,
+      "name": "ChannelNotInitialized",
+      "msg": "Channel must be initialized before use - call create_channel first"
+    },
+    {
+      "code": 6029,
+      "name": "ChannelAlreadyExists",
+      "msg": "Channel already exists for this payer-payee pair"
+    },
+    {
+      "code": 6030,
+      "name": "UnauthorizedSettler",
+      "msg": "Only the payee or authorized settler can submit this payment commitment"
+    },
+    {
+      "code": 6031,
+      "name": "InboundChannelConsentRequired",
+      "msg": "Payee consent is required to create this inbound channel"
+    },
+    {
+      "code": 6032,
+      "name": "InboundChannelsDisabled",
+      "msg": "This participant does not accept inbound channels"
+    },
+    {
+      "code": 6033,
+      "name": "SelfChannelNotAllowed",
+      "msg": "Self-channels are not allowed"
+    },
+    {
+      "code": 6034,
+      "name": "NoPendingAuthorityTransfer",
+      "msg": "No authority transfer is currently pending"
+    },
+    {
+      "code": 6035,
+      "name": "UnauthorizedPendingAuthority",
+      "msg": "Only the nominated pending authority can accept this transfer"
+    },
+    {
+      "code": 6036,
+      "name": "TooManyTokenBalances",
+      "msg": "Maximum token balances per participant exceeded"
+    },
+    {
+      "code": 6037,
+      "name": "TokenNotFound",
+      "msg": "Token ID not registered in token registry"
+    },
+    {
+      "code": 6038,
+      "name": "TokenAlreadyRegistered",
+      "msg": "Token mint already registered"
+    },
+    {
+      "code": 6039,
+      "name": "TokenIdAlreadyInUse",
+      "msg": "Token ID already in use"
+    },
+    {
+      "code": 6040,
+      "name": "UnauthorizedTokenRegistration",
+      "msg": "Unauthorized token registration"
+    },
+    {
+      "code": 6041,
+      "name": "InvalidTokenId",
+      "msg": "Token ID must be greater than zero"
+    },
+    {
+      "code": 6042,
+      "name": "InvalidTokenSymbol",
+      "msg": "Token symbol must be valid ASCII"
+    },
+    {
+      "code": 6043,
+      "name": "InvalidTokenDecimals",
+      "msg": "Token decimals exceed the protocol maximum"
+    },
+    {
+      "code": 6044,
+      "name": "TokenRegistryFull",
+      "msg": "Token registry account is full"
+    },
+    {
+      "code": 6045,
+      "name": "InvalidTokenMint",
+      "msg": "Token account mint doesn't match registered token"
+    },
+    {
+      "code": 6046,
+      "name": "InsufficientLockedBalance",
+      "msg": "Requested unlock amount exceeds the channel's locked balance"
+    },
+    {
+      "code": 6047,
+      "name": "NoChannelUnlockPending",
+      "msg": "No channel unlock is currently pending"
+    },
+    {
+      "code": 6048,
+      "name": "InvalidAuthorizedSigner",
+      "msg": "Authorized signer cannot be the zero address or the current signer"
+    },
+    {
+      "code": 6049,
+      "name": "NoAuthorizedSignerUpdatePending",
+      "msg": "No authorized signer update is currently pending"
+    }
+  ],
+  "types": [
+    {
+      "name": "ChannelAuthorizedSignerUpdateRequested",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "payer_id",
+            "type": "u32"
+          },
+          {
+            "name": "payee_id",
+            "type": "u32"
+          },
+          {
+            "name": "token_id",
+            "type": "u16"
+          },
+          {
+            "name": "current_authorized_signer",
+            "type": "pubkey"
+          },
+          {
+            "name": "pending_authorized_signer",
+            "type": "pubkey"
+          },
+          {
+            "name": "activate_at",
+            "type": "i64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ChannelAuthorizedSignerUpdated",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "payer_id",
+            "type": "u32"
+          },
+          {
+            "name": "payee_id",
+            "type": "u32"
+          },
+          {
+            "name": "token_id",
+            "type": "u16"
+          },
+          {
+            "name": "previous_authorized_signer",
+            "type": "pubkey"
+          },
+          {
+            "name": "new_authorized_signer",
+            "type": "pubkey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ChannelCreated",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "payer_id",
+            "type": "u32"
+          },
+          {
+            "name": "payee_id",
+            "type": "u32"
+          },
+          {
+            "name": "token_id",
+            "type": "u16"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ChannelFundsLocked",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "payer_id",
+            "type": "u32"
+          },
+          {
+            "name": "payee_id",
+            "type": "u32"
+          },
+          {
+            "name": "token_id",
+            "type": "u16"
+          },
+          {
+            "name": "amount",
+            "type": "u64"
+          },
+          {
+            "name": "total_locked",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ChannelFundsUnlocked",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "payer_id",
+            "type": "u32"
+          },
+          {
+            "name": "payee_id",
+            "type": "u32"
+          },
+          {
+            "name": "token_id",
+            "type": "u16"
+          },
+          {
+            "name": "released_amount",
+            "type": "u64"
+          },
+          {
+            "name": "remaining_locked",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ChannelState",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "token_id",
+            "docs": [
+              "Token ID for this channel (from token registry)"
+            ],
+            "type": "u16"
+          },
+          {
+            "name": "payer_id",
+            "docs": [
+              "Cached payer participant id for validation and events."
+            ],
+            "type": "u32"
+          },
+          {
+            "name": "payee_id",
+            "docs": [
+              "Cached payee participant id for validation and events."
+            ],
+            "type": "u32"
+          },
+          {
+            "name": "settled_cumulative",
+            "docs": [
+              "Highest cumulative committed amount already settled for this lane."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "locked_balance",
+            "docs": [
+              "Token amount locked as ring-fenced collateral (0 = no lock)"
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "authorized_signer",
+            "docs": [
+              "Signer authorized to advance this channel's cumulative commitment."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "pending_unlock_amount",
+            "docs": [
+              "Amount the payer most recently requested to unlock after the timelock."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "unlock_requested_at",
+            "docs": [
+              "Unix timestamp when the latest unlock request was created (0 = none pending)."
+            ],
+            "type": "i64"
+          },
+          {
+            "name": "pending_authorized_signer",
+            "docs": [
+              "Signer that will replace `authorized_signer` once the rotation timelock elapses."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "authorized_signer_update_requested_at",
+            "docs": [
+              "Unix timestamp when the latest signer-rotation request was created (0 = none pending)."
+            ],
+            "type": "i64"
+          },
+          {
+            "name": "bump",
+            "docs": [
+              "PDA bump"
+            ],
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ChannelUnlockRequested",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "payer_id",
+            "type": "u32"
+          },
+          {
+            "name": "payee_id",
+            "type": "u32"
+          },
+          {
+            "name": "token_id",
+            "type": "u16"
+          },
+          {
+            "name": "requested_amount",
+            "type": "u64"
+          },
+          {
+            "name": "unlock_at",
+            "type": "i64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ClearingRoundSettled",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "token_id",
+            "type": "u16"
+          },
+          {
+            "name": "participant_count",
+            "type": "u16"
+          },
+          {
+            "name": "channel_count",
+            "type": "u16"
+          },
+          {
+            "name": "total_gross",
+            "type": "u64"
+          },
+          {
+            "name": "total_net_adjusted",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "CommitmentBundleSettled",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "payee_id",
+            "type": "u32"
+          },
+          {
+            "name": "token_id",
+            "type": "u16"
+          },
+          {
+            "name": "channel_count",
+            "type": "u16"
+          },
+          {
+            "name": "total",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ConfigAuthorityTransferStarted",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "current_authority",
+            "type": "pubkey"
+          },
+          {
+            "name": "pending_authority",
+            "type": "pubkey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ConfigAuthorityTransferred",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "previous_authority",
+            "type": "pubkey"
+          },
+          {
+            "name": "new_authority",
+            "type": "pubkey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ConfigUpdated",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "authority",
+            "type": "pubkey"
+          },
+          {
+            "name": "fee_recipient",
+            "type": "pubkey"
+          },
+          {
+            "name": "fee_bps",
+            "type": "u16"
+          },
+          {
+            "name": "chain_id",
+            "type": "u16"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Deposited",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "participant_id",
+            "type": "u32"
+          },
+          {
+            "name": "token_id",
+            "type": "u16"
+          },
+          {
+            "name": "amount",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "GlobalConfig",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "authority",
+            "docs": [
+              "Active config authority - can update fee_recipient, fee_bps, etc.",
+              "Bootstrap starts with the program upgrade authority until any nominated authority accepts."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "fee_recipient",
+            "docs": [
+              "Wallet that receives registration-fee lamports and owns per-token fee accounts."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "fee_bps",
+            "docs": [
+              "Withdrawal fee in basis points (default 30 = 0.3%)"
+            ],
+            "type": "u16"
+          },
+          {
+            "name": "withdrawal_timelock_seconds",
+            "docs": [
+              "Seconds before a pending withdrawal becomes executable (default 604_800 = 7 days)"
+            ],
+            "type": "i64"
+          },
+          {
+            "name": "registration_fee_lamports",
+            "docs": [
+              "Flat SOL fee at initialize_participant (default 0)"
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "next_participant_id",
+            "docs": [
+              "Auto-incrementing participant ID counter"
+            ],
+            "type": "u32"
+          },
+          {
+            "name": "bump",
+            "docs": [
+              "PDA bump"
+            ],
+            "type": "u8"
+          },
+          {
+            "name": "chain_id",
+            "docs": [
+              "Protocol chain identifier used in signed message validation."
+            ],
+            "type": "u16"
+          },
+          {
+            "name": "message_domain",
+            "docs": [
+              "Immutable deployment-scoped domain used by signed settlement messages."
+            ],
+            "type": {
+              "array": [
+                "u8",
+                16
+              ]
+            }
+          },
+          {
+            "name": "pending_authority",
+            "docs": [
+              "Pending authority that must explicitly accept before a handoff completes."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "_reserved",
+            "docs": [
+              "Reserved for future config expansion."
+            ],
+            "type": {
+              "array": [
+                "u8",
+                14
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "InboundChannelPolicyUpdated",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "participant_id",
+            "type": "u32"
+          },
+          {
+            "name": "inbound_channel_policy",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "IndividualSettled",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "payer_id",
+            "type": "u32"
+          },
+          {
+            "name": "payee_id",
+            "type": "u32"
+          },
+          {
+            "name": "token_id",
+            "type": "u16"
+          },
+          {
+            "name": "amount",
+            "type": "u64"
+          },
+          {
+            "name": "committed_amount",
+            "type": "u64"
+          },
+          {
+            "name": "from_locked",
+            "type": "bool"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ParticipantAccount",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "owner",
+            "docs": [
+              "Participant's signing keypair (e.g. Privy smart wallet address)"
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "participant_id",
+            "docs": [
+              "Compact numeric ID used in all commitment/netting payloads and PDA seeds"
+            ],
+            "type": "u32"
+          },
+          {
+            "name": "token_balances",
+            "docs": [
+              "Token-specific balances (up to 16 different tokens per participant)"
+            ],
+            "type": {
+              "vec": {
+                "defined": {
+                  "name": "TokenBalance"
+                }
+              }
+            }
+          },
+          {
+            "name": "bump",
+            "docs": [
+              "PDA bump"
+            ],
+            "type": "u8"
+          },
+          {
+            "name": "inbound_channel_policy",
+            "docs": [
+              "How this participant handles inbound channels created by other parties."
+            ],
+            "type": "u8"
+          },
+          {
+            "name": "_reserved",
+            "docs": [
+              "Reserved for future participant-level configuration."
+            ],
+            "type": {
+              "array": [
+                "u8",
+                7
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "ParticipantInitialized",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "owner",
+            "type": "pubkey"
+          },
+          {
+            "name": "participant_id",
+            "type": "u32"
+          },
+          {
+            "name": "registration_fee_lamports",
+            "type": "u64"
+          },
+          {
+            "name": "inbound_channel_policy",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "RegistryAuthorityTransferStarted",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "current_authority",
+            "type": "pubkey"
+          },
+          {
+            "name": "pending_authority",
+            "type": "pubkey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "RegistryAuthorityTransferred",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "previous_authority",
+            "type": "pubkey"
+          },
+          {
+            "name": "new_authority",
+            "type": "pubkey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "TokenBalance",
+      "docs": [
+        "Token-specific balance entry for participants",
+        "Total: 58 bytes per token balance"
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "token_id",
+            "docs": [
+              "2-byte token identifier from registry"
+            ],
+            "type": "u16"
+          },
+          {
+            "name": "available_balance",
+            "docs": [
+              "Available balance in token's native decimals"
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "withdrawing_balance",
+            "docs": [
+              "Balance locked in pending withdrawal"
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "withdrawal_unlock_at",
+            "docs": [
+              "Unix timestamp when withdrawal unlockable (0 = none pending)"
+            ],
+            "type": "i64"
+          },
+          {
+            "name": "withdrawal_destination",
+            "docs": [
+              "Destination ATA for pending withdrawal"
+            ],
+            "type": "pubkey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "TokenEntry",
+      "docs": [
+        "Token registry entry",
+        "Total: 51 bytes per entry"
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "id",
+            "docs": [
+              "Unique 2-byte token identifier (0-65,535)"
+            ],
+            "type": "u16"
+          },
+          {
+            "name": "mint",
+            "docs": [
+              "SPL token mint address"
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "decimals",
+            "docs": [
+              "Token decimals for amount validation"
+            ],
+            "type": "u8"
+          },
+          {
+            "name": "symbol",
+            "docs": [
+              "ASCII symbol (e.g., \"TOK1\", \"TOK2\") - null-terminated"
+            ],
+            "type": {
+              "array": [
+                "u8",
+                8
+              ]
+            }
+          },
+          {
+            "name": "registered_at",
+            "docs": [
+              "Unix timestamp when token was registered (immutable)"
+            ],
+            "type": "i64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "TokenRegistry",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "authority",
+            "docs": [
+              "Registry authority - can register new tokens"
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "tokens",
+            "docs": [
+              "Array of registered token entries stored inside a fixed-size account."
+            ],
+            "type": {
+              "vec": {
+                "defined": {
+                  "name": "TokenEntry"
+                }
+              }
+            }
+          },
+          {
+            "name": "bump",
+            "docs": [
+              "PDA bump"
+            ],
+            "type": "u8"
+          },
+          {
+            "name": "pending_authority",
+            "docs": [
+              "Pending authority that must explicitly accept before a handoff completes."
+            ],
+            "type": "pubkey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "WithdrawalCancelled",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "participant_id",
+            "type": "u32"
+          },
+          {
+            "name": "token_id",
+            "type": "u16"
+          },
+          {
+            "name": "amount_returned",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "WithdrawalRequested",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "participant_id",
+            "type": "u32"
+          },
+          {
+            "name": "token_id",
+            "type": "u16"
+          },
+          {
+            "name": "amount",
+            "type": "u64"
+          },
+          {
+            "name": "destination",
+            "type": "pubkey"
+          },
+          {
+            "name": "unlock_at",
+            "type": "i64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Withdrawn",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "participant_id",
+            "type": "u32"
+          },
+          {
+            "name": "token_id",
+            "type": "u16"
+          },
+          {
+            "name": "net_amount",
+            "type": "u64"
+          },
+          {
+            "name": "fee_amount",
+            "type": "u64"
+          },
+          {
+            "name": "destination",
+            "type": "pubkey"
+          }
+        ]
+      }
+    }
+  ]
+}
