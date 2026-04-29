@@ -1,6 +1,6 @@
 {
   "name": "@agonx402/sdk",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "TypeScript SDK for the decentralized Agon Protocol on Solana",
   "type": "module",
   "license": "MIT",
