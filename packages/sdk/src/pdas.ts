@@ -1,5 +1,5 @@
 import { createHash } from "node:crypto";
-import { BN } from "@coral-xyz/anchor";
+import * as anchor from "@coral-xyz/anchor";
 import { PublicKey } from "@solana/web3.js";
 import {
   BPF_LOADER_UPGRADEABLE_PROGRAM_ID,
@@ -54,7 +54,7 @@ export function findVaultTokenAccountPda(
   return PublicKey.findProgramAddressSync(
     [
       Buffer.from(VAULT_TOKEN_ACCOUNT_SEED),
-      new BN(tokenId).toArrayLike(Buffer, "le", 2),
+      new anchor.BN(tokenId).toArrayLike(Buffer, "le", 2),
     ],
     programId,
   )[0];

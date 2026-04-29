@@ -10,6 +10,12 @@ export const AGON_CHAIN_IDS = {
   localnet: 3,
 } as const;
 
+export const OFFICIAL_DEVNET_USDC_MINT =
+  "4zMMC9srt5Ri5X14GAgXhaHii3GnPAEERYPJgZJDncDU";
+
+export const OFFICIAL_USDC_SYMBOL = "USDC";
+export const OFFICIAL_USDC_DECIMALS = 6;
+
 export const MESSAGE_DOMAIN_TAG = Buffer.from(
   "agon-message-domain-v1",
   "utf8",
