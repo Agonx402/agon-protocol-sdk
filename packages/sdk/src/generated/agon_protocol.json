@@ -1,5 +1,5 @@
 {
-  "address": "BwgpBosirapyVFeoHBg99kCyUANPajApFeTRSZNsJbRU",
+  "address": "77VR7b4BXx2KTSXA3Tbarw4w1MC5Qvv6QespTyCxWamM",
   "metadata": {
     "name": "agon_protocol",
     "version": "0.1.0",
@@ -1440,7 +1440,7 @@
         },
         {
           "name": "program",
-          "address": "BwgpBosirapyVFeoHBg99kCyUANPajApFeTRSZNsJbRU"
+          "address": "77VR7b4BXx2KTSXA3Tbarw4w1MC5Qvv6QespTyCxWamM"
         },
         {
           "name": "program_data"

@@ -5,7 +5,7 @@
  * IDL can be found at `target/idl/agon_protocol.json`.
  */
 export type AgonProtocol = {
-  "address": "BwgpBosirapyVFeoHBg99kCyUANPajApFeTRSZNsJbRU",
+  "address": "77VR7b4BXx2KTSXA3Tbarw4w1MC5Qvv6QespTyCxWamM",
   "metadata": {
     "name": "agonProtocol",
     "version": "0.1.0",
@@ -1446,7 +1446,7 @@ export type AgonProtocol = {
         },
         {
           "name": "program",
-          "address": "BwgpBosirapyVFeoHBg99kCyUANPajApFeTRSZNsJbRU"
+          "address": "77VR7b4BXx2KTSXA3Tbarw4w1MC5Qvv6QespTyCxWamM"
         },
         {
           "name": "programData"

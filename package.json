@@ -1,10 +1,6 @@
 {
   "name": "agon-protocol-sdk",
-<<<<<<< HEAD
-  "version": "0.2.0",
-=======
   "version": "0.3.0",
->>>>>>> aeddc57 (stablecoin yield)
   "private": true,
   "type": "module",
   "workspaces": [

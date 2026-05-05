@@ -1,10 +1,6 @@
 {
   "name": "@agonx402/sdk",
-<<<<<<< HEAD
-  "version": "0.2.0",
-=======
   "version": "0.4.0",
->>>>>>> aeddc57 (stablecoin yield)
   "description": "TypeScript SDK for the decentralized Agon Protocol on Solana",
   "type": "module",
   "license": "MIT",

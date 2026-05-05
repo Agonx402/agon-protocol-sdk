@@ -5,7 +5,7 @@
  * IDL can be found at `target/idl/mock_yield.json`.
  */
 export type MockYield = {
-  "address": "FX5RrnwvK9iRjZaczFbE6vokLfzVN9UwHw37smqBJjmB",
+  "address": "As3ry57AGfjXg7eg38QxHvnoA3Pqymkxd17rXJMeciCX",
   "metadata": {
     "name": "mockYield",
     "version": "0.1.0",
