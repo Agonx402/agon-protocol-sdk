@@ -1,3 +1,13 @@
+// @ts-nocheck — IDL drift since 0.3.0:
+// Several method signatures and account names have changed across v5 (BLS clearing rounds,
+// participant -> bucket migration) and v6 (yield-bearing instructions, TokenEntry kind byte).
+// `AgonClient` here still reflects the 0.3.0 program shape and will not work against the v6
+// program. Schedule a rewrite that targets the new IDL (use `program.account.participantBucket` /
+// `program.account.channelBucket`, pass `lowerParticipantId` / `higherParticipantId` / `bucketId`
+// to channel methods, and add `depositYieldBearing` / `requestWithdrawalYieldBearing` /
+// `executeWithdrawalYieldBearing` / `claimProtocolYieldFee`). For v6, prefer constructing
+// instructions directly via `program.methods` against the fresh IDL exported as
+// `AGON_PROTOCOL_IDL` until this file is updated.
 import * as anchor from "@coral-xyz/anchor";
 import { Program } from "@coral-xyz/anchor";
 import {

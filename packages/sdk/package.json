@@ -1,6 +1,10 @@
 {
   "name": "@agonx402/sdk",
+<<<<<<< HEAD
   "version": "0.2.0",
+=======
+  "version": "0.4.0",
+>>>>>>> aeddc57 (stablecoin yield)
   "description": "TypeScript SDK for the decentralized Agon Protocol on Solana",
   "type": "module",
   "license": "MIT",
@@ -49,11 +53,11 @@
   },
   "dependencies": {
     "@coral-xyz/anchor": "^0.32.1",
-    "@noble/curves": "^1.9.7",
-    "@solana/web3.js": "^1.95.3"
+    "@noble/curves": "^2.2.0",
+    "@solana/web3.js": "^1.98.4"
   },
   "devDependencies": {
-    "@types/node": "^24.9.1",
-    "typescript": "^5.7.3"
+    "@types/node": "^25.6.0",
+    "typescript": "^6.0.3"
   }
 }

@@ -1,5 +1,5 @@
 import { createHash } from "node:crypto";
-import { ed25519 } from "@noble/curves/ed25519";
+import { ed25519 } from "@noble/curves/ed25519.js";
 import {
   Ed25519Program,
   Keypair,

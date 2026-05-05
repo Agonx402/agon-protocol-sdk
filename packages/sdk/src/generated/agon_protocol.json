@@ -1,5 +1,5 @@
 {
-  "address": "Ba2puU8D2CLD1dYfRQ4YBXxirdyz3zVLLChvMf9AqJ1Y",
+  "address": "BwgpBosirapyVFeoHBg99kCyUANPajApFeTRSZNsJbRU",
   "metadata": {
     "name": "agon_protocol",
     "version": "0.1.0",
@@ -107,6 +107,71 @@
       "args": []
     },
     {
+      "name": "accrue_yield",
+      "docs": [
+        "Accrue yield for a yield-bearing token (permissionless). Pulls the latest cUSDC rate from",
+        "the lending program, advances `user_index_q64`, and credits `protocol_owed_underlying`."
+      ],
+      "discriminator": [
+        243,
+        28,
+        81,
+        65,
+        175,
+        178,
+        5,
+        112
+      ],
+      "accounts": [
+        {
+          "name": "yield_strategy",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  121,
+                  105,
+                  101,
+                  108,
+                  100,
+                  45,
+                  115,
+                  116,
+                  114,
+                  97,
+                  116,
+                  101,
+                  103,
+                  121
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "yield_strategy.token_id",
+                "account": "YieldStrategy"
+              }
+            ]
+          }
+        },
+        {
+          "name": "yield_program"
+        },
+        {
+          "name": "reserve",
+          "writable": true
+        },
+        {
+          "name": "share_mint"
+        },
+        {
+          "name": "share_vault"
+        }
+      ],
+      "args": []
+    },
+    {
       "name": "cancel_withdrawal",
       "docs": [
         "Cancel a pending withdrawal for a specific token."
@@ -123,45 +188,224 @@
       ],
       "accounts": [
         {
-          "name": "participant_account",
-          "writable": true,
-          "pda": {
-            "seeds": [
-              {
-                "kind": "const",
-                "value": [
-                  112,
-                  97,
-                  114,
-                  116,
-                  105,
-                  99,
-                  105,
-                  112,
-                  97,
-                  110,
-                  116
-                ]
-              },
-              {
-                "kind": "account",
-                "path": "owner"
-              }
-            ]
-          }
+          "name": "participant_bucket",
+          "writable": true
+        },
+        {
+          "name": "owner_index_bucket"
         },
         {
           "name": "owner",
-          "signer": true,
-          "relations": [
-            "participant_account"
-          ]
+          "signer": true
         }
       ],
       "args": [
         {
           "name": "token_id",
           "type": "u16"
+        }
+      ]
+    },
+    {
+      "name": "claim_protocol_yield_fee",
+      "docs": [
+        "Claim accumulated protocol yield (fee_recipient only). Redeems up to",
+        "`protocol_owed_underlying` USDC from the share_vault."
+      ],
+      "discriminator": [
+        120,
+        31,
+        84,
+        60,
+        246,
+        109,
+        136,
+        43
+      ],
+      "accounts": [
+        {
+          "name": "global_config",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  45,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "yield_strategy",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  121,
+                  105,
+                  101,
+                  108,
+                  100,
+                  45,
+                  115,
+                  116,
+                  114,
+                  97,
+                  116,
+                  101,
+                  103,
+                  121
+                ]
+              },
+              {
+                "kind": "arg",
+                "path": "token_id"
+              }
+            ]
+          }
+        },
+        {
+          "name": "yield_program"
+        },
+        {
+          "name": "reserve",
+          "writable": true
+        },
+        {
+          "name": "underlying_mint"
+        },
+        {
+          "name": "share_mint",
+          "writable": true
+        },
+        {
+          "name": "liquidity_vault",
+          "writable": true
+        },
+        {
+          "name": "share_vault",
+          "writable": true
+        },
+        {
+          "name": "fee_recipient_token_account",
+          "writable": true
+        },
+        {
+          "name": "fee_recipient",
+          "docs": [
+            "Must be the fee_recipient (verified inside the handler against `global_config.fee_recipient`)."
+          ],
+          "signer": true
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        }
+      ],
+      "args": [
+        {
+          "name": "token_id",
+          "type": "u16"
+        },
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "cooperative_unlock_channel_funds",
+      "docs": [
+        "Instantly release channel collateral when both channel counterparties consent."
+      ],
+      "discriminator": [
+        28,
+        18,
+        51,
+        184,
+        178,
+        44,
+        203,
+        11
+      ],
+      "accounts": [
+        {
+          "name": "token_registry",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  116,
+                  111,
+                  107,
+                  101,
+                  110,
+                  45,
+                  114,
+                  101,
+                  103,
+                  105,
+                  115,
+                  116,
+                  114,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "payer_bucket",
+          "writable": true
+        },
+        {
+          "name": "payee_bucket"
+        },
+        {
+          "name": "channel_bucket",
+          "writable": true
+        },
+        {
+          "name": "owner_index_bucket"
+        },
+        {
+          "name": "owner",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "payee_owner",
+          "signer": true
+        }
+      ],
+      "args": [
+        {
+          "name": "token_id",
+          "type": "u16"
+        },
+        {
+          "name": "payee_participant_id",
+          "type": "u32"
+        },
+        {
+          "name": "amount",
+          "type": "u64"
         }
       ]
     },
@@ -209,62 +453,16 @@
           }
         },
         {
-          "name": "payer_account",
-          "pda": {
-            "seeds": [
-              {
-                "kind": "const",
-                "value": [
-                  112,
-                  97,
-                  114,
-                  116,
-                  105,
-                  99,
-                  105,
-                  112,
-                  97,
-                  110,
-                  116
-                ]
-              },
-              {
-                "kind": "account",
-                "path": "owner"
-              }
-            ]
-          }
+          "name": "payer_bucket"
         },
         {
-          "name": "payee_account",
-          "pda": {
-            "seeds": [
-              {
-                "kind": "const",
-                "value": [
-                  112,
-                  97,
-                  114,
-                  116,
-                  105,
-                  99,
-                  105,
-                  112,
-                  97,
-                  110,
-                  116
-                ]
-              },
-              {
-                "kind": "account",
-                "path": "payee_account.owner",
-                "account": "ParticipantAccount"
-              }
-            ]
-          }
+          "name": "payee_bucket"
         },
         {
-          "name": "channel_state",
+          "name": "owner_index_bucket"
+        },
+        {
+          "name": "channel_bucket",
           "writable": true,
           "pda": {
             "seeds": [
@@ -279,23 +477,24 @@
                   101,
                   108,
                   45,
+                  98,
+                  117,
+                  99,
+                  107,
+                  101,
+                  116,
+                  45,
                   118,
                   50
                 ]
               },
               {
-                "kind": "account",
-                "path": "payer_account.participant_id",
-                "account": "ParticipantAccount"
-              },
-              {
-                "kind": "account",
-                "path": "payee_account.participant_id",
-                "account": "ParticipantAccount"
+                "kind": "arg",
+                "path": "token_id"
               },
               {
                 "kind": "arg",
-                "path": "token_id"
+                "path": "channel_bucket_id"
               }
             ]
           }
@@ -303,10 +502,7 @@
         {
           "name": "owner",
           "writable": true,
-          "signer": true,
-          "relations": [
-            "payer_account"
-          ]
+          "signer": true
         },
         {
           "name": "payee_owner",
@@ -322,6 +518,18 @@
         {
           "name": "token_id",
           "type": "u16"
+        },
+        {
+          "name": "lower_participant_id",
+          "type": "u32"
+        },
+        {
+          "name": "higher_participant_id",
+          "type": "u32"
+        },
+        {
+          "name": "channel_bucket_id",
+          "type": "u64"
         },
         {
           "name": "authorized_signer",
@@ -399,32 +607,11 @@
           }
         },
         {
-          "name": "participant_account",
-          "writable": true,
-          "pda": {
-            "seeds": [
-              {
-                "kind": "const",
-                "value": [
-                  112,
-                  97,
-                  114,
-                  116,
-                  105,
-                  99,
-                  105,
-                  112,
-                  97,
-                  110,
-                  116
-                ]
-              },
-              {
-                "kind": "account",
-                "path": "owner"
-              }
-            ]
-          }
+          "name": "participant_bucket",
+          "writable": true
+        },
+        {
+          "name": "owner_index_bucket"
         },
         {
           "name": "owner_token_account",
@@ -468,10 +655,7 @@
         },
         {
           "name": "owner",
-          "signer": true,
-          "relations": [
-            "participant_account"
-          ]
+          "signer": true
         },
         {
           "name": "token_program",
@@ -494,7 +678,7 @@
       "docs": [
         "Deposit a registered token for multiple participants in one tx.",
         "Funder's ATA to vault; credits each recipient.",
-        "amounts.len() must equal remaining_accounts (ParticipantAccounts). Max 16 recipients."
+        "amounts.len() must equal remaining participant bucket slots. Max 16 recipients."
       ],
       "discriminator": [
         193,
@@ -613,10 +797,169 @@
           "type": "u16"
         },
         {
+          "name": "participant_ids",
+          "type": {
+            "vec": "u32"
+          }
+        },
+        {
           "name": "amounts",
           "type": {
             "vec": "u64"
           }
+        }
+      ]
+    },
+    {
+      "name": "deposit_yield_bearing",
+      "docs": [
+        "Deposit USDC and receive a credit of agUSDC shares. The protocol CPIs into the lending",
+        "program to mint cUSDC into its share_vault."
+      ],
+      "discriminator": [
+        224,
+        28,
+        93,
+        65,
+        136,
+        222,
+        138,
+        6
+      ],
+      "accounts": [
+        {
+          "name": "token_registry",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  116,
+                  111,
+                  107,
+                  101,
+                  110,
+                  45,
+                  114,
+                  101,
+                  103,
+                  105,
+                  115,
+                  116,
+                  114,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "global_config",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  45,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "yield_strategy",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  121,
+                  105,
+                  101,
+                  108,
+                  100,
+                  45,
+                  115,
+                  116,
+                  114,
+                  97,
+                  116,
+                  101,
+                  103,
+                  121
+                ]
+              },
+              {
+                "kind": "arg",
+                "path": "token_id"
+              }
+            ]
+          }
+        },
+        {
+          "name": "participant_bucket",
+          "writable": true
+        },
+        {
+          "name": "owner_index_bucket"
+        },
+        {
+          "name": "yield_program"
+        },
+        {
+          "name": "reserve",
+          "writable": true
+        },
+        {
+          "name": "underlying_mint"
+        },
+        {
+          "name": "share_mint",
+          "writable": true
+        },
+        {
+          "name": "liquidity_vault",
+          "writable": true
+        },
+        {
+          "name": "share_vault",
+          "writable": true
+        },
+        {
+          "name": "depositor_underlying",
+          "writable": true
+        },
+        {
+          "name": "depositor",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        }
+      ],
+      "args": [
+        {
+          "name": "token_id",
+          "type": "u16"
+        },
+        {
+          "name": "amount",
+          "type": "u64"
         }
       ]
     },
@@ -662,111 +1005,29 @@
           }
         },
         {
-          "name": "payer_account",
-          "writable": true,
-          "pda": {
-            "seeds": [
-              {
-                "kind": "const",
-                "value": [
-                  112,
-                  97,
-                  114,
-                  116,
-                  105,
-                  99,
-                  105,
-                  112,
-                  97,
-                  110,
-                  116
-                ]
-              },
-              {
-                "kind": "account",
-                "path": "owner"
-              }
-            ]
-          }
+          "name": "payer_bucket",
+          "writable": true
         },
         {
-          "name": "payee_account",
-          "pda": {
-            "seeds": [
-              {
-                "kind": "const",
-                "value": [
-                  112,
-                  97,
-                  114,
-                  116,
-                  105,
-                  99,
-                  105,
-                  112,
-                  97,
-                  110,
-                  116
-                ]
-              },
-              {
-                "kind": "account",
-                "path": "payee_account.owner",
-                "account": "ParticipantAccount"
-              }
-            ]
-          }
+          "name": "channel_bucket",
+          "writable": true
         },
         {
-          "name": "channel_state",
-          "writable": true,
-          "pda": {
-            "seeds": [
-              {
-                "kind": "const",
-                "value": [
-                  99,
-                  104,
-                  97,
-                  110,
-                  110,
-                  101,
-                  108,
-                  45,
-                  118,
-                  50
-                ]
-              },
-              {
-                "kind": "account",
-                "path": "payer_account.participant_id",
-                "account": "ParticipantAccount"
-              },
-              {
-                "kind": "account",
-                "path": "payee_account.participant_id",
-                "account": "ParticipantAccount"
-              },
-              {
-                "kind": "account",
-                "path": "channel_state.token_id",
-                "account": "ChannelState"
-              }
-            ]
-          }
+          "name": "owner_index_bucket"
         },
         {
           "name": "owner",
-          "signer": true,
-          "relations": [
-            "payer_account"
-          ]
+          "signer": true
         }
       ],
       "args": [
         {
           "name": "token_id",
           "type": "u16"
+        },
+        {
+          "name": "payee_participant_id",
+          "type": "u32"
         }
       ]
     },
@@ -812,110 +1073,25 @@
           }
         },
         {
-          "name": "payer_account",
-          "pda": {
-            "seeds": [
-              {
-                "kind": "const",
-                "value": [
-                  112,
-                  97,
-                  114,
-                  116,
-                  105,
-                  99,
-                  105,
-                  112,
-                  97,
-                  110,
-                  116
-                ]
-              },
-              {
-                "kind": "account",
-                "path": "owner"
-              }
-            ]
-          }
+          "name": "channel_bucket",
+          "writable": true
         },
         {
-          "name": "payee_account",
-          "pda": {
-            "seeds": [
-              {
-                "kind": "const",
-                "value": [
-                  112,
-                  97,
-                  114,
-                  116,
-                  105,
-                  99,
-                  105,
-                  112,
-                  97,
-                  110,
-                  116
-                ]
-              },
-              {
-                "kind": "account",
-                "path": "payee_account.owner",
-                "account": "ParticipantAccount"
-              }
-            ]
-          }
-        },
-        {
-          "name": "channel_state",
-          "writable": true,
-          "pda": {
-            "seeds": [
-              {
-                "kind": "const",
-                "value": [
-                  99,
-                  104,
-                  97,
-                  110,
-                  110,
-                  101,
-                  108,
-                  45,
-                  118,
-                  50
-                ]
-              },
-              {
-                "kind": "account",
-                "path": "payer_account.participant_id",
-                "account": "ParticipantAccount"
-              },
-              {
-                "kind": "account",
-                "path": "payee_account.participant_id",
-                "account": "ParticipantAccount"
-              },
-              {
-                "kind": "account",
-                "path": "channel_state.token_id",
-                "account": "ChannelState"
-              }
-            ]
-          }
+          "name": "owner_index_bucket"
         },
         {
           "name": "owner",
-          "signer": true,
-          "relations": [
-            "payer_account"
-          ]
+          "signer": true
         }
       ],
       "args": [
         {
           "name": "token_id",
           "type": "u16"
+        },
+        {
+          "name": "payee_participant_id",
+          "type": "u32"
         }
       ]
     },
@@ -987,33 +1163,8 @@
           }
         },
         {
-          "name": "participant_account",
-          "writable": true,
-          "pda": {
-            "seeds": [
-              {
-                "kind": "const",
-                "value": [
-                  112,
-                  97,
-                  114,
-                  116,
-                  105,
-                  99,
-                  105,
-                  112,
-                  97,
-                  110,
-                  116
-                ]
-              },
-              {
-                "kind": "account",
-                "path": "participant_account.owner",
-                "account": "ParticipantAccount"
-              }
-            ]
-          }
+          "name": "participant_bucket",
+          "writable": true
         },
         {
           "name": "vault_token_account",
@@ -1074,6 +1225,159 @@
         {
           "name": "token_id",
           "type": "u16"
+        },
+        {
+          "name": "participant_id",
+          "type": "u32"
+        }
+      ]
+    },
+    {
+      "name": "execute_withdrawal_yield_bearing",
+      "docs": [
+        "Execute a previously requested withdrawal once its timelock expires. Redeems the",
+        "proportional cUSDC into USDC and pays user (net) and fee_recipient (fee)."
+      ],
+      "discriminator": [
+        97,
+        217,
+        165,
+        242,
+        147,
+        40,
+        132,
+        136
+      ],
+      "accounts": [
+        {
+          "name": "token_registry",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  116,
+                  111,
+                  107,
+                  101,
+                  110,
+                  45,
+                  114,
+                  101,
+                  103,
+                  105,
+                  115,
+                  116,
+                  114,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "global_config",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  45,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "yield_strategy",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  121,
+                  105,
+                  101,
+                  108,
+                  100,
+                  45,
+                  115,
+                  116,
+                  114,
+                  97,
+                  116,
+                  101,
+                  103,
+                  121
+                ]
+              },
+              {
+                "kind": "arg",
+                "path": "token_id"
+              }
+            ]
+          }
+        },
+        {
+          "name": "participant_bucket",
+          "writable": true
+        },
+        {
+          "name": "yield_program"
+        },
+        {
+          "name": "reserve",
+          "writable": true
+        },
+        {
+          "name": "underlying_mint"
+        },
+        {
+          "name": "share_mint",
+          "writable": true
+        },
+        {
+          "name": "liquidity_vault",
+          "writable": true
+        },
+        {
+          "name": "share_vault",
+          "writable": true
+        },
+        {
+          "name": "withdrawal_destination",
+          "writable": true
+        },
+        {
+          "name": "fee_recipient_token_account",
+          "writable": true
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        }
+      ],
+      "args": [
+        {
+          "name": "token_id",
+          "type": "u16"
+        },
+        {
+          "name": "participant_id",
+          "type": "u32"
         }
       ]
     },
@@ -1081,7 +1385,7 @@
       "name": "initialize",
       "docs": [
         "Initialize the protocol: creates GlobalConfig PDA.",
-        "`chain_id` selects the immutable settlement domain and withdrawal timelock."
+        "`chain_id` selects the immutable settlement domain and default timing policy."
       ],
       "discriminator": [
         175,
@@ -1136,7 +1440,7 @@
         },
         {
           "name": "program",
-          "address": "Ba2puU8D2CLD1dYfRQ4YBXxirdyz3zVLLChvMf9AqJ1Y"
+          "address": "BwgpBosirapyVFeoHBg99kCyUANPajApFeTRSZNsJbRU"
         },
         {
           "name": "program_data"
@@ -1210,7 +1514,7 @@
           }
         },
         {
-          "name": "participant_account",
+          "name": "participant_bucket",
           "writable": true,
           "pda": {
             "seeds": [
@@ -1227,12 +1531,60 @@
                   112,
                   97,
                   110,
-                  116
+                  116,
+                  45,
+                  98,
+                  117,
+                  99,
+                  107,
+                  101,
+                  116,
+                  45,
+                  118,
+                  50
                 ]
               },
               {
-                "kind": "account",
-                "path": "owner"
+                "kind": "arg",
+                "path": "participant_bucket_id"
+              }
+            ]
+          }
+        },
+        {
+          "name": "owner_index_bucket",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  111,
+                  119,
+                  110,
+                  101,
+                  114,
+                  45,
+                  105,
+                  110,
+                  100,
+                  101,
+                  120,
+                  45,
+                  98,
+                  117,
+                  99,
+                  107,
+                  101,
+                  116,
+                  45,
+                  118,
+                  50
+                ]
+              },
+              {
+                "kind": "arg",
+                "path": "owner_index_bucket_id"
               }
             ]
           }
@@ -1251,7 +1603,16 @@
           "address": "11111111111111111111111111111111"
         }
       ],
-      "args": []
+      "args": [
+        {
+          "name": "participant_bucket_id",
+          "type": "u32"
+        },
+        {
+          "name": "owner_index_bucket_id",
+          "type": "u32"
+        }
+      ]
     },
     {
       "name": "initialize_token_registry",
@@ -1376,81 +1737,20 @@
           }
         },
         {
-          "name": "payer_account",
-          "writable": true,
-          "pda": {
-            "seeds": [
-              {
-                "kind": "const",
-                "value": [
-                  112,
-                  97,
-                  114,
-                  116,
-                  105,
-                  99,
-                  105,
-                  112,
-                  97,
-                  110,
-                  116
-                ]
-              },
-              {
-                "kind": "account",
-                "path": "owner"
-              }
-            ]
-          }
+          "name": "payer_bucket",
+          "writable": true
         },
         {
-          "name": "payee_account"
+          "name": "channel_bucket",
+          "writable": true
         },
         {
-          "name": "channel_state",
-          "writable": true,
-          "pda": {
-            "seeds": [
-              {
-                "kind": "const",
-                "value": [
-                  99,
-                  104,
-                  97,
-                  110,
-                  110,
-                  101,
-                  108,
-                  45,
-                  118,
-                  50
-                ]
-              },
-              {
-                "kind": "account",
-                "path": "payer_account.participant_id",
-                "account": "ParticipantAccount"
-              },
-              {
-                "kind": "account",
-                "path": "payee_account.participant_id",
-                "account": "ParticipantAccount"
-              },
-              {
-                "kind": "account",
-                "path": "channel_state.token_id",
-                "account": "ChannelState"
-              }
-            ]
-          }
+          "name": "owner_index_bucket"
         },
         {
           "name": "owner",
           "writable": true,
-          "signer": true,
-          "relations": [
-            "payer_account"
-          ]
+          "signer": true
         },
         {
           "name": "system_program",
@@ -1463,8 +1763,87 @@
           "type": "u16"
         },
         {
+          "name": "payee_participant_id",
+          "type": "u32"
+        },
+        {
           "name": "amount",
           "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "register_participant_bls_key",
+      "docs": [
+        "Register a BLS key used only for cooperative clearing rounds."
+      ],
+      "discriminator": [
+        73,
+        33,
+        200,
+        201,
+        238,
+        231,
+        71,
+        145
+      ],
+      "accounts": [
+        {
+          "name": "global_config",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  45,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "participant_bucket",
+          "writable": true
+        },
+        {
+          "name": "owner_index_bucket"
+        },
+        {
+          "name": "owner",
+          "writable": true,
+          "signer": true
+        }
+      ],
+      "args": [
+        {
+          "name": "bls_pubkey_compressed",
+          "type": {
+            "array": [
+              "u8",
+              96
+            ]
+          }
+        },
+        {
+          "name": "pop_signature_compressed",
+          "type": {
+            "array": [
+              "u8",
+              48
+            ]
+          }
         }
       ]
     },
@@ -1619,6 +1998,216 @@
       ]
     },
     {
+      "name": "register_yield_bearing_token",
+      "docs": [
+        "Register a yield-bearing wrapper token (e.g. agUSDC). Creates a TokenEntry with",
+        "`kind = YieldBearing`, allocates a `YieldStrategy` PDA, and creates the protocol-owned",
+        "`share_vault` (a cUSDC ATA whose authority is the GlobalConfig PDA). Authority-only."
+      ],
+      "discriminator": [
+        210,
+        113,
+        58,
+        208,
+        254,
+        12,
+        56,
+        53
+      ],
+      "accounts": [
+        {
+          "name": "token_registry",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  116,
+                  111,
+                  107,
+                  101,
+                  110,
+                  45,
+                  114,
+                  101,
+                  103,
+                  105,
+                  115,
+                  116,
+                  114,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "global_config",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  45,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "yield_strategy",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  121,
+                  105,
+                  101,
+                  108,
+                  100,
+                  45,
+                  115,
+                  116,
+                  114,
+                  97,
+                  116,
+                  101,
+                  103,
+                  121
+                ]
+              },
+              {
+                "kind": "arg",
+                "path": "token_id"
+              }
+            ]
+          }
+        },
+        {
+          "name": "underlying_mint",
+          "docs": [
+            "Underlying SPL mint (USDC)."
+          ]
+        },
+        {
+          "name": "yield_program",
+          "docs": [
+            "Lending program (mock-yield in dev / Save-Kamino in prod). Validated against `Reserve`."
+          ]
+        },
+        {
+          "name": "reserve",
+          "docs": [
+            "Existing `Reserve` PDA in the yield program. Must be initialised already."
+          ]
+        },
+        {
+          "name": "share_mint",
+          "docs": [
+            "Lending share mint (cUSDC). Mint authority = `reserve`."
+          ]
+        },
+        {
+          "name": "liquidity_vault",
+          "docs": [
+            "Reserve's USDC vault — kept for symmetry/CPI ergonomics."
+          ]
+        },
+        {
+          "name": "share_vault",
+          "docs": [
+            "Protocol-owned cUSDC ATA under GlobalConfig PDA. PDA-seeded so it is deterministic."
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  121,
+                  105,
+                  101,
+                  108,
+                  100,
+                  45,
+                  115,
+                  104,
+                  97,
+                  114,
+                  101,
+                  45,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "arg",
+                "path": "token_id"
+              }
+            ]
+          }
+        },
+        {
+          "name": "authority",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        },
+        {
+          "name": "associated_token_program",
+          "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "rent",
+          "address": "SysvarRent111111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "token_id",
+          "type": "u16"
+        },
+        {
+          "name": "symbol_bytes",
+          "type": {
+            "array": [
+              "u8",
+              8
+            ]
+          }
+        },
+        {
+          "name": "protocol_yield_share_bps",
+          "type": "u16"
+        }
+      ]
+    },
+    {
       "name": "request_unlock_channel_funds",
       "docs": [
         "Request a timelocked partial unlock of channel collateral."
@@ -1660,110 +2249,25 @@
           }
         },
         {
-          "name": "payer_account",
-          "pda": {
-            "seeds": [
-              {
-                "kind": "const",
-                "value": [
-                  112,
-                  97,
-                  114,
-                  116,
-                  105,
-                  99,
-                  105,
-                  112,
-                  97,
-                  110,
-                  116
-                ]
-              },
-              {
-                "kind": "account",
-                "path": "owner"
-              }
-            ]
-          }
+          "name": "channel_bucket",
+          "writable": true
         },
         {
-          "name": "payee_account",
-          "pda": {
-            "seeds": [
-              {
-                "kind": "const",
-                "value": [
-                  112,
-                  97,
-                  114,
-                  116,
-                  105,
-                  99,
-                  105,
-                  112,
-                  97,
-                  110,
-                  116
-                ]
-              },
-              {
-                "kind": "account",
-                "path": "payee_account.owner",
-                "account": "ParticipantAccount"
-              }
-            ]
-          }
-        },
-        {
-          "name": "channel_state",
-          "writable": true,
-          "pda": {
-            "seeds": [
-              {
-                "kind": "const",
-                "value": [
-                  99,
-                  104,
-                  97,
-                  110,
-                  110,
-                  101,
-                  108,
-                  45,
-                  118,
-                  50
-                ]
-              },
-              {
-                "kind": "account",
-                "path": "payer_account.participant_id",
-                "account": "ParticipantAccount"
-              },
-              {
-                "kind": "account",
-                "path": "payee_account.participant_id",
-                "account": "ParticipantAccount"
-              },
-              {
-                "kind": "account",
-                "path": "channel_state.token_id",
-                "account": "ChannelState"
-              }
-            ]
-          }
+          "name": "owner_index_bucket"
         },
         {
           "name": "owner",
-          "signer": true,
-          "relations": [
-            "payer_account"
-          ]
+          "signer": true
         }
       ],
       "args": [
         {
           "name": "token_id",
           "type": "u16"
+        },
+        {
+          "name": "payee_participant_id",
+          "type": "u32"
         },
         {
           "name": "amount",
@@ -1813,110 +2317,25 @@
           }
         },
         {
-          "name": "payer_account",
-          "pda": {
-            "seeds": [
-              {
-                "kind": "const",
-                "value": [
-                  112,
-                  97,
-                  114,
-                  116,
-                  105,
-                  99,
-                  105,
-                  112,
-                  97,
-                  110,
-                  116
-                ]
-              },
-              {
-                "kind": "account",
-                "path": "owner"
-              }
-            ]
-          }
+          "name": "channel_bucket",
+          "writable": true
         },
         {
-          "name": "payee_account",
-          "pda": {
-            "seeds": [
-              {
-                "kind": "const",
-                "value": [
-                  112,
-                  97,
-                  114,
-                  116,
-                  105,
-                  99,
-                  105,
-                  112,
-                  97,
-                  110,
-                  116
-                ]
-              },
-              {
-                "kind": "account",
-                "path": "payee_account.owner",
-                "account": "ParticipantAccount"
-              }
-            ]
-          }
-        },
-        {
-          "name": "channel_state",
-          "writable": true,
-          "pda": {
-            "seeds": [
-              {
-                "kind": "const",
-                "value": [
-                  99,
-                  104,
-                  97,
-                  110,
-                  110,
-                  101,
-                  108,
-                  45,
-                  118,
-                  50
-                ]
-              },
-              {
-                "kind": "account",
-                "path": "payer_account.participant_id",
-                "account": "ParticipantAccount"
-              },
-              {
-                "kind": "account",
-                "path": "payee_account.participant_id",
-                "account": "ParticipantAccount"
-              },
-              {
-                "kind": "account",
-                "path": "channel_state.token_id",
-                "account": "ChannelState"
-              }
-            ]
-          }
+          "name": "owner_index_bucket"
         },
         {
           "name": "owner",
-          "signer": true,
-          "relations": [
-            "payer_account"
-          ]
+          "signer": true
         }
       ],
       "args": [
         {
           "name": "token_id",
           "type": "u16"
+        },
+        {
+          "name": "payee_participant_id",
+          "type": "u32"
         },
         {
           "name": "new_signer",
@@ -1992,32 +2411,11 @@
           }
         },
         {
-          "name": "participant_account",
-          "writable": true,
-          "pda": {
-            "seeds": [
-              {
-                "kind": "const",
-                "value": [
-                  112,
-                  97,
-                  114,
-                  116,
-                  105,
-                  99,
-                  105,
-                  112,
-                  97,
-                  110,
-                  116
-                ]
-              },
-              {
-                "kind": "account",
-                "path": "owner"
-              }
-            ]
-          }
+          "name": "participant_bucket",
+          "writable": true
+        },
+        {
+          "name": "owner_index_bucket"
         },
         {
           "name": "withdrawal_destination",
@@ -2027,10 +2425,7 @@
         },
         {
           "name": "owner",
-          "signer": true,
-          "relations": [
-            "participant_account"
-          ]
+          "signer": true
         }
       ],
       "args": [
@@ -2049,9 +2444,137 @@
       ]
     },
     {
+      "name": "request_withdrawal_yield_bearing",
+      "docs": [
+        "Request a timelocked withdrawal of `shares` agUSDC, redeemable to `destination` (USDC ATA)."
+      ],
+      "discriminator": [
+        163,
+        217,
+        181,
+        40,
+        252,
+        238,
+        234,
+        225
+      ],
+      "accounts": [
+        {
+          "name": "token_registry",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  116,
+                  111,
+                  107,
+                  101,
+                  110,
+                  45,
+                  114,
+                  101,
+                  103,
+                  105,
+                  115,
+                  116,
+                  114,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "global_config",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  45,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "yield_strategy",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  121,
+                  105,
+                  101,
+                  108,
+                  100,
+                  45,
+                  115,
+                  116,
+                  114,
+                  97,
+                  116,
+                  101,
+                  103,
+                  121
+                ]
+              },
+              {
+                "kind": "arg",
+                "path": "token_id"
+              }
+            ]
+          }
+        },
+        {
+          "name": "participant_bucket",
+          "writable": true
+        },
+        {
+          "name": "owner_index_bucket"
+        },
+        {
+          "name": "withdrawal_destination"
+        },
+        {
+          "name": "owner",
+          "signer": true
+        }
+      ],
+      "args": [
+        {
+          "name": "token_id",
+          "type": "u16"
+        },
+        {
+          "name": "shares",
+          "type": "u64"
+        },
+        {
+          "name": "destination",
+          "type": "pubkey"
+        }
+      ]
+    },
+    {
       "name": "settle_clearing_round",
       "docs": [
-        "Cooperative clearing round: advances many channels and applies only net participant balance changes."
+        "BLS-authenticated cooperative clearing round: advances many logical channels and applies",
+        "only net participant balance changes through bucket accounts."
       ],
       "discriminator": [
         172,
@@ -2125,7 +2648,21 @@
           "address": "Sysvar1nstructions1111111111111111111111111"
         }
       ],
-      "args": []
+      "args": [
+        {
+          "name": "message",
+          "type": "bytes"
+        },
+        {
+          "name": "aggregate_signature_compressed",
+          "type": {
+            "array": [
+              "u8",
+              48
+            ]
+          }
+        }
+      ]
     },
     {
       "name": "settle_commitment_bundle",
@@ -2193,10 +2730,6 @@
               }
             ]
           }
-        },
-        {
-          "name": "payee_account",
-          "writable": true
         },
         {
           "name": "submitter",
@@ -2283,52 +2816,6 @@
           }
         },
         {
-          "name": "payer_account",
-          "writable": true
-        },
-        {
-          "name": "payee_account",
-          "writable": true
-        },
-        {
-          "name": "channel_state",
-          "writable": true,
-          "pda": {
-            "seeds": [
-              {
-                "kind": "const",
-                "value": [
-                  99,
-                  104,
-                  97,
-                  110,
-                  110,
-                  101,
-                  108,
-                  45,
-                  118,
-                  50
-                ]
-              },
-              {
-                "kind": "account",
-                "path": "payer_account.participant_id",
-                "account": "ParticipantAccount"
-              },
-              {
-                "kind": "account",
-                "path": "payee_account.participant_id",
-                "account": "ParticipantAccount"
-              },
-              {
-                "kind": "account",
-                "path": "channel_state.token_id",
-                "account": "ChannelState"
-              }
-            ]
-          }
-        },
-        {
           "name": "submitter",
           "writable": true,
           "signer": true
@@ -2344,7 +2831,7 @@
       "name": "update_config",
       "docs": [
         "Update protocol configuration (authority only).",
-        "Settlement chain_id and withdrawal timelock are immutable and cannot be changed."
+        "Settlement chain_id and default timing policies are immutable and cannot be changed."
       ],
       "discriminator": [
         29,
@@ -2438,39 +2925,15 @@
       ],
       "accounts": [
         {
-          "name": "participant_account",
-          "writable": true,
-          "pda": {
-            "seeds": [
-              {
-                "kind": "const",
-                "value": [
-                  112,
-                  97,
-                  114,
-                  116,
-                  105,
-                  99,
-                  105,
-                  112,
-                  97,
-                  110,
-                  116
-                ]
-              },
-              {
-                "kind": "account",
-                "path": "owner"
-              }
-            ]
-          }
+          "name": "participant_bucket",
+          "writable": true
+        },
+        {
+          "name": "owner_index_bucket"
         },
         {
           "name": "owner",
-          "signer": true,
-          "relations": [
-            "participant_account"
-          ]
+          "signer": true
         }
       ],
       "args": [
@@ -2541,19 +3004,6 @@
   ],
   "accounts": [
     {
-      "name": "ChannelState",
-      "discriminator": [
-        74,
-        132,
-        141,
-        196,
-        64,
-        52,
-        83,
-        136
-      ]
-    },
-    {
       "name": "GlobalConfig",
       "discriminator": [
         149,
@@ -2567,16 +3017,29 @@
       ]
     },
     {
-      "name": "ParticipantAccount",
+      "name": "OwnerIndexBucket",
       "discriminator": [
-        239,
-        31,
-        144,
-        66,
-        245,
-        178,
-        84,
-        109
+        185,
+        229,
+        16,
+        160,
+        17,
+        106,
+        145,
+        192
+      ]
+    },
+    {
+      "name": "Reserve",
+      "discriminator": [
+        43,
+        242,
+        204,
+        202,
+        26,
+        247,
+        59,
+        127
       ]
     },
     {
@@ -2590,6 +3053,19 @@
         200,
         145,
         120
+      ]
+    },
+    {
+      "name": "YieldStrategy",
+      "discriminator": [
+        153,
+        203,
+        41,
+        77,
+        234,
+        105,
+        146,
+        235
       ]
     }
   ],
@@ -2777,6 +3253,19 @@
       ]
     },
     {
+      "name": "ParticipantBlsKeyRegistered",
+      "discriminator": [
+        215,
+        146,
+        255,
+        155,
+        160,
+        112,
+        89,
+        102
+      ]
+    },
+    {
       "name": "ParticipantInitialized",
       "discriminator": [
         177,
@@ -2787,6 +3276,19 @@
         96,
         231,
         179
+      ]
+    },
+    {
+      "name": "ProtocolYieldClaimed",
+      "discriminator": [
+        232,
+        119,
+        241,
+        63,
+        52,
+        240,
+        156,
+        100
       ]
     },
     {
@@ -2853,6 +3355,58 @@
         219,
         13
       ]
+    },
+    {
+      "name": "YieldAccrued",
+      "discriminator": [
+        195,
+        121,
+        41,
+        184,
+        183,
+        9,
+        52,
+        221
+      ]
+    },
+    {
+      "name": "YieldBearingTokenRegistered",
+      "discriminator": [
+        33,
+        190,
+        209,
+        168,
+        77,
+        193,
+        96,
+        12
+      ]
+    },
+    {
+      "name": "YieldDeposited",
+      "discriminator": [
+        240,
+        44,
+        237,
+        73,
+        80,
+        47,
+        196,
+        86
+      ]
+    },
+    {
+      "name": "YieldWithdrawn",
+      "discriminator": [
+        175,
+        101,
+        144,
+        232,
+        244,
+        176,
+        99,
+        108
+      ]
     }
   ],
   "errors": [
@@ -2874,7 +3428,7 @@
     {
       "code": 6003,
       "name": "WithdrawalLocked",
-      "msg": "Withdrawal timelock has not yet expired"
+      "msg": "Unlock timelock has not yet expired"
     },
     {
       "code": 6004,
@@ -2988,123 +3542,228 @@
     },
     {
       "code": 6026,
+      "name": "InvalidBlsPublicKey",
+      "msg": "Invalid BLS public key"
+    },
+    {
+      "code": 6027,
+      "name": "InvalidBlsSignature",
+      "msg": "Invalid BLS aggregate signature"
+    },
+    {
+      "code": 6028,
+      "name": "InvalidBlsProofOfPossession",
+      "msg": "Invalid BLS proof of possession"
+    },
+    {
+      "code": 6029,
+      "name": "ParticipantBlsKeyNotFound",
+      "msg": "Participant inline BLS key is not registered"
+    },
+    {
+      "code": 6030,
+      "name": "ParticipantBlsKeyAlreadyRegistered",
+      "msg": "Participant already has a registered BLS key"
+    },
+    {
+      "code": 6031,
+      "name": "AccountBlsKeyMismatch",
+      "msg": "BLS key registration does not match the participant"
+    },
+    {
+      "code": 6032,
+      "name": "BlsSyscallFailed",
+      "msg": "BLS syscall failed or is unavailable on this cluster"
+    },
+    {
+      "code": 6033,
       "name": "CpiNotAllowed",
       "msg": "CPI calls to settlement instructions are not allowed"
     },
     {
-      "code": 6027,
+      "code": 6034,
       "name": "InvalidEd25519Data",
       "msg": "Invalid Ed25519 instruction data"
     },
     {
-      "code": 6028,
+      "code": 6035,
       "name": "ChannelNotInitialized",
       "msg": "Channel must be initialized before use - call create_channel first"
     },
     {
-      "code": 6029,
+      "code": 6036,
       "name": "ChannelAlreadyExists",
       "msg": "Channel already exists for this payer-payee pair"
     },
     {
-      "code": 6030,
+      "code": 6037,
       "name": "UnauthorizedSettler",
       "msg": "Only the payee or authorized settler can submit this payment commitment"
     },
     {
-      "code": 6031,
+      "code": 6038,
       "name": "InboundChannelConsentRequired",
       "msg": "Payee consent is required to create this inbound channel"
     },
     {
-      "code": 6032,
+      "code": 6039,
+      "name": "CounterpartyConsentRequired",
+      "msg": "Counterparty consent is required for cooperative channel unlock"
+    },
+    {
+      "code": 6040,
       "name": "InboundChannelsDisabled",
       "msg": "This participant does not accept inbound channels"
     },
     {
-      "code": 6033,
+      "code": 6041,
       "name": "SelfChannelNotAllowed",
       "msg": "Self-channels are not allowed"
     },
     {
-      "code": 6034,
+      "code": 6042,
       "name": "NoPendingAuthorityTransfer",
       "msg": "No authority transfer is currently pending"
     },
     {
-      "code": 6035,
+      "code": 6043,
       "name": "UnauthorizedPendingAuthority",
       "msg": "Only the nominated pending authority can accept this transfer"
     },
     {
-      "code": 6036,
+      "code": 6044,
       "name": "TooManyTokenBalances",
       "msg": "Maximum token balances per participant exceeded"
     },
     {
-      "code": 6037,
+      "code": 6045,
       "name": "TokenNotFound",
       "msg": "Token ID not registered in token registry"
     },
     {
-      "code": 6038,
+      "code": 6046,
       "name": "TokenAlreadyRegistered",
       "msg": "Token mint already registered"
     },
     {
-      "code": 6039,
+      "code": 6047,
       "name": "TokenIdAlreadyInUse",
       "msg": "Token ID already in use"
     },
     {
-      "code": 6040,
+      "code": 6048,
       "name": "UnauthorizedTokenRegistration",
       "msg": "Unauthorized token registration"
     },
     {
-      "code": 6041,
+      "code": 6049,
       "name": "InvalidTokenId",
       "msg": "Token ID must be greater than zero"
     },
     {
-      "code": 6042,
+      "code": 6050,
       "name": "InvalidTokenSymbol",
       "msg": "Token symbol must be valid ASCII"
     },
     {
-      "code": 6043,
+      "code": 6051,
       "name": "InvalidTokenDecimals",
       "msg": "Token decimals exceed the protocol maximum"
     },
     {
-      "code": 6044,
+      "code": 6052,
       "name": "TokenRegistryFull",
       "msg": "Token registry account is full"
     },
     {
-      "code": 6045,
+      "code": 6053,
       "name": "InvalidTokenMint",
       "msg": "Token account mint doesn't match registered token"
     },
     {
-      "code": 6046,
+      "code": 6054,
       "name": "InsufficientLockedBalance",
       "msg": "Requested unlock amount exceeds the channel's locked balance"
     },
     {
-      "code": 6047,
+      "code": 6055,
       "name": "NoChannelUnlockPending",
       "msg": "No channel unlock is currently pending"
     },
     {
-      "code": 6048,
+      "code": 6056,
       "name": "InvalidAuthorizedSigner",
       "msg": "Authorized signer cannot be the zero address or the current signer"
     },
     {
-      "code": 6049,
+      "code": 6057,
       "name": "NoAuthorizedSignerUpdatePending",
       "msg": "No authorized signer update is currently pending"
+    },
+    {
+      "code": 6058,
+      "name": "BucketAccountMismatch",
+      "msg": "Bucket account does not match the expected bucket id or PDA"
+    },
+    {
+      "code": 6059,
+      "name": "BucketSlotMismatch",
+      "msg": "Bucket slot does not match the expected logical row"
+    },
+    {
+      "code": 6060,
+      "name": "BucketSlotAlreadyInitialized",
+      "msg": "Bucket slot is already initialized"
+    },
+    {
+      "code": 6061,
+      "name": "BucketFull",
+      "msg": "Bucket has no remaining free slots"
+    },
+    {
+      "code": 6062,
+      "name": "OwnerAlreadyRegistered",
+      "msg": "Owner is already registered"
+    },
+    {
+      "code": 6063,
+      "name": "TokenIsYieldBearing",
+      "msg": "Token id is yield-bearing; use the yield-bearing instruction variant"
+    },
+    {
+      "code": 6064,
+      "name": "TokenIsNotYieldBearing",
+      "msg": "Token id is plain; use the plain deposit/withdrawal instruction"
+    },
+    {
+      "code": 6065,
+      "name": "InvalidYieldStrategy",
+      "msg": "YieldStrategy account does not match the registered token configuration"
+    },
+    {
+      "code": 6066,
+      "name": "InsufficientProtocolYield",
+      "msg": "Requested protocol yield claim exceeds accrued protocol yield"
+    },
+    {
+      "code": 6067,
+      "name": "YieldUnderlyingMismatch",
+      "msg": "Yield-bearing underlying mint does not match the lending reserve"
+    },
+    {
+      "code": 6068,
+      "name": "SolvencyInvariantBroken",
+      "msg": "Solvency invariant violated: share_vault USDC value < user_owed + protocol_owed"
+    },
+    {
+      "code": 6069,
+      "name": "InvalidYieldProgram",
+      "msg": "Yield program account does not match strategy.yield_program"
+    },
+    {
+      "code": 6070,
+      "name": "InvalidProtocolYieldShareBps",
+      "msg": "Protocol yield share bps exceeds the maximum allowed value"
     }
   ],
   "types": [
@@ -3240,91 +3899,6 @@
           {
             "name": "remaining_locked",
             "type": "u64"
-          }
-        ]
-      }
-    },
-    {
-      "name": "ChannelState",
-      "type": {
-        "kind": "struct",
-        "fields": [
-          {
-            "name": "token_id",
-            "docs": [
-              "Token ID for this channel (from token registry)"
-            ],
-            "type": "u16"
-          },
-          {
-            "name": "payer_id",
-            "docs": [
-              "Cached payer participant id for validation and events."
-            ],
-            "type": "u32"
-          },
-          {
-            "name": "payee_id",
-            "docs": [
-              "Cached payee participant id for validation and events."
-            ],
-            "type": "u32"
-          },
-          {
-            "name": "settled_cumulative",
-            "docs": [
-              "Highest cumulative committed amount already settled for this lane."
-            ],
-            "type": "u64"
-          },
-          {
-            "name": "locked_balance",
-            "docs": [
-              "Token amount locked as ring-fenced collateral (0 = no lock)"
-            ],
-            "type": "u64"
-          },
-          {
-            "name": "authorized_signer",
-            "docs": [
-              "Signer authorized to advance this channel's cumulative commitment."
-            ],
-            "type": "pubkey"
-          },
-          {
-            "name": "pending_unlock_amount",
-            "docs": [
-              "Amount the payer most recently requested to unlock after the timelock."
-            ],
-            "type": "u64"
-          },
-          {
-            "name": "unlock_requested_at",
-            "docs": [
-              "Unix timestamp when the latest unlock request was created (0 = none pending)."
-            ],
-            "type": "i64"
-          },
-          {
-            "name": "pending_authorized_signer",
-            "docs": [
-              "Signer that will replace `authorized_signer` once the rotation timelock elapses."
-            ],
-            "type": "pubkey"
-          },
-          {
-            "name": "authorized_signer_update_requested_at",
-            "docs": [
-              "Unix timestamp when the latest signer-rotation request was created (0 = none pending)."
-            ],
-            "type": "i64"
-          },
-          {
-            "name": "bump",
-            "docs": [
-              "PDA bump"
-            ],
-            "type": "u8"
           }
         ]
       }
@@ -3515,7 +4089,7 @@
           {
             "name": "withdrawal_timelock_seconds",
             "docs": [
-              "Seconds before a pending withdrawal becomes executable (default 604_800 = 7 days)"
+              "Seconds before a pending available-balance withdrawal becomes executable."
             ],
             "type": "i64"
           },
@@ -3567,6 +4141,13 @@
             "type": "pubkey"
           },
           {
+            "name": "channel_unlock_timelock_seconds",
+            "docs": [
+              "Seconds before a unilateral channel-collateral unlock becomes executable."
+            ],
+            "type": "i64"
+          },
+          {
             "name": "_reserved",
             "docs": [
               "Reserved for future config expansion."
@@ -3574,7 +4155,7 @@
             "type": {
               "array": [
                 "u8",
-                14
+                6
               ]
             }
           }
@@ -3630,62 +4211,74 @@
       }
     },
     {
-      "name": "ParticipantAccount",
+      "name": "OwnerIndexBucket",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "bucket_id",
+            "type": "u32"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          },
+          {
+            "name": "slots",
+            "type": {
+              "array": [
+                {
+                  "defined": {
+                    "name": "OwnerIndexSlot"
+                  }
+                },
+                32
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "OwnerIndexSlot",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "initialized",
+            "type": "bool"
+          },
+          {
+            "name": "owner",
+            "type": "pubkey"
+          },
+          {
+            "name": "participant_id",
+            "type": "u32"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ParticipantBlsKeyRegistered",
       "type": {
         "kind": "struct",
         "fields": [
           {
             "name": "owner",
-            "docs": [
-              "Participant's signing keypair (e.g. Privy smart wallet address)"
-            ],
             "type": "pubkey"
           },
           {
             "name": "participant_id",
-            "docs": [
-              "Compact numeric ID used in all commitment/netting payloads and PDA seeds"
-            ],
             "type": "u32"
           },
           {
-            "name": "token_balances",
-            "docs": [
-              "Token-specific balances (up to 16 different tokens per participant)"
-            ],
-            "type": {
-              "vec": {
-                "defined": {
-                  "name": "TokenBalance"
-                }
-              }
-            }
+            "name": "participant_bucket",
+            "type": "pubkey"
           },
           {
-            "name": "bump",
-            "docs": [
-              "PDA bump"
-            ],
+            "name": "scheme_version",
             "type": "u8"
-          },
-          {
-            "name": "inbound_channel_policy",
-            "docs": [
-              "How this participant handles inbound channels created by other parties."
-            ],
-            "type": "u8"
-          },
-          {
-            "name": "_reserved",
-            "docs": [
-              "Reserved for future participant-level configuration."
-            ],
-            "type": {
-              "array": [
-                "u8",
-                7
-              ]
-            }
           }
         ]
       }
@@ -3710,6 +4303,30 @@
           {
             "name": "inbound_channel_policy",
             "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ProtocolYieldClaimed",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "token_id",
+            "type": "u16"
+          },
+          {
+            "name": "fee_recipient",
+            "type": "pubkey"
+          },
+          {
+            "name": "usdc_amount",
+            "type": "u64"
+          },
+          {
+            "name": "protocol_owed_underlying_after",
+            "type": "u64"
           }
         ]
       }
@@ -3747,48 +4364,50 @@
       }
     },
     {
-      "name": "TokenBalance",
-      "docs": [
-        "Token-specific balance entry for participants",
-        "Total: 58 bytes per token balance"
-      ],
+      "name": "Reserve",
       "type": {
         "kind": "struct",
         "fields": [
           {
-            "name": "token_id",
-            "docs": [
-              "2-byte token identifier from registry"
-            ],
+            "name": "underlying_mint",
+            "type": "pubkey"
+          },
+          {
+            "name": "share_mint",
+            "type": "pubkey"
+          },
+          {
+            "name": "liquidity_vault",
+            "type": "pubkey"
+          },
+          {
+            "name": "authority",
+            "type": "pubkey"
+          },
+          {
+            "name": "apy_bps",
             "type": "u16"
           },
           {
-            "name": "available_balance",
-            "docs": [
-              "Available balance in token's native decimals"
-            ],
-            "type": "u64"
-          },
-          {
-            "name": "withdrawing_balance",
-            "docs": [
-              "Balance locked in pending withdrawal"
-            ],
-            "type": "u64"
-          },
-          {
-            "name": "withdrawal_unlock_at",
-            "docs": [
-              "Unix timestamp when withdrawal unlockable (0 = none pending)"
-            ],
+            "name": "last_accrual_ts",
             "type": "i64"
           },
           {
-            "name": "withdrawal_destination",
-            "docs": [
-              "Destination ATA for pending withdrawal"
-            ],
-            "type": "pubkey"
+            "name": "total_underlying",
+            "type": "u64"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          },
+          {
+            "name": "_reserved",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
           }
         ]
       }
@@ -3797,7 +4416,7 @@
       "name": "TokenEntry",
       "docs": [
         "Token registry entry",
-        "Total: 51 bytes per entry"
+        "Total: 56 bytes per entry (was 51 in v5; +1 for `kind`, +4 reserved for future fields)."
       ],
       "type": {
         "kind": "struct",
@@ -3812,14 +4431,16 @@
           {
             "name": "mint",
             "docs": [
-              "SPL token mint address"
+              "SPL token mint address (or `Pubkey::default()` for yield-bearing wrapper tokens",
+              "that have no separate mint)."
             ],
             "type": "pubkey"
           },
           {
             "name": "decimals",
             "docs": [
-              "Token decimals for amount validation"
+              "Token decimals for amount validation. For yield-bearing wrappers this matches the",
+              "underlying so balance display / commitment math stays uniform."
             ],
             "type": "u8"
           },
@@ -3841,6 +4462,25 @@
               "Unix timestamp when token was registered (immutable)"
             ],
             "type": "i64"
+          },
+          {
+            "name": "kind",
+            "docs": [
+              "`0 = Plain`, `1 = YieldBearing` (see TOKEN_KIND_* consts)."
+            ],
+            "type": "u8"
+          },
+          {
+            "name": "_reserved",
+            "docs": [
+              "Reserved padding for future fields (do not change the size — accounts are pre-allocated)."
+            ],
+            "type": {
+              "array": [
+                "u8",
+                4
+              ]
+            }
           }
         ]
       }
@@ -3954,6 +4594,261 @@
           },
           {
             "name": "fee_amount",
+            "type": "u64"
+          },
+          {
+            "name": "destination",
+            "type": "pubkey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "YieldAccrued",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "token_id",
+            "type": "u16"
+          },
+          {
+            "name": "current_underlying",
+            "type": "u64"
+          },
+          {
+            "name": "last_settled_underlying",
+            "type": "u64"
+          },
+          {
+            "name": "user_index_q64",
+            "type": "u128"
+          },
+          {
+            "name": "protocol_owed_underlying",
+            "type": "u64"
+          },
+          {
+            "name": "total_user_shares",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "YieldBearingTokenRegistered",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "token_id",
+            "type": "u16"
+          },
+          {
+            "name": "underlying_mint",
+            "type": "pubkey"
+          },
+          {
+            "name": "share_mint",
+            "type": "pubkey"
+          },
+          {
+            "name": "share_vault",
+            "type": "pubkey"
+          },
+          {
+            "name": "reserve",
+            "type": "pubkey"
+          },
+          {
+            "name": "yield_program",
+            "type": "pubkey"
+          },
+          {
+            "name": "protocol_yield_share_bps",
+            "type": "u16"
+          }
+        ]
+      }
+    },
+    {
+      "name": "YieldDeposited",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "participant_id",
+            "type": "u32"
+          },
+          {
+            "name": "token_id",
+            "type": "u16"
+          },
+          {
+            "name": "usdc_amount",
+            "type": "u64"
+          },
+          {
+            "name": "shares_minted",
+            "type": "u64"
+          },
+          {
+            "name": "user_index_q64",
+            "type": "u128"
+          }
+        ]
+      }
+    },
+    {
+      "name": "YieldStrategy",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "token_id",
+            "docs": [
+              "agUSDC token id (the yield-bearing wrapper this strategy represents)."
+            ],
+            "type": "u16"
+          },
+          {
+            "name": "bump",
+            "docs": [
+              "PDA bump for `[YIELD_STRATEGY_SEED, token_id_le]`."
+            ],
+            "type": "u8"
+          },
+          {
+            "name": "share_vault_bump",
+            "docs": [
+              "PDA bump for `[YIELD_SHARE_VAULT_SEED, token_id_le]`."
+            ],
+            "type": "u8"
+          },
+          {
+            "name": "protocol_yield_share_bps",
+            "docs": [
+              "Protocol's slice of new yield, in basis points. `3_333` = 33.33%."
+            ],
+            "type": "u16"
+          },
+          {
+            "name": "underlying_mint",
+            "docs": [
+              "Underlying SPL mint (e.g. USDC). Same as `mock_yield::Reserve.underlying_mint`."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "yield_program",
+            "docs": [
+              "Mock-yield (or production lending) program id."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "reserve",
+            "docs": [
+              "`Reserve` account in the yield program."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "share_mint",
+            "docs": [
+              "Lending share mint (e.g. cUSDC)."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "share_vault",
+            "docs": [
+              "Protocol-owned ATA holding cUSDC, authority = GlobalConfig PDA. Single ATA backs both",
+              "users and the protocol fee."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "liquidity_vault",
+            "docs": [
+              "`Reserve.liquidity_vault` cached for CPI ergonomics."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "user_index_q64",
+            "docs": [
+              "Q64.64 index: 1 agUSDC share -> (user_index_q64 / 2^64) USDC. Starts at `Q64_ONE`,",
+              "monotonically non-decreasing under accrual, never decreases under deposits/withdrawals."
+            ],
+            "type": "u128"
+          },
+          {
+            "name": "last_settled_underlying",
+            "docs": [
+              "USDC value of `share_vault` as of last accrual. Used to detect new yield in `accrue_yield`."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "total_user_shares",
+            "docs": [
+              "Sum of agUSDC `available + withdrawing` across all participant buckets for this token.",
+              "Sanity counter; truth still lives in buckets. Used by `accrue_yield` to compute per-share",
+              "yield attribution and to enforce the invariant."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "protocol_owed_underlying",
+            "docs": [
+              "Protocol's USDC claim. Increases only inside `accrue_yield`. Decreases only inside",
+              "`claim_protocol_yield_fee`. Never touched by deposit/withdraw/channel paths."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "_reserved",
+            "docs": [
+              "Padding for future fields (e.g. additional fee tiers, snapshot history)."
+            ],
+            "type": {
+              "array": [
+                "u8",
+                64
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "YieldWithdrawn",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "participant_id",
+            "type": "u32"
+          },
+          {
+            "name": "token_id",
+            "type": "u16"
+          },
+          {
+            "name": "shares_burned",
+            "type": "u64"
+          },
+          {
+            "name": "usdc_gross",
+            "type": "u64"
+          },
+          {
+            "name": "usdc_net",
+            "type": "u64"
+          },
+          {
+            "name": "usdc_fee",
             "type": "u64"
           },
           {
