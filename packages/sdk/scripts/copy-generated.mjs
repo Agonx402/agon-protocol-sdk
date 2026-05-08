@@ -2,7 +2,7 @@ import { cpSync, mkdirSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 
 const files = [
-  "agon_protocol.json",
+  "ryvo_protocol.json",
   "mock_yield.json",
 ];
 

@@ -1,7 +1,7 @@
 {
-  "name": "@agonx402/sdk",
-  "version": "0.4.0",
-  "description": "TypeScript SDK for the decentralized Agon Protocol on Solana",
+  "name": "@ryvonetwork/sdk",
+  "version": "0.5.0",
+  "description": "TypeScript SDK for the decentralized Ryvo Protocol on Solana",
   "type": "module",
   "license": "MIT",
   "engines": {
@@ -10,14 +10,14 @@
   "publishConfig": {
     "access": "public"
   },
-  "homepage": "https://github.com/Agonx402/agon-protocol-sdk/tree/main/packages/sdk",
+  "homepage": "https://github.com/Ryvonetwork/ryvo-protocol-sdk/tree/main/packages/sdk",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Agonx402/agon-protocol-sdk.git",
+    "url": "https://github.com/Ryvonetwork/ryvo-protocol-sdk.git",
     "directory": "packages/sdk"
   },
   "bugs": {
-    "url": "https://github.com/Agonx402/agon-protocol-sdk/issues"
+    "url": "https://github.com/Ryvonetwork/ryvo-protocol-sdk/issues"
   },
   "sideEffects": false,
   "keywords": [
@@ -25,7 +25,7 @@
     "anchor",
     "payments",
     "state-channels",
-    "agon",
+    "ryvo",
     "protocol"
   ],
   "main": "./dist/index.js",

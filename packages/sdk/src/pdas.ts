@@ -99,7 +99,7 @@ export function findProgramDataPda(programId: PublicKey): PublicKey {
 }
 
 /**
- * v6: PDA for the per-token YieldStrategy account inside agon-protocol.
+ * v6: PDA for the per-token YieldStrategy account inside ryvo-protocol.
  * Seed: `[YIELD_STRATEGY_SEED, token_id_le]`.
  */
 export function findYieldStrategyPda(

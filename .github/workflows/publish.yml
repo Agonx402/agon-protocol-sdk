@@ -1,4 +1,4 @@
-name: Publish Agon Protocol SDK
+name: Publish Ryvo Protocol SDK
 
 on:
   workflow_dispatch:
@@ -77,7 +77,7 @@ jobs:
               ['dependencies', 'devDependencies', 'peerDependencies'].forEach(depType => {
                 if (config[depType]) {
                   Object.keys(config[depType]).forEach(dep => {
-                    if (dep.startsWith('@agonx402/')) {
+                    if (dep.startsWith('@ryvonetwork/')) {
                       config[depType][dep] = '^' + newVersion;
                     }
                   });

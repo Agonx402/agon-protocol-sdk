@@ -26,7 +26,7 @@ export type ClearingRoundMessageParams = {
   blocks: ClearingRoundBlock[];
 };
 
-export type CreateAgonClientOptions = {
+export type CreateRyvoClientOptions = {
   provider: anchor.AnchorProvider;
   programId?: PublicKey;
 };

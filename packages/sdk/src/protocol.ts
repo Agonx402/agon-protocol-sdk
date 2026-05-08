@@ -3,7 +3,7 @@ import { resolve } from "node:path";
 import { ed25519 } from "@noble/curves/ed25519.js";
 import { PublicKey } from "@solana/web3.js";
 import {
-  AGON_CHAIN_IDS,
+  RYVO_CHAIN_IDS,
   OFFICIAL_DEVNET_USDC_MINT,
   OFFICIAL_USDC_DECIMALS,
   OFFICIAL_USDC_SYMBOL,
@@ -13,7 +13,7 @@ import { deriveMessageDomain } from "./pdas.js";
 import type { Amountish, CommitmentMessageParams } from "./types.js";
 import { toBigIntAmount } from "./types.js";
 
-export type ProtocolCluster = keyof typeof AGON_CHAIN_IDS;
+export type ProtocolCluster = keyof typeof RYVO_CHAIN_IDS;
 
 export interface ProtocolTokenConfig {
   tokenId: number;
@@ -181,9 +181,9 @@ function deploymentTokens(config: unknown): unknown[] {
 function loadDeploymentConfig(pathValue?: string): unknown {
   const candidates = [
     pathValue,
-    process.env.AGON_PROTOCOL_DEVNET_DEPLOYMENT_CONFIG,
+    process.env.RYVO_PROTOCOL_DEVNET_DEPLOYMENT_CONFIG,
     resolve(process.cwd(), "config", "devnet-deployment.json"),
-    resolve(process.cwd(), "..", "agon-protocol", "config", "devnet-deployment.json"),
+    resolve(process.cwd(), "..", "ryvo-protocol", "config", "devnet-deployment.json"),
   ].filter((value): value is string => Boolean(value));
 
   for (const candidate of candidates) {
@@ -214,9 +214,9 @@ export function resolveCanonicalDevnetUsdcToken(
   options: ResolveCanonicalDevnetUsdcTokenOptions = {},
 ): ProtocolTokenConfig {
   const env = options.env;
-  const mint = envValue(env, "AGON_PROTOCOL_DEVNET_USDC_MINT")
+  const mint = envValue(env, "RYVO_PROTOCOL_DEVNET_USDC_MINT")
     ?? OFFICIAL_DEVNET_USDC_MINT;
-  const tokenIdOverride = envValue(env, "AGON_PROTOCOL_DEVNET_USDC_TOKEN_ID");
+  const tokenIdOverride = envValue(env, "RYVO_PROTOCOL_DEVNET_USDC_TOKEN_ID");
 
   if (mint !== OFFICIAL_DEVNET_USDC_MINT) {
     throw new Error(
@@ -227,7 +227,7 @@ export function resolveCanonicalDevnetUsdcToken(
   if (tokenIdOverride !== undefined) {
     const tokenId = Number(tokenIdOverride);
     if (!Number.isInteger(tokenId) || tokenId < 0 || tokenId > 65_535) {
-      throw new Error("AGON_PROTOCOL_DEVNET_USDC_TOKEN_ID must be a u16 integer.");
+      throw new Error("RYVO_PROTOCOL_DEVNET_USDC_TOKEN_ID must be a u16 integer.");
     }
     return {
       tokenId,
@@ -252,7 +252,7 @@ export function resolveCanonicalDevnetUsdcToken(
   }
 
   throw new Error(
-    "Unable to resolve canonical devnet USDC token ID. Set AGON_PROTOCOL_DEVNET_USDC_TOKEN_ID or provide a deployment config containing the official devnet USDC mint.",
+    "Unable to resolve canonical devnet USDC token ID. Set RYVO_PROTOCOL_DEVNET_USDC_TOKEN_ID or provide a deployment config containing the official devnet USDC mint.",
   );
 }
 
@@ -289,7 +289,7 @@ export function buildGatewayCommitmentPayload(
   params: BuildGatewayCommitmentPayloadParams,
 ): GatewayCommitmentPayload {
   const programId = normalizePublicKey(params.programId);
-  const chainId = params.chainId ?? AGON_CHAIN_IDS[params.cluster ?? "devnet"];
+  const chainId = params.chainId ?? RYVO_CHAIN_IDS[params.cluster ?? "devnet"];
   const messageDomain = params.messageDomain
     ? toBase64(params.messageDomain)
     : deriveMessageDomain(programId, chainId).toString("base64");

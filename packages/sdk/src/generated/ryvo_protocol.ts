@@ -1,14 +1,20 @@
-{
-  "address": "77VR7b4BXx2KTSXA3Tbarw4w1MC5Qvv6QespTyCxWamM",
+/**
+ * Program IDL in camelCase format in order to be used in JS/TS.
+ *
+ * Note that this is only a type helper and is not the actual IDL. The original
+ * IDL can be found at `target/idl/ryvo_protocol.json`.
+ */
+export type RyvoProtocol = {
+  "address": "HuyQoYfBEvVACTKcq8RTiDFm5k5ZBnX5we1UjWBTBeqT",
   "metadata": {
-    "name": "agon_protocol",
+    "name": "ryvoProtocol",
     "version": "0.1.0",
     "spec": "0.1.0",
     "description": "Created with Anchor"
   },
   "instructions": [
     {
-      "name": "accept_config_authority",
+      "name": "acceptConfigAuthority",
       "docs": [
         "Pending config authority accepts the handoff."
       ],
@@ -24,7 +30,7 @@
       ],
       "accounts": [
         {
-          "name": "global_config",
+          "name": "globalConfig",
           "writable": true,
           "pda": {
             "seeds": [
@@ -50,14 +56,14 @@
           }
         },
         {
-          "name": "pending_authority",
+          "name": "pendingAuthority",
           "signer": true
         }
       ],
       "args": []
     },
     {
-      "name": "accept_registry_authority",
+      "name": "acceptRegistryAuthority",
       "docs": [
         "Pending token registry authority accepts the handoff."
       ],
@@ -73,7 +79,7 @@
       ],
       "accounts": [
         {
-          "name": "token_registry",
+          "name": "tokenRegistry",
           "writable": true,
           "pda": {
             "seeds": [
@@ -100,14 +106,14 @@
           }
         },
         {
-          "name": "pending_authority",
+          "name": "pendingAuthority",
           "signer": true
         }
       ],
       "args": []
     },
     {
-      "name": "accrue_yield",
+      "name": "accrueYield",
       "docs": [
         "Accrue yield for a yield-bearing token (permissionless). Pulls the latest cUSDC rate from",
         "the lending program, advances `user_index_q64`, and credits `protocol_owed_underlying`."
@@ -124,7 +130,7 @@
       ],
       "accounts": [
         {
-          "name": "yield_strategy",
+          "name": "yieldStrategy",
           "writable": true,
           "pda": {
             "seeds": [
@@ -150,29 +156,29 @@
               {
                 "kind": "account",
                 "path": "yield_strategy.token_id",
-                "account": "YieldStrategy"
+                "account": "yieldStrategy"
               }
             ]
           }
         },
         {
-          "name": "yield_program"
+          "name": "yieldProgram"
         },
         {
           "name": "reserve",
           "writable": true
         },
         {
-          "name": "share_mint"
+          "name": "shareMint"
         },
         {
-          "name": "share_vault"
+          "name": "shareVault"
         }
       ],
       "args": []
     },
     {
-      "name": "cancel_withdrawal",
+      "name": "cancelWithdrawal",
       "docs": [
         "Cancel a pending withdrawal for a specific token."
       ],
@@ -188,11 +194,11 @@
       ],
       "accounts": [
         {
-          "name": "participant_bucket",
+          "name": "participantBucket",
           "writable": true
         },
         {
-          "name": "owner_index_bucket"
+          "name": "ownerIndexBucket"
         },
         {
           "name": "owner",
@@ -201,13 +207,13 @@
       ],
       "args": [
         {
-          "name": "token_id",
+          "name": "tokenId",
           "type": "u16"
         }
       ]
     },
     {
-      "name": "claim_protocol_yield_fee",
+      "name": "claimProtocolYieldFee",
       "docs": [
         "Claim accumulated protocol yield (fee_recipient only). Redeems up to",
         "`protocol_owed_underlying` USDC from the share_vault."
@@ -224,7 +230,7 @@
       ],
       "accounts": [
         {
-          "name": "global_config",
+          "name": "globalConfig",
           "pda": {
             "seeds": [
               {
@@ -249,7 +255,7 @@
           }
         },
         {
-          "name": "yield_strategy",
+          "name": "yieldStrategy",
           "writable": true,
           "pda": {
             "seeds": [
@@ -274,52 +280,52 @@
               },
               {
                 "kind": "arg",
-                "path": "token_id"
+                "path": "tokenId"
               }
             ]
           }
         },
         {
-          "name": "yield_program"
+          "name": "yieldProgram"
         },
         {
           "name": "reserve",
           "writable": true
         },
         {
-          "name": "underlying_mint"
+          "name": "underlyingMint"
         },
         {
-          "name": "share_mint",
+          "name": "shareMint",
           "writable": true
         },
         {
-          "name": "liquidity_vault",
+          "name": "liquidityVault",
           "writable": true
         },
         {
-          "name": "share_vault",
+          "name": "shareVault",
           "writable": true
         },
         {
-          "name": "fee_recipient_token_account",
+          "name": "feeRecipientTokenAccount",
           "writable": true
         },
         {
-          "name": "fee_recipient",
+          "name": "feeRecipient",
           "docs": [
             "Must be the fee_recipient (verified inside the handler against `global_config.fee_recipient`)."
           ],
           "signer": true
         },
         {
-          "name": "token_program",
+          "name": "tokenProgram",
           "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
         }
       ],
       "args": [
         {
-          "name": "token_id",
+          "name": "tokenId",
           "type": "u16"
         },
         {
@@ -329,7 +335,7 @@
       ]
     },
     {
-      "name": "cooperative_unlock_channel_funds",
+      "name": "cooperativeUnlockChannelFunds",
       "docs": [
         "Instantly release channel collateral when both channel counterparties consent."
       ],
@@ -345,7 +351,7 @@
       ],
       "accounts": [
         {
-          "name": "token_registry",
+          "name": "tokenRegistry",
           "pda": {
             "seeds": [
               {
@@ -371,18 +377,18 @@
           }
         },
         {
-          "name": "payer_bucket",
+          "name": "payerBucket",
           "writable": true
         },
         {
-          "name": "payee_bucket"
+          "name": "payeeBucket"
         },
         {
-          "name": "channel_bucket",
+          "name": "channelBucket",
           "writable": true
         },
         {
-          "name": "owner_index_bucket"
+          "name": "ownerIndexBucket"
         },
         {
           "name": "owner",
@@ -390,17 +396,17 @@
           "signer": true
         },
         {
-          "name": "payee_owner",
+          "name": "payeeOwner",
           "signer": true
         }
       ],
       "args": [
         {
-          "name": "token_id",
+          "name": "tokenId",
           "type": "u16"
         },
         {
-          "name": "payee_participant_id",
+          "name": "payeeParticipantId",
           "type": "u32"
         },
         {
@@ -410,7 +416,7 @@
       ]
     },
     {
-      "name": "create_channel",
+      "name": "createChannel",
       "docs": [
         "Create a token-specific channel from payer to payee. Must be called before any payment commitments are signed or settled.",
         "Payer signs and pays ~0.002 SOL rent. Ensures payees and facilitators never pay for creation."
@@ -427,7 +433,7 @@
       ],
       "accounts": [
         {
-          "name": "token_registry",
+          "name": "tokenRegistry",
           "pda": {
             "seeds": [
               {
@@ -453,16 +459,16 @@
           }
         },
         {
-          "name": "payer_bucket"
+          "name": "payerBucket"
         },
         {
-          "name": "payee_bucket"
+          "name": "payeeBucket"
         },
         {
-          "name": "owner_index_bucket"
+          "name": "ownerIndexBucket"
         },
         {
-          "name": "channel_bucket",
+          "name": "channelBucket",
           "writable": true,
           "pda": {
             "seeds": [
@@ -490,11 +496,11 @@
               },
               {
                 "kind": "arg",
-                "path": "token_id"
+                "path": "tokenId"
               },
               {
                 "kind": "arg",
-                "path": "channel_bucket_id"
+                "path": "channelBucketId"
               }
             ]
           }
@@ -505,34 +511,34 @@
           "signer": true
         },
         {
-          "name": "payee_owner",
+          "name": "payeeOwner",
           "signer": true,
           "optional": true
         },
         {
-          "name": "system_program",
+          "name": "systemProgram",
           "address": "11111111111111111111111111111111"
         }
       ],
       "args": [
         {
-          "name": "token_id",
+          "name": "tokenId",
           "type": "u16"
         },
         {
-          "name": "lower_participant_id",
+          "name": "lowerParticipantId",
           "type": "u32"
         },
         {
-          "name": "higher_participant_id",
+          "name": "higherParticipantId",
           "type": "u32"
         },
         {
-          "name": "channel_bucket_id",
+          "name": "channelBucketId",
           "type": "u64"
         },
         {
-          "name": "authorized_signer",
+          "name": "authorizedSigner",
           "type": {
             "option": "pubkey"
           }
@@ -556,7 +562,7 @@
       ],
       "accounts": [
         {
-          "name": "token_registry",
+          "name": "tokenRegistry",
           "pda": {
             "seeds": [
               {
@@ -582,7 +588,7 @@
           }
         },
         {
-          "name": "global_config",
+          "name": "globalConfig",
           "pda": {
             "seeds": [
               {
@@ -607,18 +613,18 @@
           }
         },
         {
-          "name": "participant_bucket",
+          "name": "participantBucket",
           "writable": true
         },
         {
-          "name": "owner_index_bucket"
+          "name": "ownerIndexBucket"
         },
         {
-          "name": "owner_token_account",
+          "name": "ownerTokenAccount",
           "writable": true
         },
         {
-          "name": "vault_token_account",
+          "name": "vaultTokenAccount",
           "writable": true,
           "pda": {
             "seeds": [
@@ -648,7 +654,7 @@
               },
               {
                 "kind": "arg",
-                "path": "token_id"
+                "path": "tokenId"
               }
             ]
           }
@@ -658,13 +664,13 @@
           "signer": true
         },
         {
-          "name": "token_program",
+          "name": "tokenProgram",
           "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
         }
       ],
       "args": [
         {
-          "name": "token_id",
+          "name": "tokenId",
           "type": "u16"
         },
         {
@@ -674,7 +680,7 @@
       ]
     },
     {
-      "name": "deposit_for",
+      "name": "depositFor",
       "docs": [
         "Deposit a registered token for multiple participants in one tx.",
         "Funder's ATA to vault; credits each recipient.",
@@ -692,7 +698,7 @@
       ],
       "accounts": [
         {
-          "name": "token_registry",
+          "name": "tokenRegistry",
           "pda": {
             "seeds": [
               {
@@ -718,7 +724,7 @@
           }
         },
         {
-          "name": "global_config",
+          "name": "globalConfig",
           "pda": {
             "seeds": [
               {
@@ -743,11 +749,11 @@
           }
         },
         {
-          "name": "funder_token_account",
+          "name": "funderTokenAccount",
           "writable": true
         },
         {
-          "name": "vault_token_account",
+          "name": "vaultTokenAccount",
           "writable": true,
           "pda": {
             "seeds": [
@@ -777,7 +783,7 @@
               },
               {
                 "kind": "arg",
-                "path": "token_id"
+                "path": "tokenId"
               }
             ]
           }
@@ -787,17 +793,17 @@
           "signer": true
         },
         {
-          "name": "token_program",
+          "name": "tokenProgram",
           "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
         }
       ],
       "args": [
         {
-          "name": "token_id",
+          "name": "tokenId",
           "type": "u16"
         },
         {
-          "name": "participant_ids",
+          "name": "participantIds",
           "type": {
             "vec": "u32"
           }
@@ -811,9 +817,9 @@
       ]
     },
     {
-      "name": "deposit_yield_bearing",
+      "name": "depositYieldBearing",
       "docs": [
-        "Deposit USDC and receive a credit of agUSDC shares. The protocol CPIs into the lending",
+        "Deposit USDC and receive a credit of ryUSDC shares. The protocol CPIs into the lending",
         "program to mint cUSDC into its share_vault."
       ],
       "discriminator": [
@@ -828,7 +834,7 @@
       ],
       "accounts": [
         {
-          "name": "token_registry",
+          "name": "tokenRegistry",
           "pda": {
             "seeds": [
               {
@@ -854,7 +860,7 @@
           }
         },
         {
-          "name": "global_config",
+          "name": "globalConfig",
           "pda": {
             "seeds": [
               {
@@ -879,7 +885,7 @@
           }
         },
         {
-          "name": "yield_strategy",
+          "name": "yieldStrategy",
           "writable": true,
           "pda": {
             "seeds": [
@@ -904,42 +910,42 @@
               },
               {
                 "kind": "arg",
-                "path": "token_id"
+                "path": "tokenId"
               }
             ]
           }
         },
         {
-          "name": "participant_bucket",
+          "name": "participantBucket",
           "writable": true
         },
         {
-          "name": "owner_index_bucket"
+          "name": "ownerIndexBucket"
         },
         {
-          "name": "yield_program"
+          "name": "yieldProgram"
         },
         {
           "name": "reserve",
           "writable": true
         },
         {
-          "name": "underlying_mint"
+          "name": "underlyingMint"
         },
         {
-          "name": "share_mint",
+          "name": "shareMint",
           "writable": true
         },
         {
-          "name": "liquidity_vault",
+          "name": "liquidityVault",
           "writable": true
         },
         {
-          "name": "share_vault",
+          "name": "shareVault",
           "writable": true
         },
         {
-          "name": "depositor_underlying",
+          "name": "depositorUnderlying",
           "writable": true
         },
         {
@@ -948,13 +954,13 @@
           "signer": true
         },
         {
-          "name": "token_program",
+          "name": "tokenProgram",
           "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
         }
       ],
       "args": [
         {
-          "name": "token_id",
+          "name": "tokenId",
           "type": "u16"
         },
         {
@@ -964,7 +970,7 @@
       ]
     },
     {
-      "name": "execute_unlock_channel_funds",
+      "name": "executeUnlockChannelFunds",
       "docs": [
         "Execute a previously requested collateral unlock once its timelock expires."
       ],
@@ -980,7 +986,7 @@
       ],
       "accounts": [
         {
-          "name": "global_config",
+          "name": "globalConfig",
           "pda": {
             "seeds": [
               {
@@ -1005,15 +1011,15 @@
           }
         },
         {
-          "name": "payer_bucket",
+          "name": "payerBucket",
           "writable": true
         },
         {
-          "name": "channel_bucket",
+          "name": "channelBucket",
           "writable": true
         },
         {
-          "name": "owner_index_bucket"
+          "name": "ownerIndexBucket"
         },
         {
           "name": "owner",
@@ -1022,17 +1028,17 @@
       ],
       "args": [
         {
-          "name": "token_id",
+          "name": "tokenId",
           "type": "u16"
         },
         {
-          "name": "payee_participant_id",
+          "name": "payeeParticipantId",
           "type": "u32"
         }
       ]
     },
     {
-      "name": "execute_update_channel_authorized_signer",
+      "name": "executeUpdateChannelAuthorizedSigner",
       "docs": [
         "Execute a previously requested authorized-signer rotation once its timelock expires."
       ],
@@ -1048,7 +1054,7 @@
       ],
       "accounts": [
         {
-          "name": "global_config",
+          "name": "globalConfig",
           "pda": {
             "seeds": [
               {
@@ -1073,11 +1079,11 @@
           }
         },
         {
-          "name": "channel_bucket",
+          "name": "channelBucket",
           "writable": true
         },
         {
-          "name": "owner_index_bucket"
+          "name": "ownerIndexBucket"
         },
         {
           "name": "owner",
@@ -1086,17 +1092,17 @@
       ],
       "args": [
         {
-          "name": "token_id",
+          "name": "tokenId",
           "type": "u16"
         },
         {
-          "name": "payee_participant_id",
+          "name": "payeeParticipantId",
           "type": "u32"
         }
       ]
     },
     {
-      "name": "execute_withdrawal_timelocked",
+      "name": "executeWithdrawalTimelocked",
       "docs": [
         "Execute a withdrawal for a specific token after timelock expires."
       ],
@@ -1112,7 +1118,7 @@
       ],
       "accounts": [
         {
-          "name": "token_registry",
+          "name": "tokenRegistry",
           "pda": {
             "seeds": [
               {
@@ -1138,7 +1144,7 @@
           }
         },
         {
-          "name": "global_config",
+          "name": "globalConfig",
           "pda": {
             "seeds": [
               {
@@ -1163,11 +1169,11 @@
           }
         },
         {
-          "name": "participant_bucket",
+          "name": "participantBucket",
           "writable": true
         },
         {
-          "name": "vault_token_account",
+          "name": "vaultTokenAccount",
           "writable": true,
           "pda": {
             "seeds": [
@@ -1197,43 +1203,43 @@
               },
               {
                 "kind": "arg",
-                "path": "token_id"
+                "path": "tokenId"
               }
             ]
           }
         },
         {
-          "name": "withdrawal_destination",
+          "name": "withdrawalDestination",
           "docs": [
             "Destination token account (any valid token ATA — participant or 3rd party)."
           ],
           "writable": true
         },
         {
-          "name": "fee_recipient_token_account",
+          "name": "feeRecipientTokenAccount",
           "docs": [
             "Fee recipient's token account for the token being withdrawn."
           ],
           "writable": true
         },
         {
-          "name": "token_program",
+          "name": "tokenProgram",
           "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
         }
       ],
       "args": [
         {
-          "name": "token_id",
+          "name": "tokenId",
           "type": "u16"
         },
         {
-          "name": "participant_id",
+          "name": "participantId",
           "type": "u32"
         }
       ]
     },
     {
-      "name": "execute_withdrawal_yield_bearing",
+      "name": "executeWithdrawalYieldBearing",
       "docs": [
         "Execute a previously requested withdrawal once its timelock expires. Redeems the",
         "proportional cUSDC into USDC and pays user (net) and fee_recipient (fee)."
@@ -1250,7 +1256,7 @@
       ],
       "accounts": [
         {
-          "name": "token_registry",
+          "name": "tokenRegistry",
           "pda": {
             "seeds": [
               {
@@ -1276,7 +1282,7 @@
           }
         },
         {
-          "name": "global_config",
+          "name": "globalConfig",
           "pda": {
             "seeds": [
               {
@@ -1301,7 +1307,7 @@
           }
         },
         {
-          "name": "yield_strategy",
+          "name": "yieldStrategy",
           "writable": true,
           "pda": {
             "seeds": [
@@ -1326,57 +1332,57 @@
               },
               {
                 "kind": "arg",
-                "path": "token_id"
+                "path": "tokenId"
               }
             ]
           }
         },
         {
-          "name": "participant_bucket",
+          "name": "participantBucket",
           "writable": true
         },
         {
-          "name": "yield_program"
+          "name": "yieldProgram"
         },
         {
           "name": "reserve",
           "writable": true
         },
         {
-          "name": "underlying_mint"
+          "name": "underlyingMint"
         },
         {
-          "name": "share_mint",
+          "name": "shareMint",
           "writable": true
         },
         {
-          "name": "liquidity_vault",
+          "name": "liquidityVault",
           "writable": true
         },
         {
-          "name": "share_vault",
+          "name": "shareVault",
           "writable": true
         },
         {
-          "name": "withdrawal_destination",
+          "name": "withdrawalDestination",
           "writable": true
         },
         {
-          "name": "fee_recipient_token_account",
+          "name": "feeRecipientTokenAccount",
           "writable": true
         },
         {
-          "name": "token_program",
+          "name": "tokenProgram",
           "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
         }
       ],
       "args": [
         {
-          "name": "token_id",
+          "name": "tokenId",
           "type": "u16"
         },
         {
-          "name": "participant_id",
+          "name": "participantId",
           "type": "u32"
         }
       ]
@@ -1399,7 +1405,7 @@
       ],
       "accounts": [
         {
-          "name": "global_config",
+          "name": "globalConfig",
           "writable": true,
           "pda": {
             "seeds": [
@@ -1425,13 +1431,13 @@
           }
         },
         {
-          "name": "fee_recipient",
+          "name": "feeRecipient",
           "docs": [
             "Wallet that receives registration-fee lamports and owns fee token accounts."
           ]
         },
         {
-          "name": "upgrade_authority",
+          "name": "upgradeAuthority",
           "docs": [
             "Program's upgrade authority performs the one-time bootstrap."
           ],
@@ -1440,31 +1446,31 @@
         },
         {
           "name": "program",
-          "address": "77VR7b4BXx2KTSXA3Tbarw4w1MC5Qvv6QespTyCxWamM"
+          "address": "HuyQoYfBEvVACTKcq8RTiDFm5k5ZBnX5we1UjWBTBeqT"
         },
         {
-          "name": "program_data"
+          "name": "programData"
         },
         {
-          "name": "system_program",
+          "name": "systemProgram",
           "address": "11111111111111111111111111111111"
         }
       ],
       "args": [
         {
-          "name": "chain_id",
+          "name": "chainId",
           "type": "u16"
         },
         {
-          "name": "fee_bps",
+          "name": "feeBps",
           "type": "u16"
         },
         {
-          "name": "registration_fee_lamports",
+          "name": "registrationFeeLamports",
           "type": "u64"
         },
         {
-          "name": "initial_authority",
+          "name": "initialAuthority",
           "type": {
             "option": "pubkey"
           }
@@ -1472,7 +1478,7 @@
       ]
     },
     {
-      "name": "initialize_participant",
+      "name": "initializeParticipant",
       "docs": [
         "One-time participant registration."
       ],
@@ -1488,7 +1494,7 @@
       ],
       "accounts": [
         {
-          "name": "global_config",
+          "name": "globalConfig",
           "writable": true,
           "pda": {
             "seeds": [
@@ -1514,7 +1520,7 @@
           }
         },
         {
-          "name": "participant_bucket",
+          "name": "participantBucket",
           "writable": true,
           "pda": {
             "seeds": [
@@ -1546,13 +1552,13 @@
               },
               {
                 "kind": "arg",
-                "path": "participant_bucket_id"
+                "path": "participantBucketId"
               }
             ]
           }
         },
         {
-          "name": "owner_index_bucket",
+          "name": "ownerIndexBucket",
           "writable": true,
           "pda": {
             "seeds": [
@@ -1584,13 +1590,13 @@
               },
               {
                 "kind": "arg",
-                "path": "owner_index_bucket_id"
+                "path": "ownerIndexBucketId"
               }
             ]
           }
         },
         {
-          "name": "fee_recipient",
+          "name": "feeRecipient",
           "writable": true
         },
         {
@@ -1599,23 +1605,23 @@
           "signer": true
         },
         {
-          "name": "system_program",
+          "name": "systemProgram",
           "address": "11111111111111111111111111111111"
         }
       ],
       "args": [
         {
-          "name": "participant_bucket_id",
+          "name": "participantBucketId",
           "type": "u32"
         },
         {
-          "name": "owner_index_bucket_id",
+          "name": "ownerIndexBucketId",
           "type": "u32"
         }
       ]
     },
     {
-      "name": "initialize_token_registry",
+      "name": "initializeTokenRegistry",
       "docs": [
         "Initialize the token registry (authority only, called once after program deployment)."
       ],
@@ -1631,7 +1637,7 @@
       ],
       "accounts": [
         {
-          "name": "token_registry",
+          "name": "tokenRegistry",
           "writable": true,
           "pda": {
             "seeds": [
@@ -1658,7 +1664,7 @@
           }
         },
         {
-          "name": "global_config",
+          "name": "globalConfig",
           "pda": {
             "seeds": [
               {
@@ -1688,14 +1694,14 @@
           "signer": true
         },
         {
-          "name": "system_program",
+          "name": "systemProgram",
           "address": "11111111111111111111111111111111"
         }
       ],
       "args": []
     },
     {
-      "name": "lock_channel_funds",
+      "name": "lockChannelFunds",
       "docs": [
         "Lock tokens as ring-fenced collateral for a specific payee channel."
       ],
@@ -1711,7 +1717,7 @@
       ],
       "accounts": [
         {
-          "name": "token_registry",
+          "name": "tokenRegistry",
           "pda": {
             "seeds": [
               {
@@ -1737,15 +1743,15 @@
           }
         },
         {
-          "name": "payer_bucket",
+          "name": "payerBucket",
           "writable": true
         },
         {
-          "name": "channel_bucket",
+          "name": "channelBucket",
           "writable": true
         },
         {
-          "name": "owner_index_bucket"
+          "name": "ownerIndexBucket"
         },
         {
           "name": "owner",
@@ -1753,17 +1759,17 @@
           "signer": true
         },
         {
-          "name": "system_program",
+          "name": "systemProgram",
           "address": "11111111111111111111111111111111"
         }
       ],
       "args": [
         {
-          "name": "token_id",
+          "name": "tokenId",
           "type": "u16"
         },
         {
-          "name": "payee_participant_id",
+          "name": "payeeParticipantId",
           "type": "u32"
         },
         {
@@ -1773,23 +1779,52 @@
       ]
     },
     {
-      "name": "register_participant_bls_key",
+      "name": "optInYield",
       "docs": [
-        "Register a BLS key used only for cooperative clearing rounds."
+        "Opt an existing plain-USDC bucket balance into yield. Debits `amount_usdc` from the owner's",
+        "plain-USDC bucket *available* slot and credits the equivalent ryUSDC shares into the owner's",
+        "yield bucket *available* slot. CPIs `mock_yield::deposit_reserve_liquidity` to deposit the",
+        "underlying USDC into the lending reserve. Locked balance is not eligible."
       ],
       "discriminator": [
-        73,
-        33,
-        200,
-        201,
-        238,
-        231,
-        71,
-        145
+        184,
+        188,
+        168,
+        177,
+        219,
+        213,
+        245,
+        255
       ],
       "accounts": [
         {
-          "name": "global_config",
+          "name": "tokenRegistry",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  116,
+                  111,
+                  107,
+                  101,
+                  110,
+                  45,
+                  114,
+                  101,
+                  103,
+                  105,
+                  115,
+                  116,
+                  114,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "globalConfig",
           "pda": {
             "seeds": [
               {
@@ -1814,11 +1849,367 @@
           }
         },
         {
-          "name": "participant_bucket",
+          "name": "yieldStrategy",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  121,
+                  105,
+                  101,
+                  108,
+                  100,
+                  45,
+                  115,
+                  116,
+                  114,
+                  97,
+                  116,
+                  101,
+                  103,
+                  121
+                ]
+              },
+              {
+                "kind": "arg",
+                "path": "yieldTokenId"
+              }
+            ]
+          }
+        },
+        {
+          "name": "plainVaultTokenAccount",
+          "docs": [
+            "Plain USDC vault PDA (token-id-scoped). Source of underlying for the lending CPI."
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116,
+                  45,
+                  116,
+                  111,
+                  107,
+                  101,
+                  110,
+                  45,
+                  97,
+                  99,
+                  99,
+                  111,
+                  117,
+                  110,
+                  116
+                ]
+              },
+              {
+                "kind": "arg",
+                "path": "plainTokenId"
+              }
+            ]
+          }
+        },
+        {
+          "name": "participantBucket",
           "writable": true
         },
         {
-          "name": "owner_index_bucket"
+          "name": "ownerIndexBucket"
+        },
+        {
+          "name": "yieldProgram"
+        },
+        {
+          "name": "reserve",
+          "writable": true
+        },
+        {
+          "name": "underlyingMint"
+        },
+        {
+          "name": "shareMint",
+          "writable": true
+        },
+        {
+          "name": "liquidityVault",
+          "writable": true
+        },
+        {
+          "name": "shareVault",
+          "writable": true
+        },
+        {
+          "name": "owner",
+          "signer": true
+        },
+        {
+          "name": "tokenProgram",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        }
+      ],
+      "args": [
+        {
+          "name": "plainTokenId",
+          "type": "u16"
+        },
+        {
+          "name": "yieldTokenId",
+          "type": "u16"
+        },
+        {
+          "name": "amountUsdc",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "optOutYield",
+      "docs": [
+        "Opt out of yield by burning `shares` of ryUSDC and crediting the redeemed USDC back into",
+        "the owner's plain-USDC bucket *available* slot. Up to 1 lamport of dust per call may remain",
+        "in the protocol's `share_vault` (attributed to all users on the next accrual)."
+      ],
+      "discriminator": [
+        97,
+        217,
+        237,
+        207,
+        240,
+        192,
+        22,
+        116
+      ],
+      "accounts": [
+        {
+          "name": "tokenRegistry",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  116,
+                  111,
+                  107,
+                  101,
+                  110,
+                  45,
+                  114,
+                  101,
+                  103,
+                  105,
+                  115,
+                  116,
+                  114,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "globalConfig",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  45,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "yieldStrategy",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  121,
+                  105,
+                  101,
+                  108,
+                  100,
+                  45,
+                  115,
+                  116,
+                  114,
+                  97,
+                  116,
+                  101,
+                  103,
+                  121
+                ]
+              },
+              {
+                "kind": "arg",
+                "path": "yieldTokenId"
+              }
+            ]
+          }
+        },
+        {
+          "name": "plainVaultTokenAccount",
+          "docs": [
+            "Plain USDC vault PDA — destination for redeemed underlying."
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116,
+                  45,
+                  116,
+                  111,
+                  107,
+                  101,
+                  110,
+                  45,
+                  97,
+                  99,
+                  99,
+                  111,
+                  117,
+                  110,
+                  116
+                ]
+              },
+              {
+                "kind": "arg",
+                "path": "plainTokenId"
+              }
+            ]
+          }
+        },
+        {
+          "name": "participantBucket",
+          "writable": true
+        },
+        {
+          "name": "ownerIndexBucket"
+        },
+        {
+          "name": "yieldProgram"
+        },
+        {
+          "name": "reserve",
+          "writable": true
+        },
+        {
+          "name": "underlyingMint"
+        },
+        {
+          "name": "shareMint",
+          "writable": true
+        },
+        {
+          "name": "liquidityVault",
+          "writable": true
+        },
+        {
+          "name": "shareVault",
+          "writable": true
+        },
+        {
+          "name": "owner",
+          "signer": true
+        },
+        {
+          "name": "tokenProgram",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        }
+      ],
+      "args": [
+        {
+          "name": "yieldTokenId",
+          "type": "u16"
+        },
+        {
+          "name": "plainTokenId",
+          "type": "u16"
+        },
+        {
+          "name": "shares",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "registerParticipantBlsKey",
+      "docs": [
+        "Register a BLS key used only for cooperative clearing rounds."
+      ],
+      "discriminator": [
+        73,
+        33,
+        200,
+        201,
+        238,
+        231,
+        71,
+        145
+      ],
+      "accounts": [
+        {
+          "name": "globalConfig",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  45,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "participantBucket",
+          "writable": true
+        },
+        {
+          "name": "ownerIndexBucket"
         },
         {
           "name": "owner",
@@ -1828,7 +2219,7 @@
       ],
       "args": [
         {
-          "name": "bls_pubkey_compressed",
+          "name": "blsPubkeyCompressed",
           "type": {
             "array": [
               "u8",
@@ -1837,7 +2228,7 @@
           }
         },
         {
-          "name": "pop_signature_compressed",
+          "name": "popSignatureCompressed",
           "type": {
             "array": [
               "u8",
@@ -1848,7 +2239,7 @@
       ]
     },
     {
-      "name": "register_token",
+      "name": "registerToken",
       "docs": [
         "Register a new token in the registry (authority only)."
       ],
@@ -1864,7 +2255,7 @@
       ],
       "accounts": [
         {
-          "name": "token_registry",
+          "name": "tokenRegistry",
           "writable": true,
           "pda": {
             "seeds": [
@@ -1891,7 +2282,7 @@
           }
         },
         {
-          "name": "vault_token_account",
+          "name": "vaultTokenAccount",
           "docs": [
             "Vault token account for this token (created when token is registered)"
           ],
@@ -1924,7 +2315,7 @@
               },
               {
                 "kind": "arg",
-                "path": "token_id"
+                "path": "tokenId"
               }
             ]
           }
@@ -1936,7 +2327,7 @@
           ]
         },
         {
-          "name": "global_config",
+          "name": "globalConfig",
           "pda": {
             "seeds": [
               {
@@ -1969,11 +2360,11 @@
           "signer": true
         },
         {
-          "name": "token_program",
+          "name": "tokenProgram",
           "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
         },
         {
-          "name": "system_program",
+          "name": "systemProgram",
           "address": "11111111111111111111111111111111"
         },
         {
@@ -1983,11 +2374,11 @@
       ],
       "args": [
         {
-          "name": "token_id",
+          "name": "tokenId",
           "type": "u16"
         },
         {
-          "name": "symbol_bytes",
+          "name": "symbolBytes",
           "type": {
             "array": [
               "u8",
@@ -1998,9 +2389,9 @@
       ]
     },
     {
-      "name": "register_yield_bearing_token",
+      "name": "registerYieldBearingToken",
       "docs": [
-        "Register a yield-bearing wrapper token (e.g. agUSDC). Creates a TokenEntry with",
+        "Register a yield-bearing wrapper token (e.g. ryUSDC). Creates a TokenEntry with",
         "`kind = YieldBearing`, allocates a `YieldStrategy` PDA, and creates the protocol-owned",
         "`share_vault` (a cUSDC ATA whose authority is the GlobalConfig PDA). Authority-only."
       ],
@@ -2016,7 +2407,7 @@
       ],
       "accounts": [
         {
-          "name": "token_registry",
+          "name": "tokenRegistry",
           "writable": true,
           "pda": {
             "seeds": [
@@ -2043,7 +2434,7 @@
           }
         },
         {
-          "name": "global_config",
+          "name": "globalConfig",
           "pda": {
             "seeds": [
               {
@@ -2068,7 +2459,7 @@
           }
         },
         {
-          "name": "yield_strategy",
+          "name": "yieldStrategy",
           "writable": true,
           "pda": {
             "seeds": [
@@ -2093,19 +2484,19 @@
               },
               {
                 "kind": "arg",
-                "path": "token_id"
+                "path": "tokenId"
               }
             ]
           }
         },
         {
-          "name": "underlying_mint",
+          "name": "underlyingMint",
           "docs": [
             "Underlying SPL mint (USDC)."
           ]
         },
         {
-          "name": "yield_program",
+          "name": "yieldProgram",
           "docs": [
             "Lending program (mock-yield in dev / Save-Kamino in prod). Validated against `Reserve`."
           ]
@@ -2117,19 +2508,19 @@
           ]
         },
         {
-          "name": "share_mint",
+          "name": "shareMint",
           "docs": [
             "Lending share mint (cUSDC). Mint authority = `reserve`."
           ]
         },
         {
-          "name": "liquidity_vault",
+          "name": "liquidityVault",
           "docs": [
             "Reserve's USDC vault — kept for symmetry/CPI ergonomics."
           ]
         },
         {
-          "name": "share_vault",
+          "name": "shareVault",
           "docs": [
             "Protocol-owned cUSDC ATA under GlobalConfig PDA. PDA-seeded so it is deterministic."
           ],
@@ -2160,7 +2551,7 @@
               },
               {
                 "kind": "arg",
-                "path": "token_id"
+                "path": "tokenId"
               }
             ]
           }
@@ -2171,15 +2562,15 @@
           "signer": true
         },
         {
-          "name": "token_program",
+          "name": "tokenProgram",
           "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
         },
         {
-          "name": "associated_token_program",
+          "name": "associatedTokenProgram",
           "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
         },
         {
-          "name": "system_program",
+          "name": "systemProgram",
           "address": "11111111111111111111111111111111"
         },
         {
@@ -2189,11 +2580,11 @@
       ],
       "args": [
         {
-          "name": "token_id",
+          "name": "tokenId",
           "type": "u16"
         },
         {
-          "name": "symbol_bytes",
+          "name": "symbolBytes",
           "type": {
             "array": [
               "u8",
@@ -2202,13 +2593,13 @@
           }
         },
         {
-          "name": "protocol_yield_share_bps",
+          "name": "protocolYieldShareBps",
           "type": "u16"
         }
       ]
     },
     {
-      "name": "request_unlock_channel_funds",
+      "name": "requestUnlockChannelFunds",
       "docs": [
         "Request a timelocked partial unlock of channel collateral."
       ],
@@ -2224,7 +2615,7 @@
       ],
       "accounts": [
         {
-          "name": "global_config",
+          "name": "globalConfig",
           "pda": {
             "seeds": [
               {
@@ -2249,11 +2640,11 @@
           }
         },
         {
-          "name": "channel_bucket",
+          "name": "channelBucket",
           "writable": true
         },
         {
-          "name": "owner_index_bucket"
+          "name": "ownerIndexBucket"
         },
         {
           "name": "owner",
@@ -2262,11 +2653,11 @@
       ],
       "args": [
         {
-          "name": "token_id",
+          "name": "tokenId",
           "type": "u16"
         },
         {
-          "name": "payee_participant_id",
+          "name": "payeeParticipantId",
           "type": "u32"
         },
         {
@@ -2276,7 +2667,7 @@
       ]
     },
     {
-      "name": "request_update_channel_authorized_signer",
+      "name": "requestUpdateChannelAuthorizedSigner",
       "docs": [
         "Request a timelocked rotation of the channel's authorized signer."
       ],
@@ -2292,7 +2683,7 @@
       ],
       "accounts": [
         {
-          "name": "global_config",
+          "name": "globalConfig",
           "pda": {
             "seeds": [
               {
@@ -2317,11 +2708,11 @@
           }
         },
         {
-          "name": "channel_bucket",
+          "name": "channelBucket",
           "writable": true
         },
         {
-          "name": "owner_index_bucket"
+          "name": "ownerIndexBucket"
         },
         {
           "name": "owner",
@@ -2330,21 +2721,21 @@
       ],
       "args": [
         {
-          "name": "token_id",
+          "name": "tokenId",
           "type": "u16"
         },
         {
-          "name": "payee_participant_id",
+          "name": "payeeParticipantId",
           "type": "u32"
         },
         {
-          "name": "new_signer",
+          "name": "newSigner",
           "type": "pubkey"
         }
       ]
     },
     {
-      "name": "request_withdrawal",
+      "name": "requestWithdrawal",
       "docs": [
         "Request a timelocked withdrawal for a specific token."
       ],
@@ -2360,7 +2751,7 @@
       ],
       "accounts": [
         {
-          "name": "token_registry",
+          "name": "tokenRegistry",
           "pda": {
             "seeds": [
               {
@@ -2386,7 +2777,7 @@
           }
         },
         {
-          "name": "global_config",
+          "name": "globalConfig",
           "pda": {
             "seeds": [
               {
@@ -2411,14 +2802,14 @@
           }
         },
         {
-          "name": "participant_bucket",
+          "name": "participantBucket",
           "writable": true
         },
         {
-          "name": "owner_index_bucket"
+          "name": "ownerIndexBucket"
         },
         {
-          "name": "withdrawal_destination",
+          "name": "withdrawalDestination",
           "docs": [
             "The withdrawal destination token account"
           ]
@@ -2430,7 +2821,7 @@
       ],
       "args": [
         {
-          "name": "token_id",
+          "name": "tokenId",
           "type": "u16"
         },
         {
@@ -2444,9 +2835,9 @@
       ]
     },
     {
-      "name": "request_withdrawal_yield_bearing",
+      "name": "requestWithdrawalYieldBearing",
       "docs": [
-        "Request a timelocked withdrawal of `shares` agUSDC, redeemable to `destination` (USDC ATA)."
+        "Request a timelocked withdrawal of `shares` ryUSDC, redeemable to `destination` (USDC ATA)."
       ],
       "discriminator": [
         163,
@@ -2460,7 +2851,7 @@
       ],
       "accounts": [
         {
-          "name": "token_registry",
+          "name": "tokenRegistry",
           "pda": {
             "seeds": [
               {
@@ -2486,7 +2877,7 @@
           }
         },
         {
-          "name": "global_config",
+          "name": "globalConfig",
           "pda": {
             "seeds": [
               {
@@ -2511,7 +2902,7 @@
           }
         },
         {
-          "name": "yield_strategy",
+          "name": "yieldStrategy",
           "pda": {
             "seeds": [
               {
@@ -2535,20 +2926,20 @@
               },
               {
                 "kind": "arg",
-                "path": "token_id"
+                "path": "tokenId"
               }
             ]
           }
         },
         {
-          "name": "participant_bucket",
+          "name": "participantBucket",
           "writable": true
         },
         {
-          "name": "owner_index_bucket"
+          "name": "ownerIndexBucket"
         },
         {
-          "name": "withdrawal_destination"
+          "name": "withdrawalDestination"
         },
         {
           "name": "owner",
@@ -2557,7 +2948,7 @@
       ],
       "args": [
         {
-          "name": "token_id",
+          "name": "tokenId",
           "type": "u16"
         },
         {
@@ -2571,7 +2962,7 @@
       ]
     },
     {
-      "name": "settle_clearing_round",
+      "name": "settleClearingRound",
       "docs": [
         "BLS-authenticated cooperative clearing round: advances many logical channels and applies",
         "only net participant balance changes through bucket accounts."
@@ -2588,7 +2979,7 @@
       ],
       "accounts": [
         {
-          "name": "token_registry",
+          "name": "tokenRegistry",
           "pda": {
             "seeds": [
               {
@@ -2614,7 +3005,7 @@
           }
         },
         {
-          "name": "global_config",
+          "name": "globalConfig",
           "pda": {
             "seeds": [
               {
@@ -2644,7 +3035,7 @@
           "signer": true
         },
         {
-          "name": "instructions_sysvar",
+          "name": "instructionsSysvar",
           "address": "Sysvar1nstructions1111111111111111111111111"
         }
       ],
@@ -2654,7 +3045,7 @@
           "type": "bytes"
         },
         {
-          "name": "aggregate_signature_compressed",
+          "name": "aggregateSignatureCompressed",
           "type": {
             "array": [
               "u8",
@@ -2665,7 +3056,7 @@
       ]
     },
     {
-      "name": "settle_commitment_bundle",
+      "name": "settleCommitmentBundle",
       "docs": [
         "Settle many latest commitments for one payee across many unilateral channels."
       ],
@@ -2681,7 +3072,7 @@
       ],
       "accounts": [
         {
-          "name": "token_registry",
+          "name": "tokenRegistry",
           "pda": {
             "seeds": [
               {
@@ -2707,7 +3098,7 @@
           }
         },
         {
-          "name": "global_config",
+          "name": "globalConfig",
           "pda": {
             "seeds": [
               {
@@ -2737,7 +3128,7 @@
           "signer": true
         },
         {
-          "name": "instructions_sysvar",
+          "name": "instructionsSysvar",
           "address": "Sysvar1nstructions1111111111111111111111111"
         }
       ],
@@ -2749,7 +3140,7 @@
       ]
     },
     {
-      "name": "settle_individual",
+      "name": "settleIndividual",
       "docs": [
         "Settle a single payment commitment. Submitter must be the payee or an authorized settler."
       ],
@@ -2765,7 +3156,7 @@
       ],
       "accounts": [
         {
-          "name": "token_registry",
+          "name": "tokenRegistry",
           "pda": {
             "seeds": [
               {
@@ -2791,7 +3182,7 @@
           }
         },
         {
-          "name": "global_config",
+          "name": "globalConfig",
           "pda": {
             "seeds": [
               {
@@ -2821,14 +3212,14 @@
           "signer": true
         },
         {
-          "name": "instructions_sysvar",
+          "name": "instructionsSysvar",
           "address": "Sysvar1nstructions1111111111111111111111111"
         }
       ],
       "args": []
     },
     {
-      "name": "update_config",
+      "name": "updateConfig",
       "docs": [
         "Update protocol configuration (authority only).",
         "Settlement chain_id and default timing policies are immutable and cannot be changed."
@@ -2845,7 +3236,7 @@
       ],
       "accounts": [
         {
-          "name": "global_config",
+          "name": "globalConfig",
           "writable": true,
           "pda": {
             "seeds": [
@@ -2877,31 +3268,31 @@
           ],
           "signer": true,
           "relations": [
-            "global_config"
+            "globalConfig"
           ]
         }
       ],
       "args": [
         {
-          "name": "new_authority",
+          "name": "newAuthority",
           "type": {
             "option": "pubkey"
           }
         },
         {
-          "name": "new_fee_recipient",
+          "name": "newFeeRecipient",
           "type": {
             "option": "pubkey"
           }
         },
         {
-          "name": "new_fee_bps",
+          "name": "newFeeBps",
           "type": {
             "option": "u16"
           }
         },
         {
-          "name": "new_registration_fee_lamports",
+          "name": "newRegistrationFeeLamports",
           "type": {
             "option": "u64"
           }
@@ -2909,7 +3300,7 @@
       ]
     },
     {
-      "name": "update_inbound_channel_policy",
+      "name": "updateInboundChannelPolicy",
       "docs": [
         "Update the participant's inbound channel policy."
       ],
@@ -2925,11 +3316,11 @@
       ],
       "accounts": [
         {
-          "name": "participant_bucket",
+          "name": "participantBucket",
           "writable": true
         },
         {
-          "name": "owner_index_bucket"
+          "name": "ownerIndexBucket"
         },
         {
           "name": "owner",
@@ -2938,13 +3329,13 @@
       ],
       "args": [
         {
-          "name": "inbound_channel_policy",
+          "name": "inboundChannelPolicy",
           "type": "u8"
         }
       ]
     },
     {
-      "name": "update_registry_authority",
+      "name": "updateRegistryAuthority",
       "docs": [
         "Nominate a pending token registry authority."
       ],
@@ -2960,7 +3351,7 @@
       ],
       "accounts": [
         {
-          "name": "token_registry",
+          "name": "tokenRegistry",
           "writable": true,
           "pda": {
             "seeds": [
@@ -2987,7 +3378,7 @@
           }
         },
         {
-          "name": "current_authority",
+          "name": "currentAuthority",
           "docs": [
             "Current authority"
           ],
@@ -2996,7 +3387,7 @@
       ],
       "args": [
         {
-          "name": "new_authority",
+          "name": "newAuthority",
           "type": "pubkey"
         }
       ]
@@ -3004,7 +3395,7 @@
   ],
   "accounts": [
     {
-      "name": "GlobalConfig",
+      "name": "globalConfig",
       "discriminator": [
         149,
         8,
@@ -3017,7 +3408,7 @@
       ]
     },
     {
-      "name": "OwnerIndexBucket",
+      "name": "ownerIndexBucket",
       "discriminator": [
         185,
         229,
@@ -3030,7 +3421,7 @@
       ]
     },
     {
-      "name": "Reserve",
+      "name": "reserve",
       "discriminator": [
         43,
         242,
@@ -3043,7 +3434,7 @@
       ]
     },
     {
-      "name": "TokenRegistry",
+      "name": "tokenRegistry",
       "discriminator": [
         227,
         255,
@@ -3056,7 +3447,7 @@
       ]
     },
     {
-      "name": "YieldStrategy",
+      "name": "yieldStrategy",
       "discriminator": [
         153,
         203,
@@ -3071,7 +3462,7 @@
   ],
   "events": [
     {
-      "name": "ChannelAuthorizedSignerUpdateRequested",
+      "name": "channelAuthorizedSignerUpdateRequested",
       "discriminator": [
         23,
         50,
@@ -3084,7 +3475,7 @@
       ]
     },
     {
-      "name": "ChannelAuthorizedSignerUpdated",
+      "name": "channelAuthorizedSignerUpdated",
       "discriminator": [
         52,
         244,
@@ -3097,7 +3488,7 @@
       ]
     },
     {
-      "name": "ChannelCreated",
+      "name": "channelCreated",
       "discriminator": [
         32,
         4,
@@ -3110,7 +3501,7 @@
       ]
     },
     {
-      "name": "ChannelFundsLocked",
+      "name": "channelFundsLocked",
       "discriminator": [
         146,
         187,
@@ -3123,7 +3514,7 @@
       ]
     },
     {
-      "name": "ChannelFundsUnlocked",
+      "name": "channelFundsUnlocked",
       "discriminator": [
         137,
         22,
@@ -3136,7 +3527,7 @@
       ]
     },
     {
-      "name": "ChannelUnlockRequested",
+      "name": "channelUnlockRequested",
       "discriminator": [
         178,
         124,
@@ -3149,7 +3540,7 @@
       ]
     },
     {
-      "name": "ClearingRoundSettled",
+      "name": "clearingRoundSettled",
       "discriminator": [
         122,
         115,
@@ -3162,7 +3553,7 @@
       ]
     },
     {
-      "name": "CommitmentBundleSettled",
+      "name": "commitmentBundleSettled",
       "discriminator": [
         220,
         114,
@@ -3175,7 +3566,7 @@
       ]
     },
     {
-      "name": "ConfigAuthorityTransferStarted",
+      "name": "configAuthorityTransferStarted",
       "discriminator": [
         56,
         105,
@@ -3188,7 +3579,7 @@
       ]
     },
     {
-      "name": "ConfigAuthorityTransferred",
+      "name": "configAuthorityTransferred",
       "discriminator": [
         116,
         152,
@@ -3201,7 +3592,7 @@
       ]
     },
     {
-      "name": "ConfigUpdated",
+      "name": "configUpdated",
       "discriminator": [
         40,
         241,
@@ -3214,7 +3605,7 @@
       ]
     },
     {
-      "name": "Deposited",
+      "name": "deposited",
       "discriminator": [
         111,
         141,
@@ -3227,7 +3618,7 @@
       ]
     },
     {
-      "name": "InboundChannelPolicyUpdated",
+      "name": "inboundChannelPolicyUpdated",
       "discriminator": [
         105,
         82,
@@ -3240,7 +3631,7 @@
       ]
     },
     {
-      "name": "IndividualSettled",
+      "name": "individualSettled",
       "discriminator": [
         5,
         202,
@@ -3253,7 +3644,33 @@
       ]
     },
     {
-      "name": "ParticipantBlsKeyRegistered",
+      "name": "optedInYield",
+      "discriminator": [
+        205,
+        173,
+        39,
+        40,
+        235,
+        57,
+        1,
+        54
+      ]
+    },
+    {
+      "name": "optedOutYield",
+      "discriminator": [
+        250,
+        26,
+        184,
+        180,
+        81,
+        79,
+        209,
+        2
+      ]
+    },
+    {
+      "name": "participantBlsKeyRegistered",
       "discriminator": [
         215,
         146,
@@ -3266,7 +3683,7 @@
       ]
     },
     {
-      "name": "ParticipantInitialized",
+      "name": "participantInitialized",
       "discriminator": [
         177,
         34,
@@ -3279,7 +3696,7 @@
       ]
     },
     {
-      "name": "ProtocolYieldClaimed",
+      "name": "protocolYieldClaimed",
       "discriminator": [
         232,
         119,
@@ -3292,7 +3709,7 @@
       ]
     },
     {
-      "name": "RegistryAuthorityTransferStarted",
+      "name": "registryAuthorityTransferStarted",
       "discriminator": [
         98,
         230,
@@ -3305,7 +3722,7 @@
       ]
     },
     {
-      "name": "RegistryAuthorityTransferred",
+      "name": "registryAuthorityTransferred",
       "discriminator": [
         70,
         11,
@@ -3318,7 +3735,7 @@
       ]
     },
     {
-      "name": "WithdrawalCancelled",
+      "name": "withdrawalCancelled",
       "discriminator": [
         119,
         175,
@@ -3331,7 +3748,7 @@
       ]
     },
     {
-      "name": "WithdrawalRequested",
+      "name": "withdrawalRequested",
       "discriminator": [
         75,
         207,
@@ -3344,7 +3761,7 @@
       ]
     },
     {
-      "name": "Withdrawn",
+      "name": "withdrawn",
       "discriminator": [
         20,
         89,
@@ -3357,7 +3774,7 @@
       ]
     },
     {
-      "name": "YieldAccrued",
+      "name": "yieldAccrued",
       "discriminator": [
         195,
         121,
@@ -3370,7 +3787,7 @@
       ]
     },
     {
-      "name": "YieldBearingTokenRegistered",
+      "name": "yieldBearingTokenRegistered",
       "discriminator": [
         33,
         190,
@@ -3383,7 +3800,7 @@
       ]
     },
     {
-      "name": "YieldDeposited",
+      "name": "yieldDeposited",
       "discriminator": [
         240,
         44,
@@ -3396,7 +3813,7 @@
       ]
     },
     {
-      "name": "YieldWithdrawn",
+      "name": "yieldWithdrawn",
       "discriminator": [
         175,
         101,
@@ -3412,456 +3829,461 @@
   "errors": [
     {
       "code": 6000,
-      "name": "InsufficientBalance",
+      "name": "insufficientBalance",
       "msg": "Insufficient balance for this operation"
     },
     {
       "code": 6001,
-      "name": "WithdrawalAlreadyPending",
+      "name": "withdrawalAlreadyPending",
       "msg": "A withdrawal is already pending"
     },
     {
       "code": 6002,
-      "name": "NoWithdrawalPending",
+      "name": "noWithdrawalPending",
       "msg": "No withdrawal is currently pending"
     },
     {
       "code": 6003,
-      "name": "WithdrawalLocked",
+      "name": "withdrawalLocked",
       "msg": "Unlock timelock has not yet expired"
     },
     {
       "code": 6004,
-      "name": "InvalidWithdrawalDestination",
+      "name": "invalidWithdrawalDestination",
       "msg": "Invalid withdrawal destination address"
     },
     {
       "code": 6005,
-      "name": "InvalidAuthority",
+      "name": "invalidAuthority",
       "msg": "Authority cannot be the zero address"
     },
     {
       "code": 6006,
-      "name": "InvalidFeeRecipient",
+      "name": "invalidFeeRecipient",
       "msg": "Fee recipient cannot be the zero address"
     },
     {
       "code": 6007,
-      "name": "InvalidInboundChannelPolicy",
+      "name": "invalidInboundChannelPolicy",
       "msg": "Invalid inbound channel policy"
     },
     {
       "code": 6008,
-      "name": "UnauthorizedInitializer",
+      "name": "unauthorizedInitializer",
       "msg": "Only the program upgrade authority can initialize the protocol"
     },
     {
       "code": 6009,
-      "name": "InvalidFeeBps",
+      "name": "invalidFeeBps",
       "msg": "Fee BPS must be between 3 (0.03%) and 30 (0.3%)"
     },
     {
       "code": 6010,
-      "name": "InvalidRegistrationFee",
+      "name": "invalidRegistrationFee",
       "msg": "Registration fee must be 0 or between 0.001 and 0.01 SOL"
     },
     {
       "code": 6011,
-      "name": "InvalidDepositFor",
+      "name": "invalidDepositFor",
       "msg": "Invalid deposit_for: amounts length must match recipients, max 16"
     },
     {
       "code": 6012,
-      "name": "AmountMustBePositive",
+      "name": "amountMustBePositive",
       "msg": "Amount must be greater than zero"
     },
     {
       "code": 6013,
-      "name": "CommitmentAmountMustIncrease",
+      "name": "commitmentAmountMustIncrease",
       "msg": "Committed amount must be greater than the previously settled amount"
     },
     {
       "code": 6014,
-      "name": "InvalidAuthoritySignature",
+      "name": "invalidAuthoritySignature",
       "msg": "Invalid authority signature"
     },
     {
       "code": 6015,
-      "name": "SignatureAlreadyUsed",
+      "name": "signatureAlreadyUsed",
       "msg": "This signature or clearing round has already been used"
     },
     {
       "code": 6016,
-      "name": "ParticipantNotFound",
+      "name": "participantNotFound",
       "msg": "Participant not found"
     },
     {
       "code": 6017,
-      "name": "AccountIdMismatch",
+      "name": "accountIdMismatch",
       "msg": "Account participant_id does not match message participant_id"
     },
     {
       "code": 6018,
-      "name": "InvalidCommitmentMessage",
+      "name": "invalidCommitmentMessage",
       "msg": "Invalid payment commitment message format"
     },
     {
       "code": 6019,
-      "name": "InvalidClearingRoundMessage",
+      "name": "invalidClearingRoundMessage",
       "msg": "Invalid clearing round message format"
     },
     {
       "code": 6020,
-      "name": "NetFlowImbalance",
+      "name": "netFlowImbalance",
       "msg": "Net flow sums do not balance"
     },
     {
       "code": 6021,
-      "name": "NetPositionOverflow",
+      "name": "netPositionOverflow",
       "msg": "Net position computation overflowed"
     },
     {
       "code": 6022,
-      "name": "MathOverflow",
+      "name": "mathOverflow",
       "msg": "Arithmetic overflow"
     },
     {
       "code": 6023,
-      "name": "InvalidChainId",
+      "name": "invalidChainId",
       "msg": "Chain ID is not supported by this deployment configuration"
     },
     {
       "code": 6024,
-      "name": "InvalidMessageDomain",
+      "name": "invalidMessageDomain",
       "msg": "Message domain does not match this deployment"
     },
     {
       "code": 6025,
-      "name": "InvalidSignature",
+      "name": "invalidSignature",
       "msg": "Ed25519 signature verification failed"
     },
     {
       "code": 6026,
-      "name": "InvalidBlsPublicKey",
+      "name": "invalidBlsPublicKey",
       "msg": "Invalid BLS public key"
     },
     {
       "code": 6027,
-      "name": "InvalidBlsSignature",
+      "name": "invalidBlsSignature",
       "msg": "Invalid BLS aggregate signature"
     },
     {
       "code": 6028,
-      "name": "InvalidBlsProofOfPossession",
+      "name": "invalidBlsProofOfPossession",
       "msg": "Invalid BLS proof of possession"
     },
     {
       "code": 6029,
-      "name": "ParticipantBlsKeyNotFound",
+      "name": "participantBlsKeyNotFound",
       "msg": "Participant inline BLS key is not registered"
     },
     {
       "code": 6030,
-      "name": "ParticipantBlsKeyAlreadyRegistered",
+      "name": "participantBlsKeyAlreadyRegistered",
       "msg": "Participant already has a registered BLS key"
     },
     {
       "code": 6031,
-      "name": "AccountBlsKeyMismatch",
+      "name": "accountBlsKeyMismatch",
       "msg": "BLS key registration does not match the participant"
     },
     {
       "code": 6032,
-      "name": "BlsSyscallFailed",
+      "name": "blsSyscallFailed",
       "msg": "BLS syscall failed or is unavailable on this cluster"
     },
     {
       "code": 6033,
-      "name": "CpiNotAllowed",
+      "name": "cpiNotAllowed",
       "msg": "CPI calls to settlement instructions are not allowed"
     },
     {
       "code": 6034,
-      "name": "InvalidEd25519Data",
+      "name": "invalidEd25519Data",
       "msg": "Invalid Ed25519 instruction data"
     },
     {
       "code": 6035,
-      "name": "ChannelNotInitialized",
+      "name": "channelNotInitialized",
       "msg": "Channel must be initialized before use - call create_channel first"
     },
     {
       "code": 6036,
-      "name": "ChannelAlreadyExists",
+      "name": "channelAlreadyExists",
       "msg": "Channel already exists for this payer-payee pair"
     },
     {
       "code": 6037,
-      "name": "UnauthorizedSettler",
+      "name": "unauthorizedSettler",
       "msg": "Only the payee or authorized settler can submit this payment commitment"
     },
     {
       "code": 6038,
-      "name": "InboundChannelConsentRequired",
+      "name": "inboundChannelConsentRequired",
       "msg": "Payee consent is required to create this inbound channel"
     },
     {
       "code": 6039,
-      "name": "CounterpartyConsentRequired",
+      "name": "counterpartyConsentRequired",
       "msg": "Counterparty consent is required for cooperative channel unlock"
     },
     {
       "code": 6040,
-      "name": "InboundChannelsDisabled",
+      "name": "inboundChannelsDisabled",
       "msg": "This participant does not accept inbound channels"
     },
     {
       "code": 6041,
-      "name": "SelfChannelNotAllowed",
+      "name": "selfChannelNotAllowed",
       "msg": "Self-channels are not allowed"
     },
     {
       "code": 6042,
-      "name": "NoPendingAuthorityTransfer",
+      "name": "noPendingAuthorityTransfer",
       "msg": "No authority transfer is currently pending"
     },
     {
       "code": 6043,
-      "name": "UnauthorizedPendingAuthority",
+      "name": "unauthorizedPendingAuthority",
       "msg": "Only the nominated pending authority can accept this transfer"
     },
     {
       "code": 6044,
-      "name": "TooManyTokenBalances",
+      "name": "tooManyTokenBalances",
       "msg": "Maximum token balances per participant exceeded"
     },
     {
       "code": 6045,
-      "name": "TokenNotFound",
+      "name": "tokenNotFound",
       "msg": "Token ID not registered in token registry"
     },
     {
       "code": 6046,
-      "name": "TokenAlreadyRegistered",
+      "name": "tokenAlreadyRegistered",
       "msg": "Token mint already registered"
     },
     {
       "code": 6047,
-      "name": "TokenIdAlreadyInUse",
+      "name": "tokenIdAlreadyInUse",
       "msg": "Token ID already in use"
     },
     {
       "code": 6048,
-      "name": "UnauthorizedTokenRegistration",
+      "name": "unauthorizedTokenRegistration",
       "msg": "Unauthorized token registration"
     },
     {
       "code": 6049,
-      "name": "InvalidTokenId",
+      "name": "invalidTokenId",
       "msg": "Token ID must be greater than zero"
     },
     {
       "code": 6050,
-      "name": "InvalidTokenSymbol",
+      "name": "invalidTokenSymbol",
       "msg": "Token symbol must be valid ASCII"
     },
     {
       "code": 6051,
-      "name": "InvalidTokenDecimals",
+      "name": "invalidTokenDecimals",
       "msg": "Token decimals exceed the protocol maximum"
     },
     {
       "code": 6052,
-      "name": "TokenRegistryFull",
+      "name": "tokenRegistryFull",
       "msg": "Token registry account is full"
     },
     {
       "code": 6053,
-      "name": "InvalidTokenMint",
+      "name": "invalidTokenMint",
       "msg": "Token account mint doesn't match registered token"
     },
     {
       "code": 6054,
-      "name": "InsufficientLockedBalance",
+      "name": "insufficientLockedBalance",
       "msg": "Requested unlock amount exceeds the channel's locked balance"
     },
     {
       "code": 6055,
-      "name": "NoChannelUnlockPending",
+      "name": "noChannelUnlockPending",
       "msg": "No channel unlock is currently pending"
     },
     {
       "code": 6056,
-      "name": "InvalidAuthorizedSigner",
+      "name": "invalidAuthorizedSigner",
       "msg": "Authorized signer cannot be the zero address or the current signer"
     },
     {
       "code": 6057,
-      "name": "NoAuthorizedSignerUpdatePending",
+      "name": "noAuthorizedSignerUpdatePending",
       "msg": "No authorized signer update is currently pending"
     },
     {
       "code": 6058,
-      "name": "BucketAccountMismatch",
+      "name": "bucketAccountMismatch",
       "msg": "Bucket account does not match the expected bucket id or PDA"
     },
     {
       "code": 6059,
-      "name": "BucketSlotMismatch",
+      "name": "bucketSlotMismatch",
       "msg": "Bucket slot does not match the expected logical row"
     },
     {
       "code": 6060,
-      "name": "BucketSlotAlreadyInitialized",
+      "name": "bucketSlotAlreadyInitialized",
       "msg": "Bucket slot is already initialized"
     },
     {
       "code": 6061,
-      "name": "BucketFull",
+      "name": "bucketFull",
       "msg": "Bucket has no remaining free slots"
     },
     {
       "code": 6062,
-      "name": "OwnerAlreadyRegistered",
+      "name": "ownerAlreadyRegistered",
       "msg": "Owner is already registered"
     },
     {
       "code": 6063,
-      "name": "TokenIsYieldBearing",
+      "name": "tokenIsYieldBearing",
       "msg": "Token id is yield-bearing; use the yield-bearing instruction variant"
     },
     {
       "code": 6064,
-      "name": "TokenIsNotYieldBearing",
+      "name": "tokenIsNotYieldBearing",
       "msg": "Token id is plain; use the plain deposit/withdrawal instruction"
     },
     {
       "code": 6065,
-      "name": "InvalidYieldStrategy",
+      "name": "invalidYieldStrategy",
       "msg": "YieldStrategy account does not match the registered token configuration"
     },
     {
       "code": 6066,
-      "name": "InsufficientProtocolYield",
+      "name": "insufficientProtocolYield",
       "msg": "Requested protocol yield claim exceeds accrued protocol yield"
     },
     {
       "code": 6067,
-      "name": "YieldUnderlyingMismatch",
+      "name": "yieldUnderlyingMismatch",
       "msg": "Yield-bearing underlying mint does not match the lending reserve"
     },
     {
       "code": 6068,
-      "name": "SolvencyInvariantBroken",
+      "name": "solvencyInvariantBroken",
       "msg": "Solvency invariant violated: share_vault USDC value < user_owed + protocol_owed"
     },
     {
       "code": 6069,
-      "name": "InvalidYieldProgram",
+      "name": "invalidYieldProgram",
       "msg": "Yield program account does not match strategy.yield_program"
     },
     {
       "code": 6070,
-      "name": "InvalidProtocolYieldShareBps",
+      "name": "invalidProtocolYieldShareBps",
       "msg": "Protocol yield share bps exceeds the maximum allowed value"
+    },
+    {
+      "code": 6071,
+      "name": "mismatchedYieldUnderlying",
+      "msg": "Plain token mint does not match the yield strategy's underlying mint"
     }
   ],
   "types": [
     {
-      "name": "ChannelAuthorizedSignerUpdateRequested",
+      "name": "channelAuthorizedSignerUpdateRequested",
       "type": {
         "kind": "struct",
         "fields": [
           {
-            "name": "payer_id",
+            "name": "payerId",
             "type": "u32"
           },
           {
-            "name": "payee_id",
+            "name": "payeeId",
             "type": "u32"
           },
           {
-            "name": "token_id",
+            "name": "tokenId",
             "type": "u16"
           },
           {
-            "name": "current_authorized_signer",
+            "name": "currentAuthorizedSigner",
             "type": "pubkey"
           },
           {
-            "name": "pending_authorized_signer",
+            "name": "pendingAuthorizedSigner",
             "type": "pubkey"
           },
           {
-            "name": "activate_at",
+            "name": "activateAt",
             "type": "i64"
           }
         ]
       }
     },
     {
-      "name": "ChannelAuthorizedSignerUpdated",
+      "name": "channelAuthorizedSignerUpdated",
       "type": {
         "kind": "struct",
         "fields": [
           {
-            "name": "payer_id",
+            "name": "payerId",
             "type": "u32"
           },
           {
-            "name": "payee_id",
+            "name": "payeeId",
             "type": "u32"
           },
           {
-            "name": "token_id",
+            "name": "tokenId",
             "type": "u16"
           },
           {
-            "name": "previous_authorized_signer",
+            "name": "previousAuthorizedSigner",
             "type": "pubkey"
           },
           {
-            "name": "new_authorized_signer",
+            "name": "newAuthorizedSigner",
             "type": "pubkey"
           }
         ]
       }
     },
     {
-      "name": "ChannelCreated",
+      "name": "channelCreated",
       "type": {
         "kind": "struct",
         "fields": [
           {
-            "name": "payer_id",
+            "name": "payerId",
             "type": "u32"
           },
           {
-            "name": "payee_id",
+            "name": "payeeId",
             "type": "u32"
           },
           {
-            "name": "token_id",
+            "name": "tokenId",
             "type": "u16"
           }
         ]
       }
     },
     {
-      "name": "ChannelFundsLocked",
+      "name": "channelFundsLocked",
       "type": {
         "kind": "struct",
         "fields": [
           {
-            "name": "payer_id",
+            "name": "payerId",
             "type": "u32"
           },
           {
-            "name": "payee_id",
+            "name": "payeeId",
             "type": "u32"
           },
           {
-            "name": "token_id",
+            "name": "tokenId",
             "type": "u16"
           },
           {
@@ -3869,111 +4291,111 @@
             "type": "u64"
           },
           {
-            "name": "total_locked",
+            "name": "totalLocked",
             "type": "u64"
           }
         ]
       }
     },
     {
-      "name": "ChannelFundsUnlocked",
+      "name": "channelFundsUnlocked",
       "type": {
         "kind": "struct",
         "fields": [
           {
-            "name": "payer_id",
+            "name": "payerId",
             "type": "u32"
           },
           {
-            "name": "payee_id",
+            "name": "payeeId",
             "type": "u32"
           },
           {
-            "name": "token_id",
+            "name": "tokenId",
             "type": "u16"
           },
           {
-            "name": "released_amount",
+            "name": "releasedAmount",
             "type": "u64"
           },
           {
-            "name": "remaining_locked",
+            "name": "remainingLocked",
             "type": "u64"
           }
         ]
       }
     },
     {
-      "name": "ChannelUnlockRequested",
+      "name": "channelUnlockRequested",
       "type": {
         "kind": "struct",
         "fields": [
           {
-            "name": "payer_id",
+            "name": "payerId",
             "type": "u32"
           },
           {
-            "name": "payee_id",
+            "name": "payeeId",
             "type": "u32"
           },
           {
-            "name": "token_id",
+            "name": "tokenId",
             "type": "u16"
           },
           {
-            "name": "requested_amount",
+            "name": "requestedAmount",
             "type": "u64"
           },
           {
-            "name": "unlock_at",
+            "name": "unlockAt",
             "type": "i64"
           }
         ]
       }
     },
     {
-      "name": "ClearingRoundSettled",
+      "name": "clearingRoundSettled",
       "type": {
         "kind": "struct",
         "fields": [
           {
-            "name": "token_id",
+            "name": "tokenId",
             "type": "u16"
           },
           {
-            "name": "participant_count",
+            "name": "participantCount",
             "type": "u16"
           },
           {
-            "name": "channel_count",
+            "name": "channelCount",
             "type": "u16"
           },
           {
-            "name": "total_gross",
+            "name": "totalGross",
             "type": "u64"
           },
           {
-            "name": "total_net_adjusted",
+            "name": "totalNetAdjusted",
             "type": "u64"
           }
         ]
       }
     },
     {
-      "name": "CommitmentBundleSettled",
+      "name": "commitmentBundleSettled",
       "type": {
         "kind": "struct",
         "fields": [
           {
-            "name": "payee_id",
+            "name": "payeeId",
             "type": "u32"
           },
           {
-            "name": "token_id",
+            "name": "tokenId",
             "type": "u16"
           },
           {
-            "name": "channel_count",
+            "name": "channelCount",
             "type": "u16"
           },
           {
@@ -3984,39 +4406,39 @@
       }
     },
     {
-      "name": "ConfigAuthorityTransferStarted",
+      "name": "configAuthorityTransferStarted",
       "type": {
         "kind": "struct",
         "fields": [
           {
-            "name": "current_authority",
+            "name": "currentAuthority",
             "type": "pubkey"
           },
           {
-            "name": "pending_authority",
+            "name": "pendingAuthority",
             "type": "pubkey"
           }
         ]
       }
     },
     {
-      "name": "ConfigAuthorityTransferred",
+      "name": "configAuthorityTransferred",
       "type": {
         "kind": "struct",
         "fields": [
           {
-            "name": "previous_authority",
+            "name": "previousAuthority",
             "type": "pubkey"
           },
           {
-            "name": "new_authority",
+            "name": "newAuthority",
             "type": "pubkey"
           }
         ]
       }
     },
     {
-      "name": "ConfigUpdated",
+      "name": "configUpdated",
       "type": {
         "kind": "struct",
         "fields": [
@@ -4025,31 +4447,31 @@
             "type": "pubkey"
           },
           {
-            "name": "fee_recipient",
+            "name": "feeRecipient",
             "type": "pubkey"
           },
           {
-            "name": "fee_bps",
+            "name": "feeBps",
             "type": "u16"
           },
           {
-            "name": "chain_id",
+            "name": "chainId",
             "type": "u16"
           }
         ]
       }
     },
     {
-      "name": "Deposited",
+      "name": "deposited",
       "type": {
         "kind": "struct",
         "fields": [
           {
-            "name": "participant_id",
+            "name": "participantId",
             "type": "u32"
           },
           {
-            "name": "token_id",
+            "name": "tokenId",
             "type": "u16"
           },
           {
@@ -4060,7 +4482,7 @@
       }
     },
     {
-      "name": "GlobalConfig",
+      "name": "globalConfig",
       "type": {
         "kind": "struct",
         "fields": [
@@ -4073,35 +4495,35 @@
             "type": "pubkey"
           },
           {
-            "name": "fee_recipient",
+            "name": "feeRecipient",
             "docs": [
               "Wallet that receives registration-fee lamports and owns per-token fee accounts."
             ],
             "type": "pubkey"
           },
           {
-            "name": "fee_bps",
+            "name": "feeBps",
             "docs": [
               "Withdrawal fee in basis points (default 30 = 0.3%)"
             ],
             "type": "u16"
           },
           {
-            "name": "withdrawal_timelock_seconds",
+            "name": "withdrawalTimelockSeconds",
             "docs": [
               "Seconds before a pending available-balance withdrawal becomes executable."
             ],
             "type": "i64"
           },
           {
-            "name": "registration_fee_lamports",
+            "name": "registrationFeeLamports",
             "docs": [
               "Flat SOL fee at initialize_participant (default 0)"
             ],
             "type": "u64"
           },
           {
-            "name": "next_participant_id",
+            "name": "nextParticipantId",
             "docs": [
               "Auto-incrementing participant ID counter"
             ],
@@ -4115,14 +4537,14 @@
             "type": "u8"
           },
           {
-            "name": "chain_id",
+            "name": "chainId",
             "docs": [
               "Protocol chain identifier used in signed message validation."
             ],
             "type": "u16"
           },
           {
-            "name": "message_domain",
+            "name": "messageDomain",
             "docs": [
               "Immutable deployment-scoped domain used by signed settlement messages."
             ],
@@ -4134,21 +4556,21 @@
             }
           },
           {
-            "name": "pending_authority",
+            "name": "pendingAuthority",
             "docs": [
               "Pending authority that must explicitly accept before a handoff completes."
             ],
             "type": "pubkey"
           },
           {
-            "name": "channel_unlock_timelock_seconds",
+            "name": "channelUnlockTimelockSeconds",
             "docs": [
               "Seconds before a unilateral channel-collateral unlock becomes executable."
             ],
             "type": "i64"
           },
           {
-            "name": "_reserved",
+            "name": "reserved",
             "docs": [
               "Reserved for future config expansion."
             ],
@@ -4163,36 +4585,36 @@
       }
     },
     {
-      "name": "InboundChannelPolicyUpdated",
+      "name": "inboundChannelPolicyUpdated",
       "type": {
         "kind": "struct",
         "fields": [
           {
-            "name": "participant_id",
+            "name": "participantId",
             "type": "u32"
           },
           {
-            "name": "inbound_channel_policy",
+            "name": "inboundChannelPolicy",
             "type": "u8"
           }
         ]
       }
     },
     {
-      "name": "IndividualSettled",
+      "name": "individualSettled",
       "type": {
         "kind": "struct",
         "fields": [
           {
-            "name": "payer_id",
+            "name": "payerId",
             "type": "u32"
           },
           {
-            "name": "payee_id",
+            "name": "payeeId",
             "type": "u32"
           },
           {
-            "name": "token_id",
+            "name": "tokenId",
             "type": "u16"
           },
           {
@@ -4200,23 +4622,87 @@
             "type": "u64"
           },
           {
-            "name": "committed_amount",
+            "name": "committedAmount",
             "type": "u64"
           },
           {
-            "name": "from_locked",
+            "name": "fromLocked",
             "type": "bool"
           }
         ]
       }
     },
     {
-      "name": "OwnerIndexBucket",
+      "name": "optedInYield",
       "type": {
         "kind": "struct",
         "fields": [
           {
-            "name": "bucket_id",
+            "name": "participantId",
+            "type": "u32"
+          },
+          {
+            "name": "plainTokenId",
+            "type": "u16"
+          },
+          {
+            "name": "yieldTokenId",
+            "type": "u16"
+          },
+          {
+            "name": "usdcAmount",
+            "type": "u64"
+          },
+          {
+            "name": "sharesMinted",
+            "type": "u64"
+          },
+          {
+            "name": "userIndexQ64",
+            "type": "u128"
+          }
+        ]
+      }
+    },
+    {
+      "name": "optedOutYield",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "participantId",
+            "type": "u32"
+          },
+          {
+            "name": "yieldTokenId",
+            "type": "u16"
+          },
+          {
+            "name": "plainTokenId",
+            "type": "u16"
+          },
+          {
+            "name": "sharesBurned",
+            "type": "u64"
+          },
+          {
+            "name": "usdcCredited",
+            "type": "u64"
+          },
+          {
+            "name": "userIndexQ64",
+            "type": "u128"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ownerIndexBucket",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "bucketId",
             "type": "u32"
           },
           {
@@ -4229,7 +4715,7 @@
               "array": [
                 {
                   "defined": {
-                    "name": "OwnerIndexSlot"
+                    "name": "ownerIndexSlot"
                   }
                 },
                 32
@@ -4240,7 +4726,7 @@
       }
     },
     {
-      "name": "OwnerIndexSlot",
+      "name": "ownerIndexSlot",
       "type": {
         "kind": "struct",
         "fields": [
@@ -4253,14 +4739,14 @@
             "type": "pubkey"
           },
           {
-            "name": "participant_id",
+            "name": "participantId",
             "type": "u32"
           }
         ]
       }
     },
     {
-      "name": "ParticipantBlsKeyRegistered",
+      "name": "participantBlsKeyRegistered",
       "type": {
         "kind": "struct",
         "fields": [
@@ -4269,22 +4755,22 @@
             "type": "pubkey"
           },
           {
-            "name": "participant_id",
+            "name": "participantId",
             "type": "u32"
           },
           {
-            "name": "participant_bucket",
+            "name": "participantBucket",
             "type": "pubkey"
           },
           {
-            "name": "scheme_version",
+            "name": "schemeVersion",
             "type": "u8"
           }
         ]
       }
     },
     {
-      "name": "ParticipantInitialized",
+      "name": "participantInitialized",
       "type": {
         "kind": "struct",
         "fields": [
@@ -4293,91 +4779,91 @@
             "type": "pubkey"
           },
           {
-            "name": "participant_id",
+            "name": "participantId",
             "type": "u32"
           },
           {
-            "name": "registration_fee_lamports",
+            "name": "registrationFeeLamports",
             "type": "u64"
           },
           {
-            "name": "inbound_channel_policy",
+            "name": "inboundChannelPolicy",
             "type": "u8"
           }
         ]
       }
     },
     {
-      "name": "ProtocolYieldClaimed",
+      "name": "protocolYieldClaimed",
       "type": {
         "kind": "struct",
         "fields": [
           {
-            "name": "token_id",
+            "name": "tokenId",
             "type": "u16"
           },
           {
-            "name": "fee_recipient",
+            "name": "feeRecipient",
             "type": "pubkey"
           },
           {
-            "name": "usdc_amount",
+            "name": "usdcAmount",
             "type": "u64"
           },
           {
-            "name": "protocol_owed_underlying_after",
+            "name": "protocolOwedUnderlyingAfter",
             "type": "u64"
           }
         ]
       }
     },
     {
-      "name": "RegistryAuthorityTransferStarted",
+      "name": "registryAuthorityTransferStarted",
       "type": {
         "kind": "struct",
         "fields": [
           {
-            "name": "current_authority",
+            "name": "currentAuthority",
             "type": "pubkey"
           },
           {
-            "name": "pending_authority",
+            "name": "pendingAuthority",
             "type": "pubkey"
           }
         ]
       }
     },
     {
-      "name": "RegistryAuthorityTransferred",
+      "name": "registryAuthorityTransferred",
       "type": {
         "kind": "struct",
         "fields": [
           {
-            "name": "previous_authority",
+            "name": "previousAuthority",
             "type": "pubkey"
           },
           {
-            "name": "new_authority",
+            "name": "newAuthority",
             "type": "pubkey"
           }
         ]
       }
     },
     {
-      "name": "Reserve",
+      "name": "reserve",
       "type": {
         "kind": "struct",
         "fields": [
           {
-            "name": "underlying_mint",
+            "name": "underlyingMint",
             "type": "pubkey"
           },
           {
-            "name": "share_mint",
+            "name": "shareMint",
             "type": "pubkey"
           },
           {
-            "name": "liquidity_vault",
+            "name": "liquidityVault",
             "type": "pubkey"
           },
           {
@@ -4385,15 +4871,15 @@
             "type": "pubkey"
           },
           {
-            "name": "apy_bps",
+            "name": "apyBps",
             "type": "u16"
           },
           {
-            "name": "last_accrual_ts",
+            "name": "lastAccrualTs",
             "type": "i64"
           },
           {
-            "name": "total_underlying",
+            "name": "totalUnderlying",
             "type": "u64"
           },
           {
@@ -4401,7 +4887,7 @@
             "type": "u8"
           },
           {
-            "name": "_reserved",
+            "name": "reserved",
             "type": {
               "array": [
                 "u8",
@@ -4413,7 +4899,7 @@
       }
     },
     {
-      "name": "TokenEntry",
+      "name": "tokenEntry",
       "docs": [
         "Token registry entry",
         "Total: 56 bytes per entry (was 51 in v5; +1 for `kind`, +4 reserved for future fields)."
@@ -4457,7 +4943,7 @@
             }
           },
           {
-            "name": "registered_at",
+            "name": "registeredAt",
             "docs": [
               "Unix timestamp when token was registered (immutable)"
             ],
@@ -4471,7 +4957,7 @@
             "type": "u8"
           },
           {
-            "name": "_reserved",
+            "name": "reserved",
             "docs": [
               "Reserved padding for future fields (do not change the size — accounts are pre-allocated)."
             ],
@@ -4486,7 +4972,7 @@
       }
     },
     {
-      "name": "TokenRegistry",
+      "name": "tokenRegistry",
       "type": {
         "kind": "struct",
         "fields": [
@@ -4505,7 +4991,7 @@
             "type": {
               "vec": {
                 "defined": {
-                  "name": "TokenEntry"
+                  "name": "tokenEntry"
                 }
               }
             }
@@ -4518,7 +5004,7 @@
             "type": "u8"
           },
           {
-            "name": "pending_authority",
+            "name": "pendingAuthority",
             "docs": [
               "Pending authority that must explicitly accept before a handoff completes."
             ],
@@ -4528,36 +5014,36 @@
       }
     },
     {
-      "name": "WithdrawalCancelled",
+      "name": "withdrawalCancelled",
       "type": {
         "kind": "struct",
         "fields": [
           {
-            "name": "participant_id",
+            "name": "participantId",
             "type": "u32"
           },
           {
-            "name": "token_id",
+            "name": "tokenId",
             "type": "u16"
           },
           {
-            "name": "amount_returned",
+            "name": "amountReturned",
             "type": "u64"
           }
         ]
       }
     },
     {
-      "name": "WithdrawalRequested",
+      "name": "withdrawalRequested",
       "type": {
         "kind": "struct",
         "fields": [
           {
-            "name": "participant_id",
+            "name": "participantId",
             "type": "u32"
           },
           {
-            "name": "token_id",
+            "name": "tokenId",
             "type": "u16"
           },
           {
@@ -4569,31 +5055,31 @@
             "type": "pubkey"
           },
           {
-            "name": "unlock_at",
+            "name": "unlockAt",
             "type": "i64"
           }
         ]
       }
     },
     {
-      "name": "Withdrawn",
+      "name": "withdrawn",
       "type": {
         "kind": "struct",
         "fields": [
           {
-            "name": "participant_id",
+            "name": "participantId",
             "type": "u32"
           },
           {
-            "name": "token_id",
+            "name": "tokenId",
             "type": "u16"
           },
           {
-            "name": "net_amount",
+            "name": "netAmount",
             "type": "u64"
           },
           {
-            "name": "fee_amount",
+            "name": "feeAmount",
             "type": "u64"
           },
           {
@@ -4604,56 +5090,56 @@
       }
     },
     {
-      "name": "YieldAccrued",
+      "name": "yieldAccrued",
       "type": {
         "kind": "struct",
         "fields": [
           {
-            "name": "token_id",
+            "name": "tokenId",
             "type": "u16"
           },
           {
-            "name": "current_underlying",
+            "name": "currentUnderlying",
             "type": "u64"
           },
           {
-            "name": "last_settled_underlying",
+            "name": "lastSettledUnderlying",
             "type": "u64"
           },
           {
-            "name": "user_index_q64",
+            "name": "userIndexQ64",
             "type": "u128"
           },
           {
-            "name": "protocol_owed_underlying",
+            "name": "protocolOwedUnderlying",
             "type": "u64"
           },
           {
-            "name": "total_user_shares",
+            "name": "totalUserShares",
             "type": "u64"
           }
         ]
       }
     },
     {
-      "name": "YieldBearingTokenRegistered",
+      "name": "yieldBearingTokenRegistered",
       "type": {
         "kind": "struct",
         "fields": [
           {
-            "name": "token_id",
+            "name": "tokenId",
             "type": "u16"
           },
           {
-            "name": "underlying_mint",
+            "name": "underlyingMint",
             "type": "pubkey"
           },
           {
-            "name": "share_mint",
+            "name": "shareMint",
             "type": "pubkey"
           },
           {
-            "name": "share_vault",
+            "name": "shareVault",
             "type": "pubkey"
           },
           {
@@ -4661,53 +5147,53 @@
             "type": "pubkey"
           },
           {
-            "name": "yield_program",
+            "name": "yieldProgram",
             "type": "pubkey"
           },
           {
-            "name": "protocol_yield_share_bps",
+            "name": "protocolYieldShareBps",
             "type": "u16"
           }
         ]
       }
     },
     {
-      "name": "YieldDeposited",
+      "name": "yieldDeposited",
       "type": {
         "kind": "struct",
         "fields": [
           {
-            "name": "participant_id",
+            "name": "participantId",
             "type": "u32"
           },
           {
-            "name": "token_id",
+            "name": "tokenId",
             "type": "u16"
           },
           {
-            "name": "usdc_amount",
+            "name": "usdcAmount",
             "type": "u64"
           },
           {
-            "name": "shares_minted",
+            "name": "sharesMinted",
             "type": "u64"
           },
           {
-            "name": "user_index_q64",
+            "name": "userIndexQ64",
             "type": "u128"
           }
         ]
       }
     },
     {
-      "name": "YieldStrategy",
+      "name": "yieldStrategy",
       "type": {
         "kind": "struct",
         "fields": [
           {
-            "name": "token_id",
+            "name": "tokenId",
             "docs": [
-              "agUSDC token id (the yield-bearing wrapper this strategy represents)."
+              "ryUSDC token id (the yield-bearing wrapper this strategy represents)."
             ],
             "type": "u16"
           },
@@ -4719,28 +5205,28 @@
             "type": "u8"
           },
           {
-            "name": "share_vault_bump",
+            "name": "shareVaultBump",
             "docs": [
               "PDA bump for `[YIELD_SHARE_VAULT_SEED, token_id_le]`."
             ],
             "type": "u8"
           },
           {
-            "name": "protocol_yield_share_bps",
+            "name": "protocolYieldShareBps",
             "docs": [
               "Protocol's slice of new yield, in basis points. `3_333` = 33.33%."
             ],
             "type": "u16"
           },
           {
-            "name": "underlying_mint",
+            "name": "underlyingMint",
             "docs": [
               "Underlying SPL mint (e.g. USDC). Same as `mock_yield::Reserve.underlying_mint`."
             ],
             "type": "pubkey"
           },
           {
-            "name": "yield_program",
+            "name": "yieldProgram",
             "docs": [
               "Mock-yield (or production lending) program id."
             ],
@@ -4754,14 +5240,14 @@
             "type": "pubkey"
           },
           {
-            "name": "share_mint",
+            "name": "shareMint",
             "docs": [
               "Lending share mint (e.g. cUSDC)."
             ],
             "type": "pubkey"
           },
           {
-            "name": "share_vault",
+            "name": "shareVault",
             "docs": [
               "Protocol-owned ATA holding cUSDC, authority = GlobalConfig PDA. Single ATA backs both",
               "users and the protocol fee."
@@ -4769,38 +5255,38 @@
             "type": "pubkey"
           },
           {
-            "name": "liquidity_vault",
+            "name": "liquidityVault",
             "docs": [
               "`Reserve.liquidity_vault` cached for CPI ergonomics."
             ],
             "type": "pubkey"
           },
           {
-            "name": "user_index_q64",
+            "name": "userIndexQ64",
             "docs": [
-              "Q64.64 index: 1 agUSDC share -> (user_index_q64 / 2^64) USDC. Starts at `Q64_ONE`,",
+              "Q64.64 index: 1 ryUSDC share -> (user_index_q64 / 2^64) USDC. Starts at `Q64_ONE`,",
               "monotonically non-decreasing under accrual, never decreases under deposits/withdrawals."
             ],
             "type": "u128"
           },
           {
-            "name": "last_settled_underlying",
+            "name": "lastSettledUnderlying",
             "docs": [
               "USDC value of `share_vault` as of last accrual. Used to detect new yield in `accrue_yield`."
             ],
             "type": "u64"
           },
           {
-            "name": "total_user_shares",
+            "name": "totalUserShares",
             "docs": [
-              "Sum of agUSDC `available + withdrawing` across all participant buckets for this token.",
+              "Sum of ryUSDC `available + withdrawing` across all participant buckets for this token.",
               "Sanity counter; truth still lives in buckets. Used by `accrue_yield` to compute per-share",
               "yield attribution and to enforce the invariant."
             ],
             "type": "u64"
           },
           {
-            "name": "protocol_owed_underlying",
+            "name": "protocolOwedUnderlying",
             "docs": [
               "Protocol's USDC claim. Increases only inside `accrue_yield`. Decreases only inside",
               "`claim_protocol_yield_fee`. Never touched by deposit/withdraw/channel paths."
@@ -4808,7 +5294,7 @@
             "type": "u64"
           },
           {
-            "name": "_reserved",
+            "name": "reserved",
             "docs": [
               "Padding for future fields (e.g. additional fee tiers, snapshot history)."
             ],
@@ -4823,32 +5309,32 @@
       }
     },
     {
-      "name": "YieldWithdrawn",
+      "name": "yieldWithdrawn",
       "type": {
         "kind": "struct",
         "fields": [
           {
-            "name": "participant_id",
+            "name": "participantId",
             "type": "u32"
           },
           {
-            "name": "token_id",
+            "name": "tokenId",
             "type": "u16"
           },
           {
-            "name": "shares_burned",
+            "name": "sharesBurned",
             "type": "u64"
           },
           {
-            "name": "usdc_gross",
+            "name": "usdcGross",
             "type": "u64"
           },
           {
-            "name": "usdc_net",
+            "name": "usdcNet",
             "type": "u64"
           },
           {
-            "name": "usdc_fee",
+            "name": "usdcFee",
             "type": "u64"
           },
           {
@@ -4859,4 +5345,4 @@
       }
     }
   ]
-}
+};

@@ -2,11 +2,11 @@
  * v6 yield-bearing helpers.
  *
  * The on-chain `YieldStrategy` account stores `user_index_q64` (Q64.64 fixed point) which maps
- * agUSDC shares -> USDC. This module exposes a USD-denominated UX:
+ * ryUSDC shares -> USDC. This module exposes a USD-denominated UX:
  *
- *   * `usdcToAgShares(strategy, usdc)` — translate a USD amount the user just typed in into the
+ *   * `usdcToRyShares(strategy, usdc)` — translate a USD amount the user just typed in into the
  *     share count the on-chain instructions consume.
- *   * `agSharesToUsdc(strategy, shares)` — display a stored share balance as the USD value the
+ *   * `rySharesToUsdc(strategy, shares)` — display a stored share balance as the USD value the
  *     user expects to see.
  *   * `displayedUsdBalance({ available, withdrawing }, strategy)` — convenience for a single
  *     bucket entry.
@@ -41,10 +41,10 @@ function toBigInt(value: anchor.BN | bigint | number | string): bigint {
 
 /**
  * Translate `usdc` (in underlying base units, e.g. 1_000_000 = 1 USDC at 6 decimals) into the
- * agUSDC share count to credit. Floor division — same rounding as the on-chain handler — so the
+ * ryUSDC share count to credit. Floor division — same rounding as the on-chain handler — so the
  * SDK and program agree on share allocation to the lamport.
  */
-export function usdcToAgShares(
+export function usdcToRyShares(
   strategy: YieldStrategySnapshot,
   usdc: bigint | number | string | anchor.BN,
 ): bigint {
@@ -58,9 +58,9 @@ export function usdcToAgShares(
 }
 
 /**
- * Translate a stored agUSDC share count back to USDC base units. Floor division.
+ * Translate a stored ryUSDC share count back to USDC base units. Floor division.
  */
-export function agSharesToUsdc(
+export function rySharesToUsdc(
   strategy: YieldStrategySnapshot,
   shares: bigint | number | string | anchor.BN,
 ): bigint {
@@ -71,7 +71,7 @@ export function agSharesToUsdc(
 }
 
 /**
- * Sum a participant's available + withdrawing shares for an agUSDC bucket and return the USDC
+ * Sum a participant's available + withdrawing shares for a ryUSDC bucket and return the USDC
  * value the user should see ("you have $X.XX usable"). Withdrawing balances are still owned by
  * the user and still earn yield until execute_withdrawal lands.
  */
@@ -84,7 +84,7 @@ export function displayedUsdBalance(
 ): bigint {
   const total = toBigInt(bucketEntry.availableBalance) +
     toBigInt(bucketEntry.withdrawingBalance);
-  return agSharesToUsdc(strategy, total);
+  return rySharesToUsdc(strategy, total);
 }
 
 /**
@@ -104,7 +104,7 @@ export function nextCommitmentAmountUsd(params: {
   strategy: YieldStrategySnapshot;
 }): bigint {
   const prior = toBigInt(params.settledCumulativeShares);
-  const newShares = usdcToAgShares(params.strategy, params.deltaUsdc);
+  const newShares = usdcToRyShares(params.strategy, params.deltaUsdc);
   return prior + newShares;
 }
 

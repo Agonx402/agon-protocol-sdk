@@ -1,11 +1,11 @@
 import { PublicKey } from "@solana/web3.js";
-import idlJson from "./generated/agon_protocol.json" with { type: "json" };
+import idlJson from "./generated/ryvo_protocol.json" with { type: "json" };
 import mockYieldIdlJson from "./generated/mock_yield.json" with { type: "json" };
 
-export const AGON_PROTOCOL_PROGRAM_ID = new PublicKey(idlJson.address);
+export const RYVO_PROTOCOL_PROGRAM_ID = new PublicKey(idlJson.address);
 export const MOCK_YIELD_PROGRAM_ID = new PublicKey(mockYieldIdlJson.address);
 
-export const AGON_CHAIN_IDS = {
+export const RYVO_CHAIN_IDS = {
   mainnet: 0,
   devnet: 1,
   testnet: 2,
@@ -19,15 +19,22 @@ export const OFFICIAL_USDC_SYMBOL = "USDC";
 export const OFFICIAL_USDC_DECIMALS = 6;
 
 /**
- * v6 default token id for the protocol-managed yield-bearing wrapper (agUSDC).
- * USD-denominated UX: SDK helpers translate USDC amounts <-> agUSDC shares using `user_index_q64`
- * read from the on-chain `YieldStrategy`.
+ * v7 default token ids:
+ * - `USDC_TOKEN_ID = 1` — plain USDC bucket (no yield).
+ * - `RY_USDC_TOKEN_ID = 2` — yield-bearing wrapper (ryUSDC). USD-denominated UX: SDK helpers
+ *   translate USDC amounts <-> ryUSDC shares using `user_index_q64` read from the on-chain
+ *   `YieldStrategy`.
+ *
+ * v7 introduces `opt_in_yield` / `opt_out_yield` for moving balances between these two buckets
+ * without touching the user's wallet ATA.
  */
-export const AG_USDC_TOKEN_ID = 1;
-export const AG_USDC_SYMBOL = "agUSDC";
+export const USDC_TOKEN_ID = 1;
+export const USDC_SYMBOL = "USDC";
+export const RY_USDC_TOKEN_ID = 2;
+export const RY_USDC_SYMBOL = "ryUSDC";
 
 export const MESSAGE_DOMAIN_TAG = Buffer.from(
-  "agon-message-domain-v1",
+  "ryvo-message-domain-v1",
   "utf8",
 );
 

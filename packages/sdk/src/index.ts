@@ -1,12 +1,14 @@
-import agonProtocolIdl from "./generated/agon_protocol.json" with { type: "json" };
+import ryvoProtocolIdl from "./generated/ryvo_protocol.json" with { type: "json" };
 import mockYieldIdl from "./generated/mock_yield.json" with { type: "json" };
 
-export { AgonClient, createAgonProgram, encodeSymbol, getAgonIdl } from "./client.js";
+export { RyvoClient, createRyvoProgram, encodeSymbol, getRyvoIdl } from "./client.js";
 export {
-  AG_USDC_SYMBOL,
-  AG_USDC_TOKEN_ID,
-  AGON_CHAIN_IDS,
-  AGON_PROTOCOL_PROGRAM_ID,
+  RY_USDC_SYMBOL,
+  RY_USDC_TOKEN_ID,
+  USDC_SYMBOL,
+  USDC_TOKEN_ID,
+  RYVO_CHAIN_IDS,
+  RYVO_PROTOCOL_PROGRAM_ID,
   BPF_LOADER_UPGRADEABLE_PROGRAM_ID,
   CHANNEL_V2_SEED,
   GLOBAL_CONFIG_SEED,
@@ -76,12 +78,12 @@ export {
   findYieldStrategyPda,
 } from "./pdas.js";
 export {
-  agSharesToUsdc,
+  rySharesToUsdc,
   displayedUsdBalance,
   formatUsdc,
   nextCommitmentAmountUsd,
   OutstandingCommitments,
-  usdcToAgShares,
+  usdcToRyShares,
   type YieldStrategySnapshot,
 } from "./yield.js";
 export {
@@ -91,9 +93,9 @@ export {
   type ClearingRoundBlock,
   type ClearingRoundMessageParams,
   type CommitmentMessageParams,
-  type CreateAgonClientOptions,
+  type CreateRyvoClientOptions,
 } from "./types.js";
-export { agonProtocolIdl as AGON_PROTOCOL_IDL };
+export { ryvoProtocolIdl as RYVO_PROTOCOL_IDL };
 export { mockYieldIdl as MOCK_YIELD_IDL };
-export type { AgonProtocol } from "./generated/agon_protocol.js";
+export type { RyvoProtocol } from "./generated/ryvo_protocol.js";
 export type { MockYield } from "./generated/mock_yield.js";

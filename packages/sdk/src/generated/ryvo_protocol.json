@@ -1,20 +1,14 @@
-/**
- * Program IDL in camelCase format in order to be used in JS/TS.
- *
- * Note that this is only a type helper and is not the actual IDL. The original
- * IDL can be found at `target/idl/agon_protocol.json`.
- */
-export type AgonProtocol = {
-  "address": "77VR7b4BXx2KTSXA3Tbarw4w1MC5Qvv6QespTyCxWamM",
+{
+  "address": "HuyQoYfBEvVACTKcq8RTiDFm5k5ZBnX5we1UjWBTBeqT",
   "metadata": {
-    "name": "agonProtocol",
+    "name": "ryvo_protocol",
     "version": "0.1.0",
     "spec": "0.1.0",
     "description": "Created with Anchor"
   },
   "instructions": [
     {
-      "name": "acceptConfigAuthority",
+      "name": "accept_config_authority",
       "docs": [
         "Pending config authority accepts the handoff."
       ],
@@ -30,7 +24,7 @@ export type AgonProtocol = {
       ],
       "accounts": [
         {
-          "name": "globalConfig",
+          "name": "global_config",
           "writable": true,
           "pda": {
             "seeds": [
@@ -56,14 +50,14 @@ export type AgonProtocol = {
           }
         },
         {
-          "name": "pendingAuthority",
+          "name": "pending_authority",
           "signer": true
         }
       ],
       "args": []
     },
     {
-      "name": "acceptRegistryAuthority",
+      "name": "accept_registry_authority",
       "docs": [
         "Pending token registry authority accepts the handoff."
       ],
@@ -79,7 +73,7 @@ export type AgonProtocol = {
       ],
       "accounts": [
         {
-          "name": "tokenRegistry",
+          "name": "token_registry",
           "writable": true,
           "pda": {
             "seeds": [
@@ -106,14 +100,14 @@ export type AgonProtocol = {
           }
         },
         {
-          "name": "pendingAuthority",
+          "name": "pending_authority",
           "signer": true
         }
       ],
       "args": []
     },
     {
-      "name": "accrueYield",
+      "name": "accrue_yield",
       "docs": [
         "Accrue yield for a yield-bearing token (permissionless). Pulls the latest cUSDC rate from",
         "the lending program, advances `user_index_q64`, and credits `protocol_owed_underlying`."
@@ -130,7 +124,7 @@ export type AgonProtocol = {
       ],
       "accounts": [
         {
-          "name": "yieldStrategy",
+          "name": "yield_strategy",
           "writable": true,
           "pda": {
             "seeds": [
@@ -156,29 +150,29 @@ export type AgonProtocol = {
               {
                 "kind": "account",
                 "path": "yield_strategy.token_id",
-                "account": "yieldStrategy"
+                "account": "YieldStrategy"
               }
             ]
           }
         },
         {
-          "name": "yieldProgram"
+          "name": "yield_program"
         },
         {
           "name": "reserve",
           "writable": true
         },
         {
-          "name": "shareMint"
+          "name": "share_mint"
         },
         {
-          "name": "shareVault"
+          "name": "share_vault"
         }
       ],
       "args": []
     },
     {
-      "name": "cancelWithdrawal",
+      "name": "cancel_withdrawal",
       "docs": [
         "Cancel a pending withdrawal for a specific token."
       ],
@@ -194,11 +188,11 @@ export type AgonProtocol = {
       ],
       "accounts": [
         {
-          "name": "participantBucket",
+          "name": "participant_bucket",
           "writable": true
         },
         {
-          "name": "ownerIndexBucket"
+          "name": "owner_index_bucket"
         },
         {
           "name": "owner",
@@ -207,13 +201,13 @@ export type AgonProtocol = {
       ],
       "args": [
         {
-          "name": "tokenId",
+          "name": "token_id",
           "type": "u16"
         }
       ]
     },
     {
-      "name": "claimProtocolYieldFee",
+      "name": "claim_protocol_yield_fee",
       "docs": [
         "Claim accumulated protocol yield (fee_recipient only). Redeems up to",
         "`protocol_owed_underlying` USDC from the share_vault."
@@ -230,7 +224,7 @@ export type AgonProtocol = {
       ],
       "accounts": [
         {
-          "name": "globalConfig",
+          "name": "global_config",
           "pda": {
             "seeds": [
               {
@@ -255,7 +249,7 @@ export type AgonProtocol = {
           }
         },
         {
-          "name": "yieldStrategy",
+          "name": "yield_strategy",
           "writable": true,
           "pda": {
             "seeds": [
@@ -280,52 +274,52 @@ export type AgonProtocol = {
               },
               {
                 "kind": "arg",
-                "path": "tokenId"
+                "path": "token_id"
               }
             ]
           }
         },
         {
-          "name": "yieldProgram"
+          "name": "yield_program"
         },
         {
           "name": "reserve",
           "writable": true
         },
         {
-          "name": "underlyingMint"
+          "name": "underlying_mint"
         },
         {
-          "name": "shareMint",
+          "name": "share_mint",
           "writable": true
         },
         {
-          "name": "liquidityVault",
+          "name": "liquidity_vault",
           "writable": true
         },
         {
-          "name": "shareVault",
+          "name": "share_vault",
           "writable": true
         },
         {
-          "name": "feeRecipientTokenAccount",
+          "name": "fee_recipient_token_account",
           "writable": true
         },
         {
-          "name": "feeRecipient",
+          "name": "fee_recipient",
           "docs": [
             "Must be the fee_recipient (verified inside the handler against `global_config.fee_recipient`)."
           ],
           "signer": true
         },
         {
-          "name": "tokenProgram",
+          "name": "token_program",
           "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
         }
       ],
       "args": [
         {
-          "name": "tokenId",
+          "name": "token_id",
           "type": "u16"
         },
         {
@@ -335,7 +329,7 @@ export type AgonProtocol = {
       ]
     },
     {
-      "name": "cooperativeUnlockChannelFunds",
+      "name": "cooperative_unlock_channel_funds",
       "docs": [
         "Instantly release channel collateral when both channel counterparties consent."
       ],
@@ -351,7 +345,7 @@ export type AgonProtocol = {
       ],
       "accounts": [
         {
-          "name": "tokenRegistry",
+          "name": "token_registry",
           "pda": {
             "seeds": [
               {
@@ -377,18 +371,18 @@ export type AgonProtocol = {
           }
         },
         {
-          "name": "payerBucket",
+          "name": "payer_bucket",
           "writable": true
         },
         {
-          "name": "payeeBucket"
+          "name": "payee_bucket"
         },
         {
-          "name": "channelBucket",
+          "name": "channel_bucket",
           "writable": true
         },
         {
-          "name": "ownerIndexBucket"
+          "name": "owner_index_bucket"
         },
         {
           "name": "owner",
@@ -396,17 +390,17 @@ export type AgonProtocol = {
           "signer": true
         },
         {
-          "name": "payeeOwner",
+          "name": "payee_owner",
           "signer": true
         }
       ],
       "args": [
         {
-          "name": "tokenId",
+          "name": "token_id",
           "type": "u16"
         },
         {
-          "name": "payeeParticipantId",
+          "name": "payee_participant_id",
           "type": "u32"
         },
         {
@@ -416,7 +410,7 @@ export type AgonProtocol = {
       ]
     },
     {
-      "name": "createChannel",
+      "name": "create_channel",
       "docs": [
         "Create a token-specific channel from payer to payee. Must be called before any payment commitments are signed or settled.",
         "Payer signs and pays ~0.002 SOL rent. Ensures payees and facilitators never pay for creation."
@@ -433,7 +427,7 @@ export type AgonProtocol = {
       ],
       "accounts": [
         {
-          "name": "tokenRegistry",
+          "name": "token_registry",
           "pda": {
             "seeds": [
               {
@@ -459,16 +453,16 @@ export type AgonProtocol = {
           }
         },
         {
-          "name": "payerBucket"
+          "name": "payer_bucket"
         },
         {
-          "name": "payeeBucket"
+          "name": "payee_bucket"
         },
         {
-          "name": "ownerIndexBucket"
+          "name": "owner_index_bucket"
         },
         {
-          "name": "channelBucket",
+          "name": "channel_bucket",
           "writable": true,
           "pda": {
             "seeds": [
@@ -496,11 +490,11 @@ export type AgonProtocol = {
               },
               {
                 "kind": "arg",
-                "path": "tokenId"
+                "path": "token_id"
               },
               {
                 "kind": "arg",
-                "path": "channelBucketId"
+                "path": "channel_bucket_id"
               }
             ]
           }
@@ -511,34 +505,34 @@ export type AgonProtocol = {
           "signer": true
         },
         {
-          "name": "payeeOwner",
+          "name": "payee_owner",
           "signer": true,
           "optional": true
         },
         {
-          "name": "systemProgram",
+          "name": "system_program",
           "address": "11111111111111111111111111111111"
         }
       ],
       "args": [
         {
-          "name": "tokenId",
+          "name": "token_id",
           "type": "u16"
         },
         {
-          "name": "lowerParticipantId",
+          "name": "lower_participant_id",
           "type": "u32"
         },
         {
-          "name": "higherParticipantId",
+          "name": "higher_participant_id",
           "type": "u32"
         },
         {
-          "name": "channelBucketId",
+          "name": "channel_bucket_id",
           "type": "u64"
         },
         {
-          "name": "authorizedSigner",
+          "name": "authorized_signer",
           "type": {
             "option": "pubkey"
           }
@@ -562,7 +556,7 @@ export type AgonProtocol = {
       ],
       "accounts": [
         {
-          "name": "tokenRegistry",
+          "name": "token_registry",
           "pda": {
             "seeds": [
               {
@@ -588,7 +582,7 @@ export type AgonProtocol = {
           }
         },
         {
-          "name": "globalConfig",
+          "name": "global_config",
           "pda": {
             "seeds": [
               {
@@ -613,18 +607,18 @@ export type AgonProtocol = {
           }
         },
         {
-          "name": "participantBucket",
+          "name": "participant_bucket",
           "writable": true
         },
         {
-          "name": "ownerIndexBucket"
+          "name": "owner_index_bucket"
         },
         {
-          "name": "ownerTokenAccount",
+          "name": "owner_token_account",
           "writable": true
         },
         {
-          "name": "vaultTokenAccount",
+          "name": "vault_token_account",
           "writable": true,
           "pda": {
             "seeds": [
@@ -654,7 +648,7 @@ export type AgonProtocol = {
               },
               {
                 "kind": "arg",
-                "path": "tokenId"
+                "path": "token_id"
               }
             ]
           }
@@ -664,13 +658,13 @@ export type AgonProtocol = {
           "signer": true
         },
         {
-          "name": "tokenProgram",
+          "name": "token_program",
           "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
         }
       ],
       "args": [
         {
-          "name": "tokenId",
+          "name": "token_id",
           "type": "u16"
         },
         {
@@ -680,7 +674,7 @@ export type AgonProtocol = {
       ]
     },
     {
-      "name": "depositFor",
+      "name": "deposit_for",
       "docs": [
         "Deposit a registered token for multiple participants in one tx.",
         "Funder's ATA to vault; credits each recipient.",
@@ -698,7 +692,7 @@ export type AgonProtocol = {
       ],
       "accounts": [
         {
-          "name": "tokenRegistry",
+          "name": "token_registry",
           "pda": {
             "seeds": [
               {
@@ -724,7 +718,7 @@ export type AgonProtocol = {
           }
         },
         {
-          "name": "globalConfig",
+          "name": "global_config",
           "pda": {
             "seeds": [
               {
@@ -749,11 +743,11 @@ export type AgonProtocol = {
           }
         },
         {
-          "name": "funderTokenAccount",
+          "name": "funder_token_account",
           "writable": true
         },
         {
-          "name": "vaultTokenAccount",
+          "name": "vault_token_account",
           "writable": true,
           "pda": {
             "seeds": [
@@ -783,7 +777,7 @@ export type AgonProtocol = {
               },
               {
                 "kind": "arg",
-                "path": "tokenId"
+                "path": "token_id"
               }
             ]
           }
@@ -793,17 +787,17 @@ export type AgonProtocol = {
           "signer": true
         },
         {
-          "name": "tokenProgram",
+          "name": "token_program",
           "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
         }
       ],
       "args": [
         {
-          "name": "tokenId",
+          "name": "token_id",
           "type": "u16"
         },
         {
-          "name": "participantIds",
+          "name": "participant_ids",
           "type": {
             "vec": "u32"
           }
@@ -817,9 +811,9 @@ export type AgonProtocol = {
       ]
     },
     {
-      "name": "depositYieldBearing",
+      "name": "deposit_yield_bearing",
       "docs": [
-        "Deposit USDC and receive a credit of agUSDC shares. The protocol CPIs into the lending",
+        "Deposit USDC and receive a credit of ryUSDC shares. The protocol CPIs into the lending",
         "program to mint cUSDC into its share_vault."
       ],
       "discriminator": [
@@ -834,7 +828,7 @@ export type AgonProtocol = {
       ],
       "accounts": [
         {
-          "name": "tokenRegistry",
+          "name": "token_registry",
           "pda": {
             "seeds": [
               {
@@ -860,7 +854,7 @@ export type AgonProtocol = {
           }
         },
         {
-          "name": "globalConfig",
+          "name": "global_config",
           "pda": {
             "seeds": [
               {
@@ -885,7 +879,7 @@ export type AgonProtocol = {
           }
         },
         {
-          "name": "yieldStrategy",
+          "name": "yield_strategy",
           "writable": true,
           "pda": {
             "seeds": [
@@ -910,42 +904,42 @@ export type AgonProtocol = {
               },
               {
                 "kind": "arg",
-                "path": "tokenId"
+                "path": "token_id"
               }
             ]
           }
         },
         {
-          "name": "participantBucket",
+          "name": "participant_bucket",
           "writable": true
         },
         {
-          "name": "ownerIndexBucket"
+          "name": "owner_index_bucket"
         },
         {
-          "name": "yieldProgram"
+          "name": "yield_program"
         },
         {
           "name": "reserve",
           "writable": true
         },
         {
-          "name": "underlyingMint"
+          "name": "underlying_mint"
         },
         {
-          "name": "shareMint",
+          "name": "share_mint",
           "writable": true
         },
         {
-          "name": "liquidityVault",
+          "name": "liquidity_vault",
           "writable": true
         },
         {
-          "name": "shareVault",
+          "name": "share_vault",
           "writable": true
         },
         {
-          "name": "depositorUnderlying",
+          "name": "depositor_underlying",
           "writable": true
         },
         {
@@ -954,13 +948,13 @@ export type AgonProtocol = {
           "signer": true
         },
         {
-          "name": "tokenProgram",
+          "name": "token_program",
           "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
         }
       ],
       "args": [
         {
-          "name": "tokenId",
+          "name": "token_id",
           "type": "u16"
         },
         {
@@ -970,7 +964,7 @@ export type AgonProtocol = {
       ]
     },
     {
-      "name": "executeUnlockChannelFunds",
+      "name": "execute_unlock_channel_funds",
       "docs": [
         "Execute a previously requested collateral unlock once its timelock expires."
       ],
@@ -986,7 +980,7 @@ export type AgonProtocol = {
       ],
       "accounts": [
         {
-          "name": "globalConfig",
+          "name": "global_config",
           "pda": {
             "seeds": [
               {
@@ -1011,15 +1005,15 @@ export type AgonProtocol = {
           }
         },
         {
-          "name": "payerBucket",
+          "name": "payer_bucket",
           "writable": true
         },
         {
-          "name": "channelBucket",
+          "name": "channel_bucket",
           "writable": true
         },
         {
-          "name": "ownerIndexBucket"
+          "name": "owner_index_bucket"
         },
         {
           "name": "owner",
@@ -1028,17 +1022,17 @@ export type AgonProtocol = {
       ],
       "args": [
         {
-          "name": "tokenId",
+          "name": "token_id",
           "type": "u16"
         },
         {
-          "name": "payeeParticipantId",
+          "name": "payee_participant_id",
           "type": "u32"
         }
       ]
     },
     {
-      "name": "executeUpdateChannelAuthorizedSigner",
+      "name": "execute_update_channel_authorized_signer",
       "docs": [
         "Execute a previously requested authorized-signer rotation once its timelock expires."
       ],
@@ -1054,7 +1048,7 @@ export type AgonProtocol = {
       ],
       "accounts": [
         {
-          "name": "globalConfig",
+          "name": "global_config",
           "pda": {
             "seeds": [
               {
@@ -1079,11 +1073,11 @@ export type AgonProtocol = {
           }
         },
         {
-          "name": "channelBucket",
+          "name": "channel_bucket",
           "writable": true
         },
         {
-          "name": "ownerIndexBucket"
+          "name": "owner_index_bucket"
         },
         {
           "name": "owner",
@@ -1092,17 +1086,17 @@ export type AgonProtocol = {
       ],
       "args": [
         {
-          "name": "tokenId",
+          "name": "token_id",
           "type": "u16"
         },
         {
-          "name": "payeeParticipantId",
+          "name": "payee_participant_id",
           "type": "u32"
         }
       ]
     },
     {
-      "name": "executeWithdrawalTimelocked",
+      "name": "execute_withdrawal_timelocked",
       "docs": [
         "Execute a withdrawal for a specific token after timelock expires."
       ],
@@ -1118,7 +1112,7 @@ export type AgonProtocol = {
       ],
       "accounts": [
         {
-          "name": "tokenRegistry",
+          "name": "token_registry",
           "pda": {
             "seeds": [
               {
@@ -1144,7 +1138,7 @@ export type AgonProtocol = {
           }
         },
         {
-          "name": "globalConfig",
+          "name": "global_config",
           "pda": {
             "seeds": [
               {
@@ -1169,11 +1163,11 @@ export type AgonProtocol = {
           }
         },
         {
-          "name": "participantBucket",
+          "name": "participant_bucket",
           "writable": true
         },
         {
-          "name": "vaultTokenAccount",
+          "name": "vault_token_account",
           "writable": true,
           "pda": {
             "seeds": [
@@ -1203,43 +1197,43 @@ export type AgonProtocol = {
               },
               {
                 "kind": "arg",
-                "path": "tokenId"
+                "path": "token_id"
               }
             ]
           }
         },
         {
-          "name": "withdrawalDestination",
+          "name": "withdrawal_destination",
           "docs": [
             "Destination token account (any valid token ATA — participant or 3rd party)."
           ],
           "writable": true
         },
         {
-          "name": "feeRecipientTokenAccount",
+          "name": "fee_recipient_token_account",
           "docs": [
             "Fee recipient's token account for the token being withdrawn."
           ],
           "writable": true
         },
         {
-          "name": "tokenProgram",
+          "name": "token_program",
           "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
         }
       ],
       "args": [
         {
-          "name": "tokenId",
+          "name": "token_id",
           "type": "u16"
         },
         {
-          "name": "participantId",
+          "name": "participant_id",
           "type": "u32"
         }
       ]
     },
     {
-      "name": "executeWithdrawalYieldBearing",
+      "name": "execute_withdrawal_yield_bearing",
       "docs": [
         "Execute a previously requested withdrawal once its timelock expires. Redeems the",
         "proportional cUSDC into USDC and pays user (net) and fee_recipient (fee)."
@@ -1256,7 +1250,7 @@ export type AgonProtocol = {
       ],
       "accounts": [
         {
-          "name": "tokenRegistry",
+          "name": "token_registry",
           "pda": {
             "seeds": [
               {
@@ -1282,7 +1276,7 @@ export type AgonProtocol = {
           }
         },
         {
-          "name": "globalConfig",
+          "name": "global_config",
           "pda": {
             "seeds": [
               {
@@ -1307,7 +1301,7 @@ export type AgonProtocol = {
           }
         },
         {
-          "name": "yieldStrategy",
+          "name": "yield_strategy",
           "writable": true,
           "pda": {
             "seeds": [
@@ -1332,57 +1326,57 @@ export type AgonProtocol = {
               },
               {
                 "kind": "arg",
-                "path": "tokenId"
+                "path": "token_id"
               }
             ]
           }
         },
         {
-          "name": "participantBucket",
+          "name": "participant_bucket",
           "writable": true
         },
         {
-          "name": "yieldProgram"
+          "name": "yield_program"
         },
         {
           "name": "reserve",
           "writable": true
         },
         {
-          "name": "underlyingMint"
+          "name": "underlying_mint"
         },
         {
-          "name": "shareMint",
+          "name": "share_mint",
           "writable": true
         },
         {
-          "name": "liquidityVault",
+          "name": "liquidity_vault",
           "writable": true
         },
         {
-          "name": "shareVault",
+          "name": "share_vault",
           "writable": true
         },
         {
-          "name": "withdrawalDestination",
+          "name": "withdrawal_destination",
           "writable": true
         },
         {
-          "name": "feeRecipientTokenAccount",
+          "name": "fee_recipient_token_account",
           "writable": true
         },
         {
-          "name": "tokenProgram",
+          "name": "token_program",
           "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
         }
       ],
       "args": [
         {
-          "name": "tokenId",
+          "name": "token_id",
           "type": "u16"
         },
         {
-          "name": "participantId",
+          "name": "participant_id",
           "type": "u32"
         }
       ]
@@ -1405,7 +1399,7 @@ export type AgonProtocol = {
       ],
       "accounts": [
         {
-          "name": "globalConfig",
+          "name": "global_config",
           "writable": true,
           "pda": {
             "seeds": [
@@ -1431,13 +1425,13 @@ export type AgonProtocol = {
           }
         },
         {
-          "name": "feeRecipient",
+          "name": "fee_recipient",
           "docs": [
             "Wallet that receives registration-fee lamports and owns fee token accounts."
           ]
         },
         {
-          "name": "upgradeAuthority",
+          "name": "upgrade_authority",
           "docs": [
             "Program's upgrade authority performs the one-time bootstrap."
           ],
@@ -1446,31 +1440,31 @@ export type AgonProtocol = {
         },
         {
           "name": "program",
-          "address": "77VR7b4BXx2KTSXA3Tbarw4w1MC5Qvv6QespTyCxWamM"
+          "address": "HuyQoYfBEvVACTKcq8RTiDFm5k5ZBnX5we1UjWBTBeqT"
         },
         {
-          "name": "programData"
+          "name": "program_data"
         },
         {
-          "name": "systemProgram",
+          "name": "system_program",
           "address": "11111111111111111111111111111111"
         }
       ],
       "args": [
         {
-          "name": "chainId",
+          "name": "chain_id",
           "type": "u16"
         },
         {
-          "name": "feeBps",
+          "name": "fee_bps",
           "type": "u16"
         },
         {
-          "name": "registrationFeeLamports",
+          "name": "registration_fee_lamports",
           "type": "u64"
         },
         {
-          "name": "initialAuthority",
+          "name": "initial_authority",
           "type": {
             "option": "pubkey"
           }
@@ -1478,7 +1472,7 @@ export type AgonProtocol = {
       ]
     },
     {
-      "name": "initializeParticipant",
+      "name": "initialize_participant",
       "docs": [
         "One-time participant registration."
       ],
@@ -1494,7 +1488,7 @@ export type AgonProtocol = {
       ],
       "accounts": [
         {
-          "name": "globalConfig",
+          "name": "global_config",
           "writable": true,
           "pda": {
             "seeds": [
@@ -1520,7 +1514,7 @@ export type AgonProtocol = {
           }
         },
         {
-          "name": "participantBucket",
+          "name": "participant_bucket",
           "writable": true,
           "pda": {
             "seeds": [
@@ -1552,13 +1546,13 @@ export type AgonProtocol = {
               },
               {
                 "kind": "arg",
-                "path": "participantBucketId"
+                "path": "participant_bucket_id"
               }
             ]
           }
         },
         {
-          "name": "ownerIndexBucket",
+          "name": "owner_index_bucket",
           "writable": true,
           "pda": {
             "seeds": [
@@ -1590,13 +1584,13 @@ export type AgonProtocol = {
               },
               {
                 "kind": "arg",
-                "path": "ownerIndexBucketId"
+                "path": "owner_index_bucket_id"
               }
             ]
           }
         },
         {
-          "name": "feeRecipient",
+          "name": "fee_recipient",
           "writable": true
         },
         {
@@ -1605,23 +1599,23 @@ export type AgonProtocol = {
           "signer": true
         },
         {
-          "name": "systemProgram",
+          "name": "system_program",
           "address": "11111111111111111111111111111111"
         }
       ],
       "args": [
         {
-          "name": "participantBucketId",
+          "name": "participant_bucket_id",
           "type": "u32"
         },
         {
-          "name": "ownerIndexBucketId",
+          "name": "owner_index_bucket_id",
           "type": "u32"
         }
       ]
     },
     {
-      "name": "initializeTokenRegistry",
+      "name": "initialize_token_registry",
       "docs": [
         "Initialize the token registry (authority only, called once after program deployment)."
       ],
@@ -1637,7 +1631,7 @@ export type AgonProtocol = {
       ],
       "accounts": [
         {
-          "name": "tokenRegistry",
+          "name": "token_registry",
           "writable": true,
           "pda": {
             "seeds": [
@@ -1664,7 +1658,7 @@ export type AgonProtocol = {
           }
         },
         {
-          "name": "globalConfig",
+          "name": "global_config",
           "pda": {
             "seeds": [
               {
@@ -1694,14 +1688,14 @@ export type AgonProtocol = {
           "signer": true
         },
         {
-          "name": "systemProgram",
+          "name": "system_program",
           "address": "11111111111111111111111111111111"
         }
       ],
       "args": []
     },
     {
-      "name": "lockChannelFunds",
+      "name": "lock_channel_funds",
       "docs": [
         "Lock tokens as ring-fenced collateral for a specific payee channel."
       ],
@@ -1717,7 +1711,7 @@ export type AgonProtocol = {
       ],
       "accounts": [
         {
-          "name": "tokenRegistry",
+          "name": "token_registry",
           "pda": {
             "seeds": [
               {
@@ -1743,15 +1737,15 @@ export type AgonProtocol = {
           }
         },
         {
-          "name": "payerBucket",
+          "name": "payer_bucket",
           "writable": true
         },
         {
-          "name": "channelBucket",
+          "name": "channel_bucket",
           "writable": true
         },
         {
-          "name": "ownerIndexBucket"
+          "name": "owner_index_bucket"
         },
         {
           "name": "owner",
@@ -1759,17 +1753,17 @@ export type AgonProtocol = {
           "signer": true
         },
         {
-          "name": "systemProgram",
+          "name": "system_program",
           "address": "11111111111111111111111111111111"
         }
       ],
       "args": [
         {
-          "name": "tokenId",
+          "name": "token_id",
           "type": "u16"
         },
         {
-          "name": "payeeParticipantId",
+          "name": "payee_participant_id",
           "type": "u32"
         },
         {
@@ -1779,23 +1773,52 @@ export type AgonProtocol = {
       ]
     },
     {
-      "name": "registerParticipantBlsKey",
+      "name": "opt_in_yield",
       "docs": [
-        "Register a BLS key used only for cooperative clearing rounds."
+        "Opt an existing plain-USDC bucket balance into yield. Debits `amount_usdc` from the owner's",
+        "plain-USDC bucket *available* slot and credits the equivalent ryUSDC shares into the owner's",
+        "yield bucket *available* slot. CPIs `mock_yield::deposit_reserve_liquidity` to deposit the",
+        "underlying USDC into the lending reserve. Locked balance is not eligible."
       ],
       "discriminator": [
-        73,
-        33,
-        200,
-        201,
-        238,
-        231,
-        71,
-        145
+        184,
+        188,
+        168,
+        177,
+        219,
+        213,
+        245,
+        255
       ],
       "accounts": [
         {
-          "name": "globalConfig",
+          "name": "token_registry",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  116,
+                  111,
+                  107,
+                  101,
+                  110,
+                  45,
+                  114,
+                  101,
+                  103,
+                  105,
+                  115,
+                  116,
+                  114,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "global_config",
           "pda": {
             "seeds": [
               {
@@ -1820,11 +1843,367 @@ export type AgonProtocol = {
           }
         },
         {
-          "name": "participantBucket",
+          "name": "yield_strategy",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  121,
+                  105,
+                  101,
+                  108,
+                  100,
+                  45,
+                  115,
+                  116,
+                  114,
+                  97,
+                  116,
+                  101,
+                  103,
+                  121
+                ]
+              },
+              {
+                "kind": "arg",
+                "path": "yield_token_id"
+              }
+            ]
+          }
+        },
+        {
+          "name": "plain_vault_token_account",
+          "docs": [
+            "Plain USDC vault PDA (token-id-scoped). Source of underlying for the lending CPI."
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116,
+                  45,
+                  116,
+                  111,
+                  107,
+                  101,
+                  110,
+                  45,
+                  97,
+                  99,
+                  99,
+                  111,
+                  117,
+                  110,
+                  116
+                ]
+              },
+              {
+                "kind": "arg",
+                "path": "plain_token_id"
+              }
+            ]
+          }
+        },
+        {
+          "name": "participant_bucket",
           "writable": true
         },
         {
-          "name": "ownerIndexBucket"
+          "name": "owner_index_bucket"
+        },
+        {
+          "name": "yield_program"
+        },
+        {
+          "name": "reserve",
+          "writable": true
+        },
+        {
+          "name": "underlying_mint"
+        },
+        {
+          "name": "share_mint",
+          "writable": true
+        },
+        {
+          "name": "liquidity_vault",
+          "writable": true
+        },
+        {
+          "name": "share_vault",
+          "writable": true
+        },
+        {
+          "name": "owner",
+          "signer": true
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        }
+      ],
+      "args": [
+        {
+          "name": "plain_token_id",
+          "type": "u16"
+        },
+        {
+          "name": "yield_token_id",
+          "type": "u16"
+        },
+        {
+          "name": "amount_usdc",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "opt_out_yield",
+      "docs": [
+        "Opt out of yield by burning `shares` of ryUSDC and crediting the redeemed USDC back into",
+        "the owner's plain-USDC bucket *available* slot. Up to 1 lamport of dust per call may remain",
+        "in the protocol's `share_vault` (attributed to all users on the next accrual)."
+      ],
+      "discriminator": [
+        97,
+        217,
+        237,
+        207,
+        240,
+        192,
+        22,
+        116
+      ],
+      "accounts": [
+        {
+          "name": "token_registry",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  116,
+                  111,
+                  107,
+                  101,
+                  110,
+                  45,
+                  114,
+                  101,
+                  103,
+                  105,
+                  115,
+                  116,
+                  114,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "global_config",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  45,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "yield_strategy",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  121,
+                  105,
+                  101,
+                  108,
+                  100,
+                  45,
+                  115,
+                  116,
+                  114,
+                  97,
+                  116,
+                  101,
+                  103,
+                  121
+                ]
+              },
+              {
+                "kind": "arg",
+                "path": "yield_token_id"
+              }
+            ]
+          }
+        },
+        {
+          "name": "plain_vault_token_account",
+          "docs": [
+            "Plain USDC vault PDA — destination for redeemed underlying."
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116,
+                  45,
+                  116,
+                  111,
+                  107,
+                  101,
+                  110,
+                  45,
+                  97,
+                  99,
+                  99,
+                  111,
+                  117,
+                  110,
+                  116
+                ]
+              },
+              {
+                "kind": "arg",
+                "path": "plain_token_id"
+              }
+            ]
+          }
+        },
+        {
+          "name": "participant_bucket",
+          "writable": true
+        },
+        {
+          "name": "owner_index_bucket"
+        },
+        {
+          "name": "yield_program"
+        },
+        {
+          "name": "reserve",
+          "writable": true
+        },
+        {
+          "name": "underlying_mint"
+        },
+        {
+          "name": "share_mint",
+          "writable": true
+        },
+        {
+          "name": "liquidity_vault",
+          "writable": true
+        },
+        {
+          "name": "share_vault",
+          "writable": true
+        },
+        {
+          "name": "owner",
+          "signer": true
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        }
+      ],
+      "args": [
+        {
+          "name": "yield_token_id",
+          "type": "u16"
+        },
+        {
+          "name": "plain_token_id",
+          "type": "u16"
+        },
+        {
+          "name": "shares",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "register_participant_bls_key",
+      "docs": [
+        "Register a BLS key used only for cooperative clearing rounds."
+      ],
+      "discriminator": [
+        73,
+        33,
+        200,
+        201,
+        238,
+        231,
+        71,
+        145
+      ],
+      "accounts": [
+        {
+          "name": "global_config",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  45,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "participant_bucket",
+          "writable": true
+        },
+        {
+          "name": "owner_index_bucket"
         },
         {
           "name": "owner",
@@ -1834,7 +2213,7 @@ export type AgonProtocol = {
       ],
       "args": [
         {
-          "name": "blsPubkeyCompressed",
+          "name": "bls_pubkey_compressed",
           "type": {
             "array": [
               "u8",
@@ -1843,7 +2222,7 @@ export type AgonProtocol = {
           }
         },
         {
-          "name": "popSignatureCompressed",
+          "name": "pop_signature_compressed",
           "type": {
             "array": [
               "u8",
@@ -1854,7 +2233,7 @@ export type AgonProtocol = {
       ]
     },
     {
-      "name": "registerToken",
+      "name": "register_token",
       "docs": [
         "Register a new token in the registry (authority only)."
       ],
@@ -1870,7 +2249,7 @@ export type AgonProtocol = {
       ],
       "accounts": [
         {
-          "name": "tokenRegistry",
+          "name": "token_registry",
           "writable": true,
           "pda": {
             "seeds": [
@@ -1897,7 +2276,7 @@ export type AgonProtocol = {
           }
         },
         {
-          "name": "vaultTokenAccount",
+          "name": "vault_token_account",
           "docs": [
             "Vault token account for this token (created when token is registered)"
           ],
@@ -1930,7 +2309,7 @@ export type AgonProtocol = {
               },
               {
                 "kind": "arg",
-                "path": "tokenId"
+                "path": "token_id"
               }
             ]
           }
@@ -1942,7 +2321,7 @@ export type AgonProtocol = {
           ]
         },
         {
-          "name": "globalConfig",
+          "name": "global_config",
           "pda": {
             "seeds": [
               {
@@ -1975,11 +2354,11 @@ export type AgonProtocol = {
           "signer": true
         },
         {
-          "name": "tokenProgram",
+          "name": "token_program",
           "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
         },
         {
-          "name": "systemProgram",
+          "name": "system_program",
           "address": "11111111111111111111111111111111"
         },
         {
@@ -1989,11 +2368,11 @@ export type AgonProtocol = {
       ],
       "args": [
         {
-          "name": "tokenId",
+          "name": "token_id",
           "type": "u16"
         },
         {
-          "name": "symbolBytes",
+          "name": "symbol_bytes",
           "type": {
             "array": [
               "u8",
@@ -2004,9 +2383,9 @@ export type AgonProtocol = {
       ]
     },
     {
-      "name": "registerYieldBearingToken",
+      "name": "register_yield_bearing_token",
       "docs": [
-        "Register a yield-bearing wrapper token (e.g. agUSDC). Creates a TokenEntry with",
+        "Register a yield-bearing wrapper token (e.g. ryUSDC). Creates a TokenEntry with",
         "`kind = YieldBearing`, allocates a `YieldStrategy` PDA, and creates the protocol-owned",
         "`share_vault` (a cUSDC ATA whose authority is the GlobalConfig PDA). Authority-only."
       ],
@@ -2022,7 +2401,7 @@ export type AgonProtocol = {
       ],
       "accounts": [
         {
-          "name": "tokenRegistry",
+          "name": "token_registry",
           "writable": true,
           "pda": {
             "seeds": [
@@ -2049,7 +2428,7 @@ export type AgonProtocol = {
           }
         },
         {
-          "name": "globalConfig",
+          "name": "global_config",
           "pda": {
             "seeds": [
               {
@@ -2074,7 +2453,7 @@ export type AgonProtocol = {
           }
         },
         {
-          "name": "yieldStrategy",
+          "name": "yield_strategy",
           "writable": true,
           "pda": {
             "seeds": [
@@ -2099,19 +2478,19 @@ export type AgonProtocol = {
               },
               {
                 "kind": "arg",
-                "path": "tokenId"
+                "path": "token_id"
               }
             ]
           }
         },
         {
-          "name": "underlyingMint",
+          "name": "underlying_mint",
           "docs": [
             "Underlying SPL mint (USDC)."
           ]
         },
         {
-          "name": "yieldProgram",
+          "name": "yield_program",
           "docs": [
             "Lending program (mock-yield in dev / Save-Kamino in prod). Validated against `Reserve`."
           ]
@@ -2123,19 +2502,19 @@ export type AgonProtocol = {
           ]
         },
         {
-          "name": "shareMint",
+          "name": "share_mint",
           "docs": [
             "Lending share mint (cUSDC). Mint authority = `reserve`."
           ]
         },
         {
-          "name": "liquidityVault",
+          "name": "liquidity_vault",
           "docs": [
             "Reserve's USDC vault — kept for symmetry/CPI ergonomics."
           ]
         },
         {
-          "name": "shareVault",
+          "name": "share_vault",
           "docs": [
             "Protocol-owned cUSDC ATA under GlobalConfig PDA. PDA-seeded so it is deterministic."
           ],
@@ -2166,7 +2545,7 @@ export type AgonProtocol = {
               },
               {
                 "kind": "arg",
-                "path": "tokenId"
+                "path": "token_id"
               }
             ]
           }
@@ -2177,15 +2556,15 @@ export type AgonProtocol = {
           "signer": true
         },
         {
-          "name": "tokenProgram",
+          "name": "token_program",
           "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
         },
         {
-          "name": "associatedTokenProgram",
+          "name": "associated_token_program",
           "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
         },
         {
-          "name": "systemProgram",
+          "name": "system_program",
           "address": "11111111111111111111111111111111"
         },
         {
@@ -2195,11 +2574,11 @@ export type AgonProtocol = {
       ],
       "args": [
         {
-          "name": "tokenId",
+          "name": "token_id",
           "type": "u16"
         },
         {
-          "name": "symbolBytes",
+          "name": "symbol_bytes",
           "type": {
             "array": [
               "u8",
@@ -2208,13 +2587,13 @@ export type AgonProtocol = {
           }
         },
         {
-          "name": "protocolYieldShareBps",
+          "name": "protocol_yield_share_bps",
           "type": "u16"
         }
       ]
     },
     {
-      "name": "requestUnlockChannelFunds",
+      "name": "request_unlock_channel_funds",
       "docs": [
         "Request a timelocked partial unlock of channel collateral."
       ],
@@ -2230,7 +2609,7 @@ export type AgonProtocol = {
       ],
       "accounts": [
         {
-          "name": "globalConfig",
+          "name": "global_config",
           "pda": {
             "seeds": [
               {
@@ -2255,11 +2634,11 @@ export type AgonProtocol = {
           }
         },
         {
-          "name": "channelBucket",
+          "name": "channel_bucket",
           "writable": true
         },
         {
-          "name": "ownerIndexBucket"
+          "name": "owner_index_bucket"
         },
         {
           "name": "owner",
@@ -2268,11 +2647,11 @@ export type AgonProtocol = {
       ],
       "args": [
         {
-          "name": "tokenId",
+          "name": "token_id",
           "type": "u16"
         },
         {
-          "name": "payeeParticipantId",
+          "name": "payee_participant_id",
           "type": "u32"
         },
         {
@@ -2282,7 +2661,7 @@ export type AgonProtocol = {
       ]
     },
     {
-      "name": "requestUpdateChannelAuthorizedSigner",
+      "name": "request_update_channel_authorized_signer",
       "docs": [
         "Request a timelocked rotation of the channel's authorized signer."
       ],
@@ -2298,7 +2677,7 @@ export type AgonProtocol = {
       ],
       "accounts": [
         {
-          "name": "globalConfig",
+          "name": "global_config",
           "pda": {
             "seeds": [
               {
@@ -2323,11 +2702,11 @@ export type AgonProtocol = {
           }
         },
         {
-          "name": "channelBucket",
+          "name": "channel_bucket",
           "writable": true
         },
         {
-          "name": "ownerIndexBucket"
+          "name": "owner_index_bucket"
         },
         {
           "name": "owner",
@@ -2336,21 +2715,21 @@ export type AgonProtocol = {
       ],
       "args": [
         {
-          "name": "tokenId",
+          "name": "token_id",
           "type": "u16"
         },
         {
-          "name": "payeeParticipantId",
+          "name": "payee_participant_id",
           "type": "u32"
         },
         {
-          "name": "newSigner",
+          "name": "new_signer",
           "type": "pubkey"
         }
       ]
     },
     {
-      "name": "requestWithdrawal",
+      "name": "request_withdrawal",
       "docs": [
         "Request a timelocked withdrawal for a specific token."
       ],
@@ -2366,7 +2745,7 @@ export type AgonProtocol = {
       ],
       "accounts": [
         {
-          "name": "tokenRegistry",
+          "name": "token_registry",
           "pda": {
             "seeds": [
               {
@@ -2392,7 +2771,7 @@ export type AgonProtocol = {
           }
         },
         {
-          "name": "globalConfig",
+          "name": "global_config",
           "pda": {
             "seeds": [
               {
@@ -2417,14 +2796,14 @@ export type AgonProtocol = {
           }
         },
         {
-          "name": "participantBucket",
+          "name": "participant_bucket",
           "writable": true
         },
         {
-          "name": "ownerIndexBucket"
+          "name": "owner_index_bucket"
         },
         {
-          "name": "withdrawalDestination",
+          "name": "withdrawal_destination",
           "docs": [
             "The withdrawal destination token account"
           ]
@@ -2436,7 +2815,7 @@ export type AgonProtocol = {
       ],
       "args": [
         {
-          "name": "tokenId",
+          "name": "token_id",
           "type": "u16"
         },
         {
@@ -2450,9 +2829,9 @@ export type AgonProtocol = {
       ]
     },
     {
-      "name": "requestWithdrawalYieldBearing",
+      "name": "request_withdrawal_yield_bearing",
       "docs": [
-        "Request a timelocked withdrawal of `shares` agUSDC, redeemable to `destination` (USDC ATA)."
+        "Request a timelocked withdrawal of `shares` ryUSDC, redeemable to `destination` (USDC ATA)."
       ],
       "discriminator": [
         163,
@@ -2466,7 +2845,7 @@ export type AgonProtocol = {
       ],
       "accounts": [
         {
-          "name": "tokenRegistry",
+          "name": "token_registry",
           "pda": {
             "seeds": [
               {
@@ -2492,7 +2871,7 @@ export type AgonProtocol = {
           }
         },
         {
-          "name": "globalConfig",
+          "name": "global_config",
           "pda": {
             "seeds": [
               {
@@ -2517,7 +2896,7 @@ export type AgonProtocol = {
           }
         },
         {
-          "name": "yieldStrategy",
+          "name": "yield_strategy",
           "pda": {
             "seeds": [
               {
@@ -2541,20 +2920,20 @@ export type AgonProtocol = {
               },
               {
                 "kind": "arg",
-                "path": "tokenId"
+                "path": "token_id"
               }
             ]
           }
         },
         {
-          "name": "participantBucket",
+          "name": "participant_bucket",
           "writable": true
         },
         {
-          "name": "ownerIndexBucket"
+          "name": "owner_index_bucket"
         },
         {
-          "name": "withdrawalDestination"
+          "name": "withdrawal_destination"
         },
         {
           "name": "owner",
@@ -2563,7 +2942,7 @@ export type AgonProtocol = {
       ],
       "args": [
         {
-          "name": "tokenId",
+          "name": "token_id",
           "type": "u16"
         },
         {
@@ -2577,7 +2956,7 @@ export type AgonProtocol = {
       ]
     },
     {
-      "name": "settleClearingRound",
+      "name": "settle_clearing_round",
       "docs": [
         "BLS-authenticated cooperative clearing round: advances many logical channels and applies",
         "only net participant balance changes through bucket accounts."
@@ -2594,7 +2973,7 @@ export type AgonProtocol = {
       ],
       "accounts": [
         {
-          "name": "tokenRegistry",
+          "name": "token_registry",
           "pda": {
             "seeds": [
               {
@@ -2620,7 +2999,7 @@ export type AgonProtocol = {
           }
         },
         {
-          "name": "globalConfig",
+          "name": "global_config",
           "pda": {
             "seeds": [
               {
@@ -2650,7 +3029,7 @@ export type AgonProtocol = {
           "signer": true
         },
         {
-          "name": "instructionsSysvar",
+          "name": "instructions_sysvar",
           "address": "Sysvar1nstructions1111111111111111111111111"
         }
       ],
@@ -2660,7 +3039,7 @@ export type AgonProtocol = {
           "type": "bytes"
         },
         {
-          "name": "aggregateSignatureCompressed",
+          "name": "aggregate_signature_compressed",
           "type": {
             "array": [
               "u8",
@@ -2671,7 +3050,7 @@ export type AgonProtocol = {
       ]
     },
     {
-      "name": "settleCommitmentBundle",
+      "name": "settle_commitment_bundle",
       "docs": [
         "Settle many latest commitments for one payee across many unilateral channels."
       ],
@@ -2687,7 +3066,7 @@ export type AgonProtocol = {
       ],
       "accounts": [
         {
-          "name": "tokenRegistry",
+          "name": "token_registry",
           "pda": {
             "seeds": [
               {
@@ -2713,7 +3092,7 @@ export type AgonProtocol = {
           }
         },
         {
-          "name": "globalConfig",
+          "name": "global_config",
           "pda": {
             "seeds": [
               {
@@ -2743,7 +3122,7 @@ export type AgonProtocol = {
           "signer": true
         },
         {
-          "name": "instructionsSysvar",
+          "name": "instructions_sysvar",
           "address": "Sysvar1nstructions1111111111111111111111111"
         }
       ],
@@ -2755,7 +3134,7 @@ export type AgonProtocol = {
       ]
     },
     {
-      "name": "settleIndividual",
+      "name": "settle_individual",
       "docs": [
         "Settle a single payment commitment. Submitter must be the payee or an authorized settler."
       ],
@@ -2771,7 +3150,7 @@ export type AgonProtocol = {
       ],
       "accounts": [
         {
-          "name": "tokenRegistry",
+          "name": "token_registry",
           "pda": {
             "seeds": [
               {
@@ -2797,7 +3176,7 @@ export type AgonProtocol = {
           }
         },
         {
-          "name": "globalConfig",
+          "name": "global_config",
           "pda": {
             "seeds": [
               {
@@ -2827,14 +3206,14 @@ export type AgonProtocol = {
           "signer": true
         },
         {
-          "name": "instructionsSysvar",
+          "name": "instructions_sysvar",
           "address": "Sysvar1nstructions1111111111111111111111111"
         }
       ],
       "args": []
     },
     {
-      "name": "updateConfig",
+      "name": "update_config",
       "docs": [
         "Update protocol configuration (authority only).",
         "Settlement chain_id and default timing policies are immutable and cannot be changed."
@@ -2851,7 +3230,7 @@ export type AgonProtocol = {
       ],
       "accounts": [
         {
-          "name": "globalConfig",
+          "name": "global_config",
           "writable": true,
           "pda": {
             "seeds": [
@@ -2883,31 +3262,31 @@ export type AgonProtocol = {
           ],
           "signer": true,
           "relations": [
-            "globalConfig"
+            "global_config"
           ]
         }
       ],
       "args": [
         {
-          "name": "newAuthority",
+          "name": "new_authority",
           "type": {
             "option": "pubkey"
           }
         },
         {
-          "name": "newFeeRecipient",
+          "name": "new_fee_recipient",
           "type": {
             "option": "pubkey"
           }
         },
         {
-          "name": "newFeeBps",
+          "name": "new_fee_bps",
           "type": {
             "option": "u16"
           }
         },
         {
-          "name": "newRegistrationFeeLamports",
+          "name": "new_registration_fee_lamports",
           "type": {
             "option": "u64"
           }
@@ -2915,7 +3294,7 @@ export type AgonProtocol = {
       ]
     },
     {
-      "name": "updateInboundChannelPolicy",
+      "name": "update_inbound_channel_policy",
       "docs": [
         "Update the participant's inbound channel policy."
       ],
@@ -2931,11 +3310,11 @@ export type AgonProtocol = {
       ],
       "accounts": [
         {
-          "name": "participantBucket",
+          "name": "participant_bucket",
           "writable": true
         },
         {
-          "name": "ownerIndexBucket"
+          "name": "owner_index_bucket"
         },
         {
           "name": "owner",
@@ -2944,13 +3323,13 @@ export type AgonProtocol = {
       ],
       "args": [
         {
-          "name": "inboundChannelPolicy",
+          "name": "inbound_channel_policy",
           "type": "u8"
         }
       ]
     },
     {
-      "name": "updateRegistryAuthority",
+      "name": "update_registry_authority",
       "docs": [
         "Nominate a pending token registry authority."
       ],
@@ -2966,7 +3345,7 @@ export type AgonProtocol = {
       ],
       "accounts": [
         {
-          "name": "tokenRegistry",
+          "name": "token_registry",
           "writable": true,
           "pda": {
             "seeds": [
@@ -2993,7 +3372,7 @@ export type AgonProtocol = {
           }
         },
         {
-          "name": "currentAuthority",
+          "name": "current_authority",
           "docs": [
             "Current authority"
           ],
@@ -3002,7 +3381,7 @@ export type AgonProtocol = {
       ],
       "args": [
         {
-          "name": "newAuthority",
+          "name": "new_authority",
           "type": "pubkey"
         }
       ]
@@ -3010,7 +3389,7 @@ export type AgonProtocol = {
   ],
   "accounts": [
     {
-      "name": "globalConfig",
+      "name": "GlobalConfig",
       "discriminator": [
         149,
         8,
@@ -3023,7 +3402,7 @@ export type AgonProtocol = {
       ]
     },
     {
-      "name": "ownerIndexBucket",
+      "name": "OwnerIndexBucket",
       "discriminator": [
         185,
         229,
@@ -3036,7 +3415,7 @@ export type AgonProtocol = {
       ]
     },
     {
-      "name": "reserve",
+      "name": "Reserve",
       "discriminator": [
         43,
         242,
@@ -3049,7 +3428,7 @@ export type AgonProtocol = {
       ]
     },
     {
-      "name": "tokenRegistry",
+      "name": "TokenRegistry",
       "discriminator": [
         227,
         255,
@@ -3062,7 +3441,7 @@ export type AgonProtocol = {
       ]
     },
     {
-      "name": "yieldStrategy",
+      "name": "YieldStrategy",
       "discriminator": [
         153,
         203,
@@ -3077,7 +3456,7 @@ export type AgonProtocol = {
   ],
   "events": [
     {
-      "name": "channelAuthorizedSignerUpdateRequested",
+      "name": "ChannelAuthorizedSignerUpdateRequested",
       "discriminator": [
         23,
         50,
@@ -3090,7 +3469,7 @@ export type AgonProtocol = {
       ]
     },
     {
-      "name": "channelAuthorizedSignerUpdated",
+      "name": "ChannelAuthorizedSignerUpdated",
       "discriminator": [
         52,
         244,
@@ -3103,7 +3482,7 @@ export type AgonProtocol = {
       ]
     },
     {
-      "name": "channelCreated",
+      "name": "ChannelCreated",
       "discriminator": [
         32,
         4,
@@ -3116,7 +3495,7 @@ export type AgonProtocol = {
       ]
     },
     {
-      "name": "channelFundsLocked",
+      "name": "ChannelFundsLocked",
       "discriminator": [
         146,
         187,
@@ -3129,7 +3508,7 @@ export type AgonProtocol = {
       ]
     },
     {
-      "name": "channelFundsUnlocked",
+      "name": "ChannelFundsUnlocked",
       "discriminator": [
         137,
         22,
@@ -3142,7 +3521,7 @@ export type AgonProtocol = {
       ]
     },
     {
-      "name": "channelUnlockRequested",
+      "name": "ChannelUnlockRequested",
       "discriminator": [
         178,
         124,
@@ -3155,7 +3534,7 @@ export type AgonProtocol = {
       ]
     },
     {
-      "name": "clearingRoundSettled",
+      "name": "ClearingRoundSettled",
       "discriminator": [
         122,
         115,
@@ -3168,7 +3547,7 @@ export type AgonProtocol = {
       ]
     },
     {
-      "name": "commitmentBundleSettled",
+      "name": "CommitmentBundleSettled",
       "discriminator": [
         220,
         114,
@@ -3181,7 +3560,7 @@ export type AgonProtocol = {
       ]
     },
     {
-      "name": "configAuthorityTransferStarted",
+      "name": "ConfigAuthorityTransferStarted",
       "discriminator": [
         56,
         105,
@@ -3194,7 +3573,7 @@ export type AgonProtocol = {
       ]
     },
     {
-      "name": "configAuthorityTransferred",
+      "name": "ConfigAuthorityTransferred",
       "discriminator": [
         116,
         152,
@@ -3207,7 +3586,7 @@ export type AgonProtocol = {
       ]
     },
     {
-      "name": "configUpdated",
+      "name": "ConfigUpdated",
       "discriminator": [
         40,
         241,
@@ -3220,7 +3599,7 @@ export type AgonProtocol = {
       ]
     },
     {
-      "name": "deposited",
+      "name": "Deposited",
       "discriminator": [
         111,
         141,
@@ -3233,7 +3612,7 @@ export type AgonProtocol = {
       ]
     },
     {
-      "name": "inboundChannelPolicyUpdated",
+      "name": "InboundChannelPolicyUpdated",
       "discriminator": [
         105,
         82,
@@ -3246,7 +3625,7 @@ export type AgonProtocol = {
       ]
     },
     {
-      "name": "individualSettled",
+      "name": "IndividualSettled",
       "discriminator": [
         5,
         202,
@@ -3259,7 +3638,33 @@ export type AgonProtocol = {
       ]
     },
     {
-      "name": "participantBlsKeyRegistered",
+      "name": "OptedInYield",
+      "discriminator": [
+        205,
+        173,
+        39,
+        40,
+        235,
+        57,
+        1,
+        54
+      ]
+    },
+    {
+      "name": "OptedOutYield",
+      "discriminator": [
+        250,
+        26,
+        184,
+        180,
+        81,
+        79,
+        209,
+        2
+      ]
+    },
+    {
+      "name": "ParticipantBlsKeyRegistered",
       "discriminator": [
         215,
         146,
@@ -3272,7 +3677,7 @@ export type AgonProtocol = {
       ]
     },
     {
-      "name": "participantInitialized",
+      "name": "ParticipantInitialized",
       "discriminator": [
         177,
         34,
@@ -3285,7 +3690,7 @@ export type AgonProtocol = {
       ]
     },
     {
-      "name": "protocolYieldClaimed",
+      "name": "ProtocolYieldClaimed",
       "discriminator": [
         232,
         119,
@@ -3298,7 +3703,7 @@ export type AgonProtocol = {
       ]
     },
     {
-      "name": "registryAuthorityTransferStarted",
+      "name": "RegistryAuthorityTransferStarted",
       "discriminator": [
         98,
         230,
@@ -3311,7 +3716,7 @@ export type AgonProtocol = {
       ]
     },
     {
-      "name": "registryAuthorityTransferred",
+      "name": "RegistryAuthorityTransferred",
       "discriminator": [
         70,
         11,
@@ -3324,7 +3729,7 @@ export type AgonProtocol = {
       ]
     },
     {
-      "name": "withdrawalCancelled",
+      "name": "WithdrawalCancelled",
       "discriminator": [
         119,
         175,
@@ -3337,7 +3742,7 @@ export type AgonProtocol = {
       ]
     },
     {
-      "name": "withdrawalRequested",
+      "name": "WithdrawalRequested",
       "discriminator": [
         75,
         207,
@@ -3350,7 +3755,7 @@ export type AgonProtocol = {
       ]
     },
     {
-      "name": "withdrawn",
+      "name": "Withdrawn",
       "discriminator": [
         20,
         89,
@@ -3363,7 +3768,7 @@ export type AgonProtocol = {
       ]
     },
     {
-      "name": "yieldAccrued",
+      "name": "YieldAccrued",
       "discriminator": [
         195,
         121,
@@ -3376,7 +3781,7 @@ export type AgonProtocol = {
       ]
     },
     {
-      "name": "yieldBearingTokenRegistered",
+      "name": "YieldBearingTokenRegistered",
       "discriminator": [
         33,
         190,
@@ -3389,7 +3794,7 @@ export type AgonProtocol = {
       ]
     },
     {
-      "name": "yieldDeposited",
+      "name": "YieldDeposited",
       "discriminator": [
         240,
         44,
@@ -3402,7 +3807,7 @@ export type AgonProtocol = {
       ]
     },
     {
-      "name": "yieldWithdrawn",
+      "name": "YieldWithdrawn",
       "discriminator": [
         175,
         101,
@@ -3418,456 +3823,461 @@ export type AgonProtocol = {
   "errors": [
     {
       "code": 6000,
-      "name": "insufficientBalance",
+      "name": "InsufficientBalance",
       "msg": "Insufficient balance for this operation"
     },
     {
       "code": 6001,
-      "name": "withdrawalAlreadyPending",
+      "name": "WithdrawalAlreadyPending",
       "msg": "A withdrawal is already pending"
     },
     {
       "code": 6002,
-      "name": "noWithdrawalPending",
+      "name": "NoWithdrawalPending",
       "msg": "No withdrawal is currently pending"
     },
     {
       "code": 6003,
-      "name": "withdrawalLocked",
+      "name": "WithdrawalLocked",
       "msg": "Unlock timelock has not yet expired"
     },
     {
       "code": 6004,
-      "name": "invalidWithdrawalDestination",
+      "name": "InvalidWithdrawalDestination",
       "msg": "Invalid withdrawal destination address"
     },
     {
       "code": 6005,
-      "name": "invalidAuthority",
+      "name": "InvalidAuthority",
       "msg": "Authority cannot be the zero address"
     },
     {
       "code": 6006,
-      "name": "invalidFeeRecipient",
+      "name": "InvalidFeeRecipient",
       "msg": "Fee recipient cannot be the zero address"
     },
     {
       "code": 6007,
-      "name": "invalidInboundChannelPolicy",
+      "name": "InvalidInboundChannelPolicy",
       "msg": "Invalid inbound channel policy"
     },
     {
       "code": 6008,
-      "name": "unauthorizedInitializer",
+      "name": "UnauthorizedInitializer",
       "msg": "Only the program upgrade authority can initialize the protocol"
     },
     {
       "code": 6009,
-      "name": "invalidFeeBps",
+      "name": "InvalidFeeBps",
       "msg": "Fee BPS must be between 3 (0.03%) and 30 (0.3%)"
     },
     {
       "code": 6010,
-      "name": "invalidRegistrationFee",
+      "name": "InvalidRegistrationFee",
       "msg": "Registration fee must be 0 or between 0.001 and 0.01 SOL"
     },
     {
       "code": 6011,
-      "name": "invalidDepositFor",
+      "name": "InvalidDepositFor",
       "msg": "Invalid deposit_for: amounts length must match recipients, max 16"
     },
     {
       "code": 6012,
-      "name": "amountMustBePositive",
+      "name": "AmountMustBePositive",
       "msg": "Amount must be greater than zero"
     },
     {
       "code": 6013,
-      "name": "commitmentAmountMustIncrease",
+      "name": "CommitmentAmountMustIncrease",
       "msg": "Committed amount must be greater than the previously settled amount"
     },
     {
       "code": 6014,
-      "name": "invalidAuthoritySignature",
+      "name": "InvalidAuthoritySignature",
       "msg": "Invalid authority signature"
     },
     {
       "code": 6015,
-      "name": "signatureAlreadyUsed",
+      "name": "SignatureAlreadyUsed",
       "msg": "This signature or clearing round has already been used"
     },
     {
       "code": 6016,
-      "name": "participantNotFound",
+      "name": "ParticipantNotFound",
       "msg": "Participant not found"
     },
     {
       "code": 6017,
-      "name": "accountIdMismatch",
+      "name": "AccountIdMismatch",
       "msg": "Account participant_id does not match message participant_id"
     },
     {
       "code": 6018,
-      "name": "invalidCommitmentMessage",
+      "name": "InvalidCommitmentMessage",
       "msg": "Invalid payment commitment message format"
     },
     {
       "code": 6019,
-      "name": "invalidClearingRoundMessage",
+      "name": "InvalidClearingRoundMessage",
       "msg": "Invalid clearing round message format"
     },
     {
       "code": 6020,
-      "name": "netFlowImbalance",
+      "name": "NetFlowImbalance",
       "msg": "Net flow sums do not balance"
     },
     {
       "code": 6021,
-      "name": "netPositionOverflow",
+      "name": "NetPositionOverflow",
       "msg": "Net position computation overflowed"
     },
     {
       "code": 6022,
-      "name": "mathOverflow",
+      "name": "MathOverflow",
       "msg": "Arithmetic overflow"
     },
     {
       "code": 6023,
-      "name": "invalidChainId",
+      "name": "InvalidChainId",
       "msg": "Chain ID is not supported by this deployment configuration"
     },
     {
       "code": 6024,
-      "name": "invalidMessageDomain",
+      "name": "InvalidMessageDomain",
       "msg": "Message domain does not match this deployment"
     },
     {
       "code": 6025,
-      "name": "invalidSignature",
+      "name": "InvalidSignature",
       "msg": "Ed25519 signature verification failed"
     },
     {
       "code": 6026,
-      "name": "invalidBlsPublicKey",
+      "name": "InvalidBlsPublicKey",
       "msg": "Invalid BLS public key"
     },
     {
       "code": 6027,
-      "name": "invalidBlsSignature",
+      "name": "InvalidBlsSignature",
       "msg": "Invalid BLS aggregate signature"
     },
     {
       "code": 6028,
-      "name": "invalidBlsProofOfPossession",
+      "name": "InvalidBlsProofOfPossession",
       "msg": "Invalid BLS proof of possession"
     },
     {
       "code": 6029,
-      "name": "participantBlsKeyNotFound",
+      "name": "ParticipantBlsKeyNotFound",
       "msg": "Participant inline BLS key is not registered"
     },
     {
       "code": 6030,
-      "name": "participantBlsKeyAlreadyRegistered",
+      "name": "ParticipantBlsKeyAlreadyRegistered",
       "msg": "Participant already has a registered BLS key"
     },
     {
       "code": 6031,
-      "name": "accountBlsKeyMismatch",
+      "name": "AccountBlsKeyMismatch",
       "msg": "BLS key registration does not match the participant"
     },
     {
       "code": 6032,
-      "name": "blsSyscallFailed",
+      "name": "BlsSyscallFailed",
       "msg": "BLS syscall failed or is unavailable on this cluster"
     },
     {
       "code": 6033,
-      "name": "cpiNotAllowed",
+      "name": "CpiNotAllowed",
       "msg": "CPI calls to settlement instructions are not allowed"
     },
     {
       "code": 6034,
-      "name": "invalidEd25519Data",
+      "name": "InvalidEd25519Data",
       "msg": "Invalid Ed25519 instruction data"
     },
     {
       "code": 6035,
-      "name": "channelNotInitialized",
+      "name": "ChannelNotInitialized",
       "msg": "Channel must be initialized before use - call create_channel first"
     },
     {
       "code": 6036,
-      "name": "channelAlreadyExists",
+      "name": "ChannelAlreadyExists",
       "msg": "Channel already exists for this payer-payee pair"
     },
     {
       "code": 6037,
-      "name": "unauthorizedSettler",
+      "name": "UnauthorizedSettler",
       "msg": "Only the payee or authorized settler can submit this payment commitment"
     },
     {
       "code": 6038,
-      "name": "inboundChannelConsentRequired",
+      "name": "InboundChannelConsentRequired",
       "msg": "Payee consent is required to create this inbound channel"
     },
     {
       "code": 6039,
-      "name": "counterpartyConsentRequired",
+      "name": "CounterpartyConsentRequired",
       "msg": "Counterparty consent is required for cooperative channel unlock"
     },
     {
       "code": 6040,
-      "name": "inboundChannelsDisabled",
+      "name": "InboundChannelsDisabled",
       "msg": "This participant does not accept inbound channels"
     },
     {
       "code": 6041,
-      "name": "selfChannelNotAllowed",
+      "name": "SelfChannelNotAllowed",
       "msg": "Self-channels are not allowed"
     },
     {
       "code": 6042,
-      "name": "noPendingAuthorityTransfer",
+      "name": "NoPendingAuthorityTransfer",
       "msg": "No authority transfer is currently pending"
     },
     {
       "code": 6043,
-      "name": "unauthorizedPendingAuthority",
+      "name": "UnauthorizedPendingAuthority",
       "msg": "Only the nominated pending authority can accept this transfer"
     },
     {
       "code": 6044,
-      "name": "tooManyTokenBalances",
+      "name": "TooManyTokenBalances",
       "msg": "Maximum token balances per participant exceeded"
     },
     {
       "code": 6045,
-      "name": "tokenNotFound",
+      "name": "TokenNotFound",
       "msg": "Token ID not registered in token registry"
     },
     {
       "code": 6046,
-      "name": "tokenAlreadyRegistered",
+      "name": "TokenAlreadyRegistered",
       "msg": "Token mint already registered"
     },
     {
       "code": 6047,
-      "name": "tokenIdAlreadyInUse",
+      "name": "TokenIdAlreadyInUse",
       "msg": "Token ID already in use"
     },
     {
       "code": 6048,
-      "name": "unauthorizedTokenRegistration",
+      "name": "UnauthorizedTokenRegistration",
       "msg": "Unauthorized token registration"
     },
     {
       "code": 6049,
-      "name": "invalidTokenId",
+      "name": "InvalidTokenId",
       "msg": "Token ID must be greater than zero"
     },
     {
       "code": 6050,
-      "name": "invalidTokenSymbol",
+      "name": "InvalidTokenSymbol",
       "msg": "Token symbol must be valid ASCII"
     },
     {
       "code": 6051,
-      "name": "invalidTokenDecimals",
+      "name": "InvalidTokenDecimals",
       "msg": "Token decimals exceed the protocol maximum"
     },
     {
       "code": 6052,
-      "name": "tokenRegistryFull",
+      "name": "TokenRegistryFull",
       "msg": "Token registry account is full"
     },
     {
       "code": 6053,
-      "name": "invalidTokenMint",
+      "name": "InvalidTokenMint",
       "msg": "Token account mint doesn't match registered token"
     },
     {
       "code": 6054,
-      "name": "insufficientLockedBalance",
+      "name": "InsufficientLockedBalance",
       "msg": "Requested unlock amount exceeds the channel's locked balance"
     },
     {
       "code": 6055,
-      "name": "noChannelUnlockPending",
+      "name": "NoChannelUnlockPending",
       "msg": "No channel unlock is currently pending"
     },
     {
       "code": 6056,
-      "name": "invalidAuthorizedSigner",
+      "name": "InvalidAuthorizedSigner",
       "msg": "Authorized signer cannot be the zero address or the current signer"
     },
     {
       "code": 6057,
-      "name": "noAuthorizedSignerUpdatePending",
+      "name": "NoAuthorizedSignerUpdatePending",
       "msg": "No authorized signer update is currently pending"
     },
     {
       "code": 6058,
-      "name": "bucketAccountMismatch",
+      "name": "BucketAccountMismatch",
       "msg": "Bucket account does not match the expected bucket id or PDA"
     },
     {
       "code": 6059,
-      "name": "bucketSlotMismatch",
+      "name": "BucketSlotMismatch",
       "msg": "Bucket slot does not match the expected logical row"
     },
     {
       "code": 6060,
-      "name": "bucketSlotAlreadyInitialized",
+      "name": "BucketSlotAlreadyInitialized",
       "msg": "Bucket slot is already initialized"
     },
     {
       "code": 6061,
-      "name": "bucketFull",
+      "name": "BucketFull",
       "msg": "Bucket has no remaining free slots"
     },
     {
       "code": 6062,
-      "name": "ownerAlreadyRegistered",
+      "name": "OwnerAlreadyRegistered",
       "msg": "Owner is already registered"
     },
     {
       "code": 6063,
-      "name": "tokenIsYieldBearing",
+      "name": "TokenIsYieldBearing",
       "msg": "Token id is yield-bearing; use the yield-bearing instruction variant"
     },
     {
       "code": 6064,
-      "name": "tokenIsNotYieldBearing",
+      "name": "TokenIsNotYieldBearing",
       "msg": "Token id is plain; use the plain deposit/withdrawal instruction"
     },
     {
       "code": 6065,
-      "name": "invalidYieldStrategy",
+      "name": "InvalidYieldStrategy",
       "msg": "YieldStrategy account does not match the registered token configuration"
     },
     {
       "code": 6066,
-      "name": "insufficientProtocolYield",
+      "name": "InsufficientProtocolYield",
       "msg": "Requested protocol yield claim exceeds accrued protocol yield"
     },
     {
       "code": 6067,
-      "name": "yieldUnderlyingMismatch",
+      "name": "YieldUnderlyingMismatch",
       "msg": "Yield-bearing underlying mint does not match the lending reserve"
     },
     {
       "code": 6068,
-      "name": "solvencyInvariantBroken",
+      "name": "SolvencyInvariantBroken",
       "msg": "Solvency invariant violated: share_vault USDC value < user_owed + protocol_owed"
     },
     {
       "code": 6069,
-      "name": "invalidYieldProgram",
+      "name": "InvalidYieldProgram",
       "msg": "Yield program account does not match strategy.yield_program"
     },
     {
       "code": 6070,
-      "name": "invalidProtocolYieldShareBps",
+      "name": "InvalidProtocolYieldShareBps",
       "msg": "Protocol yield share bps exceeds the maximum allowed value"
+    },
+    {
+      "code": 6071,
+      "name": "MismatchedYieldUnderlying",
+      "msg": "Plain token mint does not match the yield strategy's underlying mint"
     }
   ],
   "types": [
     {
-      "name": "channelAuthorizedSignerUpdateRequested",
+      "name": "ChannelAuthorizedSignerUpdateRequested",
       "type": {
         "kind": "struct",
         "fields": [
           {
-            "name": "payerId",
+            "name": "payer_id",
             "type": "u32"
           },
           {
-            "name": "payeeId",
+            "name": "payee_id",
             "type": "u32"
           },
           {
-            "name": "tokenId",
+            "name": "token_id",
             "type": "u16"
           },
           {
-            "name": "currentAuthorizedSigner",
+            "name": "current_authorized_signer",
             "type": "pubkey"
           },
           {
-            "name": "pendingAuthorizedSigner",
+            "name": "pending_authorized_signer",
             "type": "pubkey"
           },
           {
-            "name": "activateAt",
+            "name": "activate_at",
             "type": "i64"
           }
         ]
       }
     },
     {
-      "name": "channelAuthorizedSignerUpdated",
+      "name": "ChannelAuthorizedSignerUpdated",
       "type": {
         "kind": "struct",
         "fields": [
           {
-            "name": "payerId",
+            "name": "payer_id",
             "type": "u32"
           },
           {
-            "name": "payeeId",
+            "name": "payee_id",
             "type": "u32"
           },
           {
-            "name": "tokenId",
+            "name": "token_id",
             "type": "u16"
           },
           {
-            "name": "previousAuthorizedSigner",
+            "name": "previous_authorized_signer",
             "type": "pubkey"
           },
           {
-            "name": "newAuthorizedSigner",
+            "name": "new_authorized_signer",
             "type": "pubkey"
           }
         ]
       }
     },
     {
-      "name": "channelCreated",
+      "name": "ChannelCreated",
       "type": {
         "kind": "struct",
         "fields": [
           {
-            "name": "payerId",
+            "name": "payer_id",
             "type": "u32"
           },
           {
-            "name": "payeeId",
+            "name": "payee_id",
             "type": "u32"
           },
           {
-            "name": "tokenId",
+            "name": "token_id",
             "type": "u16"
           }
         ]
       }
     },
     {
-      "name": "channelFundsLocked",
+      "name": "ChannelFundsLocked",
       "type": {
         "kind": "struct",
         "fields": [
           {
-            "name": "payerId",
+            "name": "payer_id",
             "type": "u32"
           },
           {
-            "name": "payeeId",
+            "name": "payee_id",
             "type": "u32"
           },
           {
-            "name": "tokenId",
+            "name": "token_id",
             "type": "u16"
           },
           {
@@ -3875,111 +4285,111 @@ export type AgonProtocol = {
             "type": "u64"
           },
           {
-            "name": "totalLocked",
+            "name": "total_locked",
             "type": "u64"
           }
         ]
       }
     },
     {
-      "name": "channelFundsUnlocked",
+      "name": "ChannelFundsUnlocked",
       "type": {
         "kind": "struct",
         "fields": [
           {
-            "name": "payerId",
+            "name": "payer_id",
             "type": "u32"
           },
           {
-            "name": "payeeId",
+            "name": "payee_id",
             "type": "u32"
           },
           {
-            "name": "tokenId",
+            "name": "token_id",
             "type": "u16"
           },
           {
-            "name": "releasedAmount",
+            "name": "released_amount",
             "type": "u64"
           },
           {
-            "name": "remainingLocked",
+            "name": "remaining_locked",
             "type": "u64"
           }
         ]
       }
     },
     {
-      "name": "channelUnlockRequested",
+      "name": "ChannelUnlockRequested",
       "type": {
         "kind": "struct",
         "fields": [
           {
-            "name": "payerId",
+            "name": "payer_id",
             "type": "u32"
           },
           {
-            "name": "payeeId",
+            "name": "payee_id",
             "type": "u32"
           },
           {
-            "name": "tokenId",
+            "name": "token_id",
             "type": "u16"
           },
           {
-            "name": "requestedAmount",
+            "name": "requested_amount",
             "type": "u64"
           },
           {
-            "name": "unlockAt",
+            "name": "unlock_at",
             "type": "i64"
           }
         ]
       }
     },
     {
-      "name": "clearingRoundSettled",
+      "name": "ClearingRoundSettled",
       "type": {
         "kind": "struct",
         "fields": [
           {
-            "name": "tokenId",
+            "name": "token_id",
             "type": "u16"
           },
           {
-            "name": "participantCount",
+            "name": "participant_count",
             "type": "u16"
           },
           {
-            "name": "channelCount",
+            "name": "channel_count",
             "type": "u16"
           },
           {
-            "name": "totalGross",
+            "name": "total_gross",
             "type": "u64"
           },
           {
-            "name": "totalNetAdjusted",
+            "name": "total_net_adjusted",
             "type": "u64"
           }
         ]
       }
     },
     {
-      "name": "commitmentBundleSettled",
+      "name": "CommitmentBundleSettled",
       "type": {
         "kind": "struct",
         "fields": [
           {
-            "name": "payeeId",
+            "name": "payee_id",
             "type": "u32"
           },
           {
-            "name": "tokenId",
+            "name": "token_id",
             "type": "u16"
           },
           {
-            "name": "channelCount",
+            "name": "channel_count",
             "type": "u16"
           },
           {
@@ -3990,39 +4400,39 @@ export type AgonProtocol = {
       }
     },
     {
-      "name": "configAuthorityTransferStarted",
+      "name": "ConfigAuthorityTransferStarted",
       "type": {
         "kind": "struct",
         "fields": [
           {
-            "name": "currentAuthority",
+            "name": "current_authority",
             "type": "pubkey"
           },
           {
-            "name": "pendingAuthority",
+            "name": "pending_authority",
             "type": "pubkey"
           }
         ]
       }
     },
     {
-      "name": "configAuthorityTransferred",
+      "name": "ConfigAuthorityTransferred",
       "type": {
         "kind": "struct",
         "fields": [
           {
-            "name": "previousAuthority",
+            "name": "previous_authority",
             "type": "pubkey"
           },
           {
-            "name": "newAuthority",
+            "name": "new_authority",
             "type": "pubkey"
           }
         ]
       }
     },
     {
-      "name": "configUpdated",
+      "name": "ConfigUpdated",
       "type": {
         "kind": "struct",
         "fields": [
@@ -4031,31 +4441,31 @@ export type AgonProtocol = {
             "type": "pubkey"
           },
           {
-            "name": "feeRecipient",
+            "name": "fee_recipient",
             "type": "pubkey"
           },
           {
-            "name": "feeBps",
+            "name": "fee_bps",
             "type": "u16"
           },
           {
-            "name": "chainId",
+            "name": "chain_id",
             "type": "u16"
           }
         ]
       }
     },
     {
-      "name": "deposited",
+      "name": "Deposited",
       "type": {
         "kind": "struct",
         "fields": [
           {
-            "name": "participantId",
+            "name": "participant_id",
             "type": "u32"
           },
           {
-            "name": "tokenId",
+            "name": "token_id",
             "type": "u16"
           },
           {
@@ -4066,7 +4476,7 @@ export type AgonProtocol = {
       }
     },
     {
-      "name": "globalConfig",
+      "name": "GlobalConfig",
       "type": {
         "kind": "struct",
         "fields": [
@@ -4079,35 +4489,35 @@ export type AgonProtocol = {
             "type": "pubkey"
           },
           {
-            "name": "feeRecipient",
+            "name": "fee_recipient",
             "docs": [
               "Wallet that receives registration-fee lamports and owns per-token fee accounts."
             ],
             "type": "pubkey"
           },
           {
-            "name": "feeBps",
+            "name": "fee_bps",
             "docs": [
               "Withdrawal fee in basis points (default 30 = 0.3%)"
             ],
             "type": "u16"
           },
           {
-            "name": "withdrawalTimelockSeconds",
+            "name": "withdrawal_timelock_seconds",
             "docs": [
               "Seconds before a pending available-balance withdrawal becomes executable."
             ],
             "type": "i64"
           },
           {
-            "name": "registrationFeeLamports",
+            "name": "registration_fee_lamports",
             "docs": [
               "Flat SOL fee at initialize_participant (default 0)"
             ],
             "type": "u64"
           },
           {
-            "name": "nextParticipantId",
+            "name": "next_participant_id",
             "docs": [
               "Auto-incrementing participant ID counter"
             ],
@@ -4121,14 +4531,14 @@ export type AgonProtocol = {
             "type": "u8"
           },
           {
-            "name": "chainId",
+            "name": "chain_id",
             "docs": [
               "Protocol chain identifier used in signed message validation."
             ],
             "type": "u16"
           },
           {
-            "name": "messageDomain",
+            "name": "message_domain",
             "docs": [
               "Immutable deployment-scoped domain used by signed settlement messages."
             ],
@@ -4140,21 +4550,21 @@ export type AgonProtocol = {
             }
           },
           {
-            "name": "pendingAuthority",
+            "name": "pending_authority",
             "docs": [
               "Pending authority that must explicitly accept before a handoff completes."
             ],
             "type": "pubkey"
           },
           {
-            "name": "channelUnlockTimelockSeconds",
+            "name": "channel_unlock_timelock_seconds",
             "docs": [
               "Seconds before a unilateral channel-collateral unlock becomes executable."
             ],
             "type": "i64"
           },
           {
-            "name": "reserved",
+            "name": "_reserved",
             "docs": [
               "Reserved for future config expansion."
             ],
@@ -4169,36 +4579,36 @@ export type AgonProtocol = {
       }
     },
     {
-      "name": "inboundChannelPolicyUpdated",
+      "name": "InboundChannelPolicyUpdated",
       "type": {
         "kind": "struct",
         "fields": [
           {
-            "name": "participantId",
+            "name": "participant_id",
             "type": "u32"
           },
           {
-            "name": "inboundChannelPolicy",
+            "name": "inbound_channel_policy",
             "type": "u8"
           }
         ]
       }
     },
     {
-      "name": "individualSettled",
+      "name": "IndividualSettled",
       "type": {
         "kind": "struct",
         "fields": [
           {
-            "name": "payerId",
+            "name": "payer_id",
             "type": "u32"
           },
           {
-            "name": "payeeId",
+            "name": "payee_id",
             "type": "u32"
           },
           {
-            "name": "tokenId",
+            "name": "token_id",
             "type": "u16"
           },
           {
@@ -4206,23 +4616,87 @@ export type AgonProtocol = {
             "type": "u64"
           },
           {
-            "name": "committedAmount",
+            "name": "committed_amount",
             "type": "u64"
           },
           {
-            "name": "fromLocked",
+            "name": "from_locked",
             "type": "bool"
           }
         ]
       }
     },
     {
-      "name": "ownerIndexBucket",
+      "name": "OptedInYield",
       "type": {
         "kind": "struct",
         "fields": [
           {
-            "name": "bucketId",
+            "name": "participant_id",
+            "type": "u32"
+          },
+          {
+            "name": "plain_token_id",
+            "type": "u16"
+          },
+          {
+            "name": "yield_token_id",
+            "type": "u16"
+          },
+          {
+            "name": "usdc_amount",
+            "type": "u64"
+          },
+          {
+            "name": "shares_minted",
+            "type": "u64"
+          },
+          {
+            "name": "user_index_q64",
+            "type": "u128"
+          }
+        ]
+      }
+    },
+    {
+      "name": "OptedOutYield",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "participant_id",
+            "type": "u32"
+          },
+          {
+            "name": "yield_token_id",
+            "type": "u16"
+          },
+          {
+            "name": "plain_token_id",
+            "type": "u16"
+          },
+          {
+            "name": "shares_burned",
+            "type": "u64"
+          },
+          {
+            "name": "usdc_credited",
+            "type": "u64"
+          },
+          {
+            "name": "user_index_q64",
+            "type": "u128"
+          }
+        ]
+      }
+    },
+    {
+      "name": "OwnerIndexBucket",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "bucket_id",
             "type": "u32"
           },
           {
@@ -4235,7 +4709,7 @@ export type AgonProtocol = {
               "array": [
                 {
                   "defined": {
-                    "name": "ownerIndexSlot"
+                    "name": "OwnerIndexSlot"
                   }
                 },
                 32
@@ -4246,7 +4720,7 @@ export type AgonProtocol = {
       }
     },
     {
-      "name": "ownerIndexSlot",
+      "name": "OwnerIndexSlot",
       "type": {
         "kind": "struct",
         "fields": [
@@ -4259,14 +4733,14 @@ export type AgonProtocol = {
             "type": "pubkey"
           },
           {
-            "name": "participantId",
+            "name": "participant_id",
             "type": "u32"
           }
         ]
       }
     },
     {
-      "name": "participantBlsKeyRegistered",
+      "name": "ParticipantBlsKeyRegistered",
       "type": {
         "kind": "struct",
         "fields": [
@@ -4275,22 +4749,22 @@ export type AgonProtocol = {
             "type": "pubkey"
           },
           {
-            "name": "participantId",
+            "name": "participant_id",
             "type": "u32"
           },
           {
-            "name": "participantBucket",
+            "name": "participant_bucket",
             "type": "pubkey"
           },
           {
-            "name": "schemeVersion",
+            "name": "scheme_version",
             "type": "u8"
           }
         ]
       }
     },
     {
-      "name": "participantInitialized",
+      "name": "ParticipantInitialized",
       "type": {
         "kind": "struct",
         "fields": [
@@ -4299,91 +4773,91 @@ export type AgonProtocol = {
             "type": "pubkey"
           },
           {
-            "name": "participantId",
+            "name": "participant_id",
             "type": "u32"
           },
           {
-            "name": "registrationFeeLamports",
+            "name": "registration_fee_lamports",
             "type": "u64"
           },
           {
-            "name": "inboundChannelPolicy",
+            "name": "inbound_channel_policy",
             "type": "u8"
           }
         ]
       }
     },
     {
-      "name": "protocolYieldClaimed",
+      "name": "ProtocolYieldClaimed",
       "type": {
         "kind": "struct",
         "fields": [
           {
-            "name": "tokenId",
+            "name": "token_id",
             "type": "u16"
           },
           {
-            "name": "feeRecipient",
+            "name": "fee_recipient",
             "type": "pubkey"
           },
           {
-            "name": "usdcAmount",
+            "name": "usdc_amount",
             "type": "u64"
           },
           {
-            "name": "protocolOwedUnderlyingAfter",
+            "name": "protocol_owed_underlying_after",
             "type": "u64"
           }
         ]
       }
     },
     {
-      "name": "registryAuthorityTransferStarted",
+      "name": "RegistryAuthorityTransferStarted",
       "type": {
         "kind": "struct",
         "fields": [
           {
-            "name": "currentAuthority",
+            "name": "current_authority",
             "type": "pubkey"
           },
           {
-            "name": "pendingAuthority",
+            "name": "pending_authority",
             "type": "pubkey"
           }
         ]
       }
     },
     {
-      "name": "registryAuthorityTransferred",
+      "name": "RegistryAuthorityTransferred",
       "type": {
         "kind": "struct",
         "fields": [
           {
-            "name": "previousAuthority",
+            "name": "previous_authority",
             "type": "pubkey"
           },
           {
-            "name": "newAuthority",
+            "name": "new_authority",
             "type": "pubkey"
           }
         ]
       }
     },
     {
-      "name": "reserve",
+      "name": "Reserve",
       "type": {
         "kind": "struct",
         "fields": [
           {
-            "name": "underlyingMint",
+            "name": "underlying_mint",
             "type": "pubkey"
           },
           {
-            "name": "shareMint",
+            "name": "share_mint",
             "type": "pubkey"
           },
           {
-            "name": "liquidityVault",
+            "name": "liquidity_vault",
             "type": "pubkey"
           },
           {
@@ -4391,15 +4865,15 @@ export type AgonProtocol = {
             "type": "pubkey"
           },
           {
-            "name": "apyBps",
+            "name": "apy_bps",
             "type": "u16"
           },
           {
-            "name": "lastAccrualTs",
+            "name": "last_accrual_ts",
             "type": "i64"
           },
           {
-            "name": "totalUnderlying",
+            "name": "total_underlying",
             "type": "u64"
           },
           {
@@ -4407,7 +4881,7 @@ export type AgonProtocol = {
             "type": "u8"
           },
           {
-            "name": "reserved",
+            "name": "_reserved",
             "type": {
               "array": [
                 "u8",
@@ -4419,7 +4893,7 @@ export type AgonProtocol = {
       }
     },
     {
-      "name": "tokenEntry",
+      "name": "TokenEntry",
       "docs": [
         "Token registry entry",
         "Total: 56 bytes per entry (was 51 in v5; +1 for `kind`, +4 reserved for future fields)."
@@ -4463,7 +4937,7 @@ export type AgonProtocol = {
             }
           },
           {
-            "name": "registeredAt",
+            "name": "registered_at",
             "docs": [
               "Unix timestamp when token was registered (immutable)"
             ],
@@ -4477,7 +4951,7 @@ export type AgonProtocol = {
             "type": "u8"
           },
           {
-            "name": "reserved",
+            "name": "_reserved",
             "docs": [
               "Reserved padding for future fields (do not change the size — accounts are pre-allocated)."
             ],
@@ -4492,7 +4966,7 @@ export type AgonProtocol = {
       }
     },
     {
-      "name": "tokenRegistry",
+      "name": "TokenRegistry",
       "type": {
         "kind": "struct",
         "fields": [
@@ -4511,7 +4985,7 @@ export type AgonProtocol = {
             "type": {
               "vec": {
                 "defined": {
-                  "name": "tokenEntry"
+                  "name": "TokenEntry"
                 }
               }
             }
@@ -4524,7 +4998,7 @@ export type AgonProtocol = {
             "type": "u8"
           },
           {
-            "name": "pendingAuthority",
+            "name": "pending_authority",
             "docs": [
               "Pending authority that must explicitly accept before a handoff completes."
             ],
@@ -4534,36 +5008,36 @@ export type AgonProtocol = {
       }
     },
     {
-      "name": "withdrawalCancelled",
+      "name": "WithdrawalCancelled",
       "type": {
         "kind": "struct",
         "fields": [
           {
-            "name": "participantId",
+            "name": "participant_id",
             "type": "u32"
           },
           {
-            "name": "tokenId",
+            "name": "token_id",
             "type": "u16"
           },
           {
-            "name": "amountReturned",
+            "name": "amount_returned",
             "type": "u64"
           }
         ]
       }
     },
     {
-      "name": "withdrawalRequested",
+      "name": "WithdrawalRequested",
       "type": {
         "kind": "struct",
         "fields": [
           {
-            "name": "participantId",
+            "name": "participant_id",
             "type": "u32"
           },
           {
-            "name": "tokenId",
+            "name": "token_id",
             "type": "u16"
           },
           {
@@ -4575,31 +5049,31 @@ export type AgonProtocol = {
             "type": "pubkey"
           },
           {
-            "name": "unlockAt",
+            "name": "unlock_at",
             "type": "i64"
           }
         ]
       }
     },
     {
-      "name": "withdrawn",
+      "name": "Withdrawn",
       "type": {
         "kind": "struct",
         "fields": [
           {
-            "name": "participantId",
+            "name": "participant_id",
             "type": "u32"
           },
           {
-            "name": "tokenId",
+            "name": "token_id",
             "type": "u16"
           },
           {
-            "name": "netAmount",
+            "name": "net_amount",
             "type": "u64"
           },
           {
-            "name": "feeAmount",
+            "name": "fee_amount",
             "type": "u64"
           },
           {
@@ -4610,56 +5084,56 @@ export type AgonProtocol = {
       }
     },
     {
-      "name": "yieldAccrued",
+      "name": "YieldAccrued",
       "type": {
         "kind": "struct",
         "fields": [
           {
-            "name": "tokenId",
+            "name": "token_id",
             "type": "u16"
           },
           {
-            "name": "currentUnderlying",
+            "name": "current_underlying",
             "type": "u64"
           },
           {
-            "name": "lastSettledUnderlying",
+            "name": "last_settled_underlying",
             "type": "u64"
           },
           {
-            "name": "userIndexQ64",
+            "name": "user_index_q64",
             "type": "u128"
           },
           {
-            "name": "protocolOwedUnderlying",
+            "name": "protocol_owed_underlying",
             "type": "u64"
           },
           {
-            "name": "totalUserShares",
+            "name": "total_user_shares",
             "type": "u64"
           }
         ]
       }
     },
     {
-      "name": "yieldBearingTokenRegistered",
+      "name": "YieldBearingTokenRegistered",
       "type": {
         "kind": "struct",
         "fields": [
           {
-            "name": "tokenId",
+            "name": "token_id",
             "type": "u16"
           },
           {
-            "name": "underlyingMint",
+            "name": "underlying_mint",
             "type": "pubkey"
           },
           {
-            "name": "shareMint",
+            "name": "share_mint",
             "type": "pubkey"
           },
           {
-            "name": "shareVault",
+            "name": "share_vault",
             "type": "pubkey"
           },
           {
@@ -4667,53 +5141,53 @@ export type AgonProtocol = {
             "type": "pubkey"
           },
           {
-            "name": "yieldProgram",
+            "name": "yield_program",
             "type": "pubkey"
           },
           {
-            "name": "protocolYieldShareBps",
+            "name": "protocol_yield_share_bps",
             "type": "u16"
           }
         ]
       }
     },
     {
-      "name": "yieldDeposited",
+      "name": "YieldDeposited",
       "type": {
         "kind": "struct",
         "fields": [
           {
-            "name": "participantId",
+            "name": "participant_id",
             "type": "u32"
           },
           {
-            "name": "tokenId",
+            "name": "token_id",
             "type": "u16"
           },
           {
-            "name": "usdcAmount",
+            "name": "usdc_amount",
             "type": "u64"
           },
           {
-            "name": "sharesMinted",
+            "name": "shares_minted",
             "type": "u64"
           },
           {
-            "name": "userIndexQ64",
+            "name": "user_index_q64",
             "type": "u128"
           }
         ]
       }
     },
     {
-      "name": "yieldStrategy",
+      "name": "YieldStrategy",
       "type": {
         "kind": "struct",
         "fields": [
           {
-            "name": "tokenId",
+            "name": "token_id",
             "docs": [
-              "agUSDC token id (the yield-bearing wrapper this strategy represents)."
+              "ryUSDC token id (the yield-bearing wrapper this strategy represents)."
             ],
             "type": "u16"
           },
@@ -4725,28 +5199,28 @@ export type AgonProtocol = {
             "type": "u8"
           },
           {
-            "name": "shareVaultBump",
+            "name": "share_vault_bump",
             "docs": [
               "PDA bump for `[YIELD_SHARE_VAULT_SEED, token_id_le]`."
             ],
             "type": "u8"
           },
           {
-            "name": "protocolYieldShareBps",
+            "name": "protocol_yield_share_bps",
             "docs": [
               "Protocol's slice of new yield, in basis points. `3_333` = 33.33%."
             ],
             "type": "u16"
           },
           {
-            "name": "underlyingMint",
+            "name": "underlying_mint",
             "docs": [
               "Underlying SPL mint (e.g. USDC). Same as `mock_yield::Reserve.underlying_mint`."
             ],
             "type": "pubkey"
           },
           {
-            "name": "yieldProgram",
+            "name": "yield_program",
             "docs": [
               "Mock-yield (or production lending) program id."
             ],
@@ -4760,14 +5234,14 @@ export type AgonProtocol = {
             "type": "pubkey"
           },
           {
-            "name": "shareMint",
+            "name": "share_mint",
             "docs": [
               "Lending share mint (e.g. cUSDC)."
             ],
             "type": "pubkey"
           },
           {
-            "name": "shareVault",
+            "name": "share_vault",
             "docs": [
               "Protocol-owned ATA holding cUSDC, authority = GlobalConfig PDA. Single ATA backs both",
               "users and the protocol fee."
@@ -4775,38 +5249,38 @@ export type AgonProtocol = {
             "type": "pubkey"
           },
           {
-            "name": "liquidityVault",
+            "name": "liquidity_vault",
             "docs": [
               "`Reserve.liquidity_vault` cached for CPI ergonomics."
             ],
             "type": "pubkey"
           },
           {
-            "name": "userIndexQ64",
+            "name": "user_index_q64",
             "docs": [
-              "Q64.64 index: 1 agUSDC share -> (user_index_q64 / 2^64) USDC. Starts at `Q64_ONE`,",
+              "Q64.64 index: 1 ryUSDC share -> (user_index_q64 / 2^64) USDC. Starts at `Q64_ONE`,",
               "monotonically non-decreasing under accrual, never decreases under deposits/withdrawals."
             ],
             "type": "u128"
           },
           {
-            "name": "lastSettledUnderlying",
+            "name": "last_settled_underlying",
             "docs": [
               "USDC value of `share_vault` as of last accrual. Used to detect new yield in `accrue_yield`."
             ],
             "type": "u64"
           },
           {
-            "name": "totalUserShares",
+            "name": "total_user_shares",
             "docs": [
-              "Sum of agUSDC `available + withdrawing` across all participant buckets for this token.",
+              "Sum of ryUSDC `available + withdrawing` across all participant buckets for this token.",
               "Sanity counter; truth still lives in buckets. Used by `accrue_yield` to compute per-share",
               "yield attribution and to enforce the invariant."
             ],
             "type": "u64"
           },
           {
-            "name": "protocolOwedUnderlying",
+            "name": "protocol_owed_underlying",
             "docs": [
               "Protocol's USDC claim. Increases only inside `accrue_yield`. Decreases only inside",
               "`claim_protocol_yield_fee`. Never touched by deposit/withdraw/channel paths."
@@ -4814,7 +5288,7 @@ export type AgonProtocol = {
             "type": "u64"
           },
           {
-            "name": "reserved",
+            "name": "_reserved",
             "docs": [
               "Padding for future fields (e.g. additional fee tiers, snapshot history)."
             ],
@@ -4829,32 +5303,32 @@ export type AgonProtocol = {
       }
     },
     {
-      "name": "yieldWithdrawn",
+      "name": "YieldWithdrawn",
       "type": {
         "kind": "struct",
         "fields": [
           {
-            "name": "participantId",
+            "name": "participant_id",
             "type": "u32"
           },
           {
-            "name": "tokenId",
+            "name": "token_id",
             "type": "u16"
           },
           {
-            "name": "sharesBurned",
+            "name": "shares_burned",
             "type": "u64"
           },
           {
-            "name": "usdcGross",
+            "name": "usdc_gross",
             "type": "u64"
           },
           {
-            "name": "usdcNet",
+            "name": "usdc_net",
             "type": "u64"
           },
           {
-            "name": "usdcFee",
+            "name": "usdc_fee",
             "type": "u64"
           },
           {
@@ -4865,4 +5339,4 @@ export type AgonProtocol = {
       }
     }
   ]
-};
+}

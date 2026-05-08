@@ -1,13 +1,13 @@
 // @ts-nocheck — IDL drift since 0.3.0:
 // Several method signatures and account names have changed across v5 (BLS clearing rounds,
 // participant -> bucket migration) and v6 (yield-bearing instructions, TokenEntry kind byte).
-// `AgonClient` here still reflects the 0.3.0 program shape and will not work against the v6
+// `RyvoClient` here still reflects the 0.3.0 program shape and will not work against the v6
 // program. Schedule a rewrite that targets the new IDL (use `program.account.participantBucket` /
 // `program.account.channelBucket`, pass `lowerParticipantId` / `higherParticipantId` / `bucketId`
 // to channel methods, and add `depositYieldBearing` / `requestWithdrawalYieldBearing` /
 // `executeWithdrawalYieldBearing` / `claimProtocolYieldFee`). For v6, prefer constructing
 // instructions directly via `program.methods` against the fresh IDL exported as
-// `AGON_PROTOCOL_IDL` until this file is updated.
+// `RYVO_PROTOCOL_IDL` until this file is updated.
 import * as anchor from "@coral-xyz/anchor";
 import { Program } from "@coral-xyz/anchor";
 import {
@@ -16,12 +16,12 @@ import {
   SystemProgram,
 } from "@solana/web3.js";
 import {
-  AGON_PROTOCOL_PROGRAM_ID,
+  RYVO_PROTOCOL_PROGRAM_ID,
   BPF_LOADER_UPGRADEABLE_PROGRAM_ID,
   SPL_TOKEN_PROGRAM_ID,
 } from "./constants.js";
-import idlJson from "./generated/agon_protocol.json" with { type: "json" };
-import type { AgonProtocol } from "./generated/agon_protocol.js";
+import idlJson from "./generated/ryvo_protocol.json" with { type: "json" };
+import type { RyvoProtocol } from "./generated/ryvo_protocol.js";
 import {
   findChannelPda,
   findGlobalConfigPda,
@@ -30,35 +30,35 @@ import {
   findTokenRegistryPda,
   findVaultTokenAccountPda,
 } from "./pdas.js";
-import type { Amountish, CreateAgonClientOptions } from "./types.js";
+import type { Amountish, CreateRyvoClientOptions } from "./types.js";
 import { toAnchorBn } from "./types.js";
 
-function cloneIdlWithProgramAddress(programId: PublicKey): AgonProtocol {
-  const idl = JSON.parse(JSON.stringify(idlJson)) as AgonProtocol;
+function cloneIdlWithProgramAddress(programId: PublicKey): RyvoProtocol {
+  const idl = JSON.parse(JSON.stringify(idlJson)) as RyvoProtocol;
   (idl as unknown as { address: string }).address = programId.toBase58();
   return idl;
 }
 
-export function getAgonIdl(programId: PublicKey = AGON_PROTOCOL_PROGRAM_ID) {
+export function getRyvoIdl(programId: PublicKey = RYVO_PROTOCOL_PROGRAM_ID) {
   return cloneIdlWithProgramAddress(programId);
 }
 
-export function createAgonProgram({
+export function createRyvoProgram({
   provider,
-  programId = AGON_PROTOCOL_PROGRAM_ID,
-}: CreateAgonClientOptions): Program<AgonProtocol> {
-  return new Program(getAgonIdl(programId), provider) as Program<AgonProtocol>;
+  programId = RYVO_PROTOCOL_PROGRAM_ID,
+}: CreateRyvoClientOptions): Program<RyvoProtocol> {
+  return new Program(getRyvoIdl(programId), provider) as Program<RyvoProtocol>;
 }
 
-export class AgonClient {
+export class RyvoClient {
   readonly provider: anchor.AnchorProvider;
   readonly programId: PublicKey;
-  readonly program: Program<AgonProtocol>;
+  readonly program: Program<RyvoProtocol>;
 
-  constructor({ provider, programId = AGON_PROTOCOL_PROGRAM_ID }: CreateAgonClientOptions) {
+  constructor({ provider, programId = RYVO_PROTOCOL_PROGRAM_ID }: CreateRyvoClientOptions) {
     this.provider = provider;
     this.programId = programId;
-    this.program = createAgonProgram({ provider, programId });
+    this.program = createRyvoProgram({ provider, programId });
   }
 
   globalConfigAddress(): PublicKey {
@@ -500,7 +500,7 @@ export function encodeSymbol(symbol: string): number[] {
 }
 
 export {
-  AGON_PROTOCOL_PROGRAM_ID,
+  RYVO_PROTOCOL_PROGRAM_ID,
   BPF_LOADER_UPGRADEABLE_PROGRAM_ID,
   findChannelPda,
   findGlobalConfigPda,

@@ -5,12 +5,12 @@
  * IDL can be found at `target/idl/mock_yield.json`.
  */
 export type MockYield = {
-  "address": "As3ry57AGfjXg7eg38QxHvnoA3Pqymkxd17rXJMeciCX",
+  "address": "AKimUnWF5CrWeA7XipX23vXCzdKfXGisR8C9cNuKtzGW",
   "metadata": {
     "name": "mockYield",
     "version": "0.1.0",
     "spec": "0.1.0",
-    "description": "Mock Save/Kamino-style lending program for Agon devnet demos. Mints cUSDC SPL shares against USDC deposits with a configurable APY."
+    "description": "Mock Save/Kamino-style lending program for Ryvo devnet demos. Mints cUSDC SPL shares against USDC deposits with a configurable APY."
   },
   "instructions": [
     {
@@ -329,7 +329,7 @@ export type MockYield = {
         {
           "name": "shareAuthority",
           "docs": [
-            "Authority that can burn `redeemer_shares`. For agon-protocol calls this is the",
+            "Authority that can burn `redeemer_shares`. For ryvo-protocol calls this is the",
             "`GlobalConfig` PDA (the `share_vault` owner). For end-user direct redemptions it would be",
             "the wallet holding the cUSDC."
           ],
